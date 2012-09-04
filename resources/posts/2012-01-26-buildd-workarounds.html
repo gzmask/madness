@@ -81,7 +81,7 @@
 
   <p>
     Depending on whether one uses <strong>dh</strong> short form, or a
-    traditional <code>debian/rules</code>, here's an outline of how
+    traditional <kbd>debian/rules</kbd>, here's an outline of how
     the rules file could look like:
   </p>
 
@@ -102,7 +102,7 @@ binary: binary-arch binary-indep
     With <strong>dh</strong> short form, this looks a bit different,
     because you don't need to set up dependencies, debhelper does that
     for us. We simply override the build: target, as per the above,
-    and use the -arch and -indep variants of the <tt>dh_auto_*</tt>
+    and use the -arch and -indep variants of the <kbd>dh_auto_*</kbd>
     family of overrides. This can be either trivial, or complicated,
     depending on the build system.
   </p>
@@ -110,7 +110,7 @@ binary: binary-arch binary-indep
   <p>
     The basic idea is that we disable the <em>-indep</em> variant of
     those targets that we do not need, and leave the rest alone. If
-    you need to override any of the other <tt>dh_auto_*</tt> stuff,
+    you need to override any of the other <kbd>dh_auto_*</kbd> stuff,
     override the <em>-arch</em> variant instead.
   </p>
 
@@ -153,8 +153,8 @@ override_dh_auto_build-indep:
   </p>
 
   <p>
-    The only downside of this workaround is that <code>debian/rules
-    build</code> will not do the expected thing.
+    The only downside of this workaround is that <kbd>debian/rules
+    build</kbd> will not do the expected thing.
   </p>
 
   <p>

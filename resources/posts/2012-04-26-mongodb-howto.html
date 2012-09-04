@@ -57,12 +57,12 @@
 
   <p>
     All of the options should be self explanatory, I believe: you can
-    list multiple <em>host:port</em> pairs in the <tt>servers()</tt>
-    option (but the <tt>host()</tt> and <tt>port()</tt> options from
+    list multiple <em>host:port</em> pairs in the <code>servers()</code>
+    option (but the <code>host()</code> and <code>port()</code> options from
     3.3 continue to work, for compability's sake),
-    and <tt>safe-mode()</tt> can be toggled on and off, as one would
+    and <code>safe-mode()</code> can be toggled on and off, as one would
     expect. The most interesting part of the configuration is
-    <tt>value-pairs()</tt> no doubt, that setting controls what gets
+    <code>value-pairs()</code> no doubt, that setting controls what gets
     into the database, and in what format.
   </p>
 
@@ -77,15 +77,15 @@
   <h2>Value pairs<hr></h2>
 
   <p>
-    The basic idea behind <tt>value-pairs()</tt> is that it allows one to
+    The basic idea behind <code>value-pairs()</code> is that it allows one to
     control which key-value pairs shall be considered for use. Think
-    of it like a <tt>SELECT</tt> in ye olde SQL, just done our way.
+    of it like a <code>SELECT</code> in ye olde SQL, just done our way.
   </p>
 
   <h3>The basics<hr></h3>
 
   <p>
-    As a first step, one needs to select a default <tt>scope()</tt>, which can
+    As a first step, one needs to select a default <code>scope()</code>, which can
     be a combination of any of the following:
   </p>
 
@@ -172,19 +172,19 @@
 
   <p>
     The scope determines the base set - but you can add new keys to
-    it, or even exclude. The <tt>key()</tt> and <tt>exclude()</tt>
+    it, or even exclude. The <code>key()</code> and <code>exclude()</code>
     options are the ways to accomplish this, both take a glob-pattern
-    (in 3.4; 3.3 does not support globs in the <tt>key()</tt> option,
+    (in 3.4; 3.3 does not support globs in the <code>key()</code> option,
     only exact key names), and will add in, or exclude any key that
     matches that set. These are evaluated in order, so if you first
     exclude something, and a subsequent statement adds it back, it
     will be back - or the other way around. However,
-    the <tt>scope()</tt> is always evaluated first, regardless of
+    the <code>scope()</code> is always evaluated first, regardless of
     where it appears in the config.
   </p>
 
   <p>
-    A special version of <tt>key()</tt> is the <tt>pair()</tt> option,
+    A special version of <code>key()</code> is the <code>pair()</code> option,
     with which one can add any value (where the value can be specified
     as a template, with all the bells and whistles that supports:
     macros, template functions and the rest) under pretty much any
@@ -251,7 +251,7 @@
 
   <p>
     And that's about it! It's important to keep in mind, that
-    explicitly defining a <tt>pair()</tt> with a custom value will
+    explicitly defining a <code>pair()</code> with a custom value will
     overwrite the value of the given key if it existed before. This
     can be used to override fields of the default scope, for example.
   </p>
@@ -259,7 +259,7 @@
   <p>
     Now lets say we want to add the <em>META</em> too, but not the
     advertisement. This only needs one more line added to the
-    <tt>value-pairs()</tt> block above:
+    <code>value-pairs()</code> block above:
   </p>
 
   <pre>key("META.*") exclude("META.ADVERTISEMENT")</pre>
@@ -319,7 +319,7 @@
     Lets suppose we want to restructure things a bit, and
     move <em>FACILITY</em> and <em>PRIORITY</em> under
     the <em>syslog.</em>  prefix. Since those two are the only keys
-    that end with <tt>ITY</tt>, we can use a glob:
+    that end with <code>ITY</code>, we can use a glob:
   </p>
 
   <pre>key("*ITY" rekey(add-prefix("syslog.")))</pre>
@@ -327,7 +327,7 @@
   <p>
     And to showcase the third available key transformer function, lets
     say we want to replace <em>META</em> with <em>COPYRIGHT</em>! We
-    could do this with <tt>shift()</tt> and <tt>add-prefix()</tt>, but
+    could do this with <code>shift()</code> and <code>add-prefix()</code>, but
     there's a shortcut:
   </p>
 
@@ -336,7 +336,7 @@
   <p>
     You might wonder now, though, why transformations are useful, when
     the dance we need to do to get things into shape (and still use
-    <tt>exclude()</tt> and <tt>pair()</tt> for <em>PROGRAM</em>
+    <code>exclude()</code> and <code>pair()</code> for <em>PROGRAM</em>
     and <em>PID</em>!) is longer than if we listed keys by hand. Why,
     then?
   </p>
