@@ -1,8 +1,9 @@
 (ns madness.blog.archive
   "## Low-level archive rendering
 
-  Archives are pages that do not have any content, but the title, and
-  a list of recent posts, and optionally archived posts."
+  Archives are pages that do not have any content, but the title, an
+  archive-specific Atom feed, and a list of recent posts, and
+  optionally archived posts."
 
   ^{:author "Gergely Nagy <algernon@madhouse-project.org>"
     :copyright "Copyright (C) 2012 Gergely Nagy <algernon@madhouse-project.org>"
@@ -50,12 +51,14 @@
 
 ;; Renders the whole archive page, be that the main one, or the
 ;; per-tag archives. The page will include the title, a list of recent
-;; posts, followed by archived ones, and of course the
-;; sidebar. Everything else is disabled.
+;; posts, followed by archived ones, and of course the sidebar. This
+;; also updates the Atom feed in the page (the `#main-rss` and
+;; `#rss-feed` elements) with the supplied URL. Everything else is
+;; disabled.
 ;;
 ;; Uses the `#recents` and `#archive` elements of the template mostly.
 (h/deftemplate blog-archive (cfg/template)
-  [title blog-posts all-posts]
+  [title feed-url blog-posts all-posts]
 
   [:.hero-unit :h1] (h/do->
                      (h/content title)
@@ -65,6 +68,10 @@
   [:#full-article-footer] nil
   [:#post-neighbours] nil
   [:#disqus] nil
+  [:#rss-feed] (h/set-attr :href feed-url)
+  [:#main-rss] (h/do->
+                (h/remove-attr :id)
+                (h/set-attr :href feed-url))
   [:#recents] (h/clone-for [recent (utils/blog->table
                                     (cfg/recent-posts :columns)
                                     (cfg/recent-posts :rows) blog-posts)]

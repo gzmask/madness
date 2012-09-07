@@ -93,7 +93,7 @@
 ;;
 (defmethod render :archive [_]
   (render-to-file blog-posts blog-posts
-                  (partial blog-archive/blog-archive "Archive")
+                  (partial blog-archive/blog-archive "Archive" "/blog/atom.xml")
                   "blog/archives/index.html"))
 
 ;; ### The tag archives
@@ -113,7 +113,8 @@
   
   (let [fn (str "." (utils/tag-to-url tag) "index.html")]
     (render-to-file all-posts tagged-posts
-                    (partial blog-archive/blog-archive (str "Tag: " tag)) fn)))
+                    (partial blog-archive/blog-archive (str "Tag: " tag)
+                             (str "" (utils/tag-to-url tag) "atom.xml")) fn)))
 
 ;; And another, that maps through the tags, and using the previous
 ;; method, renders an archive for each of them.
