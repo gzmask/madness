@@ -3149,13 +3149,16 @@ $ lein run -m madness.core :index :archive
 <li><code>:index</code>: The main index page of the blog.</li>
 <li><code>:archive</code>: The main archive page of the blog.</li>
 <li><code>:tags</code>: All of the per-tag archives of the blog.</li>
+<li><code>:date-archives</code>: Yearly, monthly &amp; daily archives of the blog.</li>
 <li><code>:posts</code>: All of the posts that belong to the blog.</li>
 <li><code>:pages</code>: All of the pages that accompany the blog.</li>
 <li><code>:main-feed</code>: The main Atom feed.</li>
 <li><code>:tag-feeds</code>: The per-tag Atom feeds.</li>
+<li><code>:date-feeds</code>: Yearly, monthly &amp; daily atom feeds.</li>
 </ul>
 </td><td class="codes"><pre class="brush: clojure">(defn -main
-  ([] (-main &quot;:index&quot; &quot;:archive&quot; &quot;:tags&quot; &quot;:posts&quot; &quot;:main-feed&quot; &quot;:pages&quot; &quot;:tag-feeds&quot;))
+  ([] (-main &quot;:index&quot; &quot;:archive&quot; &quot;:tags&quot; &quot;:date-archives&quot; &quot;:posts&quot;
+             &quot;:main-feed&quot; &quot;:pages&quot; &quot;:tag-feeds&quot; &quot;:date-feeds&quot;))
   ([&amp; args] (dorun (map render/render (map str-&gt;keyword args)))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.config" name="madness.config"><h1 class="project-name">madness.config</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Configuration handling for Madness.</h2>
 
 <p>  Madness can be configured by placing a file called <code>settings.clj</code> in
@@ -3316,7 +3319,7 @@ number is not limited. Madness does not implement any kind of
 archive paging.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :archive [_]
   (render-to-file blog-posts blog-posts
-                  (partial blog-archive/blog-archive &quot;Archive&quot;)
+                  (partial blog-archive/blog-archive &quot;Archive&quot; &quot;/blog/atom.xml&quot;)
                   &quot;blog/archives/index.html&quot;))</pre></td></tr><tr><td class="docs"><h3>The tag archives</h3>
 
 <p>Each tag has an archive of its own, in files named after the tag,
@@ -3332,11 +3335,51 @@ function that can render one.</p>
   
   (let [fn (str &quot;.&quot; (utils/tag-to-url tag) &quot;index.html&quot;)]
     (render-to-file all-posts tagged-posts
-                    (partial blog-archive/blog-archive (str &quot;Tag: &quot; tag)) fn)))</pre></td></tr><tr><td class="docs"><p>And another, that maps through the tags, and using the previous
+                    (partial blog-archive/blog-archive (str &quot;Tag: &quot; tag)
+                             (str &quot;&quot; (utils/tag-to-url tag) &quot;atom.xml&quot;)) fn)))</pre></td></tr><tr><td class="docs"><p>And another, that maps through the tags, and using the previous
 method, renders an archive for each of them.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tags [_]
   (dorun (map #(render :tag-archive blog-posts %1 (get blog-tag-grouped %1))
-              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="docs"><h3>Blog posts</h3>
+              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="docs"><h3>Date-based archives</h3>
+
+<p>Because posts are rendered into locations based on their creation
+date, and because it makes it easier to navigate bigger blogs, we
+need archives for each year, month and date.</p>
+
+<p>These dated archives are exactly the same as the global archive,
+except that the recent and archived posts are limited to a
+particular date: a year, a month, or a day.</p>
+</td><td class="codes"></td></tr><tr><td class="docs"><p>To render all the archives for each and every date a post was
+created on, we need a function that can render one.</p>
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-archive
+  [_ all-posts date dated-posts]
+
+  (let [uri (str &quot;/blog/&quot; date &quot;/&quot;)
+        fn (str &quot;.&quot; uri &quot;index.html&quot;)]
+    (render-to-file all-posts dated-posts
+                    (partial blog-archive/blog-archive
+                             (str &quot;Archive of posts @ &quot; date)
+                             (str &quot;&quot; uri &quot;atom.xml&quot;)) fn)))</pre></td></tr><tr><td class="docs"><p>And since all the dated archives follow the same pattern, lets
+introduce a helper function!</p>
+</td><td class="codes"></td></tr><tr><td class="docs"><p>Group blog posts by date, using the function <code>f</code> (which is expected
+  to return a formatted date when given a blog post), and render the
+  archives for each and every key within the group.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn render-dated-archive
+  [render-type f]
+  (let [dated-archive (utils/group-blog-by-date blog-posts f)]
+    (dorun (map #(render render-type blog-posts %1 (get dated-archive %1))
+                (keys dated-archive)))))</pre></td></tr><tr><td class="docs"><p>With these, we can render daily, montly and yearly archives easily.</p>
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :daily-archives [_]
+  (render-dated-archive :date-archive utils/posts-by-day))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :monthly-archives [_]
+  (render-dated-archive :date-archive utils/posts-by-month)
+  (render :daily-archives))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :yearly-archives [_]
+  (render-dated-archive :date-archive utils/posts-by-year)
+  (render :monthly-archives))</pre></td></tr><tr><td class="docs"><p>And for convenience, we have a function that can be called from the
+command line, and will generate all of the above dated archives.</p>
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-archives [_]
+  (render :yearly-archives))</pre></td></tr><tr><td class="docs"><h3>Blog posts</h3>
 
 <p>Blog posts are pretty simple: they show the post itself, the date
 it was posted, the tags it is tagged with, and any previous or next
@@ -3395,13 +3438,36 @@ rendered.</p>
   (let [fn (str &quot;.&quot; (utils/tag-to-url tag) &quot;atom.xml&quot;)]
     (io/write-out-dir fn
                       (blog-feed/emit-atom
-                       (str (cfg/atom-feed :title) &quot;:&quot; tag)
+                       (str (cfg/atom-feed :title) &quot;: &quot; tag)
                        (utils/tag-to-url tag)
                        tagged-posts))))</pre></td></tr><tr><td class="docs"><p>And as usual, since we can render a feed for a single tag, mapping
 through all the tags is all it takes to render them all.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tag-feeds [_]
   (dorun (map #(render :tag-feed %1 (get blog-tag-grouped %1))
-              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.io" name="madness.io"><h1 class="project-name">madness.io</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>I/O helper routines</p>
+              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="docs"><p>As with archives, we render atom feeds for each year, month and day
+a blog post was posted on, in a very similar manner the archives
+are rendered.</p>
+</td><td class="codes"></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-feed
+  [_ _ date dated-posts]
+
+  (let [uri (str &quot;/blog/&quot; date &quot;/&quot;)
+        fn (str &quot;.&quot; uri &quot;atom.xml&quot;)]
+    (io/write-out-dir fn
+                      (blog-feed/emit-atom
+                       (str (cfg/atom-feed :title) &quot; @ &quot; date)
+                       uri
+                       dated-posts))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :daily-feeds [_]
+  (render-dated-archive :date-feed utils/posts-by-day))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :monthly-feeds [_]
+  (render-dated-archive :date-feed utils/posts-by-month)
+  (render :daily-feeds))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :yearly-feeds [_]
+  (render-dated-archive :date-feed utils/posts-by-year)
+  (render :monthly-feeds))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-feeds [_]
+  (render :yearly-feeds))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.io" name="madness.io"><h1 class="project-name">madness.io</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>I/O helper routines</p>
 </td><td class="codes"><pre class="brush: clojure">(ns madness.io
   ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
     :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
@@ -3446,7 +3512,34 @@ through all the tags is all it takes to render them all.</p>
   posts as values.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn group-blog-by-tags
   [blog]
-  (reduce #(assoc %1 %2 (posts-tagged blog %2)) {} (tags blog)))</pre></td></tr><tr><td class="docs"><p>Given a full blog, and a single post, find the previous and the
+  (reduce #(assoc %1 %2 (posts-tagged blog %2)) {} (tags blog)))</pre></td></tr><tr><td class="docs"><p>Returns a set of all the blog posts that match the filter.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- blog-dates
+  [blog f]
+  (set (map #(f (:date %1)) blog)))</pre></td></tr><tr><td class="docs"><p>Checks whether a given post was made on a particular date. The <code>f</code>
+  function is used to transform the posts date before the comparsion.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- post-with-date?
+  [date f post]
+  (let [fdate (f (:date post))]
+    (= date fdate)))</pre></td></tr><tr><td class="docs"><p>Returns all posts within a blog that have a particular date, where
+  the date of the posts is determined after transforming them with
+  function <code>f</code>.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- posts-with-date
+  [blog date f]
+  (filter (partial post-with-date? date f) blog))</pre></td></tr><tr><td class="docs"><p>Group all posts within a blog by date. Uses the supplied <code>f</code>
+  function to format and compare dates.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn group-blog-by-date
+  [blog f]
+  (reduce #(assoc %1 %2 (posts-with-date blog %2 f)) {}
+          (blog-dates blog f)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn posts-by-day
+  [d]
+  (time-format/unparse (time-format/formatter &quot;yyyy/MM/dd&quot;) d))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn posts-by-month
+  [d]
+  (time-format/unparse (time-format/formatter &quot;yyyy/MM&quot;) d))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn posts-by-year
+  [d]
+  (time-format/unparse (time-format/formatter &quot;yyyy&quot;) d))</pre></td></tr><tr><td class="docs"><p>Given a full blog, and a single post, find the previous and the
   next post that surround the current one.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn neighbours
   [blog post]
@@ -3893,8 +3986,9 @@ by <a href="#madness.blog.nav">blog.nav</a>.</p>
   [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
   [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.archive" name="madness.blog.archive"><h1 class="project-name">madness.blog.archive</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Low-level archive rendering</h2>
 
-<p>  Archives are pages that do not have any content, but the title, and
-  a list of recent posts, and optionally archived posts.</p>
+<p>  Archives are pages that do not have any content, but the title, an
+  archive-specific Atom feed, and a list of recent posts, and
+  optionally archived posts.</p>
 </td><td class="codes"><pre class="brush: clojure">(ns madness.blog.archive
   ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
     :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
@@ -3933,12 +4027,14 @@ element of the template as source.</p>
                     (h/remove-attr :id)
                     (h/remove-class &quot;visible-desktop&quot;)))</pre></td></tr><tr><td class="docs"><p>Renders the whole archive page, be that the main one, or the
 per-tag archives. The page will include the title, a list of recent
-posts, followed by archived ones, and of course the
-sidebar. Everything else is disabled.</p>
+posts, followed by archived ones, and of course the sidebar. This
+also updates the Atom feed in the page (the <code>#main-rss</code> and
+<code>#rss-feed</code> elements) with the supplied URL. Everything else is
+disabled.</p>
 
 <p>Uses the <code>#recents</code> and <code>#archive</code> elements of the template mostly.</p>
 </td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-archive (cfg/template)
-  [title blog-posts all-posts]
+  [title feed-url blog-posts all-posts]
   [:.hero-unit :h1] (h/do-&gt;
                      (h/content title)
                      (h/set-attr :title title))
@@ -3947,6 +4043,10 @@ sidebar. Everything else is disabled.</p>
   [:#full-article-footer] nil
   [:#post-neighbours] nil
   [:#disqus] nil
+  [:#rss-feed] (h/set-attr :href feed-url)
+  [:#main-rss] (h/do-&gt;
+                (h/remove-attr :id)
+                (h/set-attr :href feed-url))
   [:#recents] (h/clone-for [recent (utils/blog-&gt;table
                                     (cfg/recent-posts :columns)
                                     (cfg/recent-posts :rows) blog-posts)]
