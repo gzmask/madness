@@ -122,6 +122,59 @@
   (dorun (map #(render :tag-archive blog-posts %1 (get blog-tag-grouped %1))
               (keys blog-tag-grouped))))
 
+;; ### Date-based archives
+;;
+;; Because posts are rendered into locations based on their creation
+;; date, and because it makes it easier to navigate bigger blogs, we
+;; need archives for each year, month and date.
+;;
+;; These dated archives are exactly the same as the global archive,
+;; except that the recent and archived posts are limited to a
+;; particular date: a year, a month, or a day.
+
+;; To render all the archives for each and every date a post was
+;; created on, we need a function that can render one.
+(defmethod render :date-archive
+  [_ all-posts date dated-posts]
+
+  (let [uri (str "/blog/" date "/")
+        fn (str "." uri "index.html")]
+    (render-to-file all-posts dated-posts
+                    (partial blog-archive/blog-archive
+                             (str "Archive of posts @ " date)
+                             (str "" uri "atom.xml")) fn)))
+
+;; And since all the dated archives follow the same pattern, lets
+;; introduce a helper function!
+
+(defn render-dated-archive
+  "Group blog posts by date, using the function `f` (which is expected
+  to return a formatted date when given a blog post), and render the
+  archives for each and every key within the group."
+
+  [render-type f]
+
+  (let [dated-archive (utils/group-blog-by-date blog-posts f)]
+    (dorun (map #(render render-type blog-posts %1 (get dated-archive %1))
+                (keys dated-archive)))))
+
+;; With these, we can render daily, montly and yearly archives easily.
+(defmethod render :daily-archives [_]
+  (render-dated-archive :date-archive utils/posts-by-day))
+
+(defmethod render :monthly-archives [_]
+  (render-dated-archive :date-archive utils/posts-by-month)
+  (render :daily-archives))
+
+(defmethod render :yearly-archives [_]
+  (render-dated-archive :date-archive utils/posts-by-year)
+  (render :monthly-archives))
+
+;; And for convenience, we have a function that can be called from the
+;; command line, and will generate all of the above dated archives.
+(defmethod render :date-archives [_]
+  (render :yearly-archives))
+
 ;; ### Blog posts
 ;;
 ;; Blog posts are pretty simple: they show the post itself, the date
@@ -205,7 +258,7 @@
   (let [fn (str "." (utils/tag-to-url tag) "atom.xml")]
     (io/write-out-dir fn
                       (blog-feed/emit-atom
-                       (str (cfg/atom-feed :title) ":" tag)
+                       (str (cfg/atom-feed :title) ": " tag)
                        (utils/tag-to-url tag)
                        tagged-posts))))
 
@@ -214,3 +267,32 @@
 (defmethod render :tag-feeds [_]
   (dorun (map #(render :tag-feed %1 (get blog-tag-grouped %1))
               (keys blog-tag-grouped))))
+
+;; As with archives, we render atom feeds for each year, month and day
+;; a blog post was posted on, in a very similar manner the archives
+;; are rendered.
+
+(defmethod render :date-feed
+  [_ _ date dated-posts]
+
+  (let [uri (str "/blog/" date "/")
+        fn (str "." uri "atom.xml")]
+    (io/write-out-dir fn
+                      (blog-feed/emit-atom
+                       (str (cfg/atom-feed :title) " @ " date)
+                       uri
+                       dated-posts))))
+
+(defmethod render :daily-feeds [_]
+  (render-dated-archive :date-feed utils/posts-by-day))
+
+(defmethod render :monthly-feeds [_]
+  (render-dated-archive :date-feed utils/posts-by-month)
+  (render :daily-feeds))
+
+(defmethod render :yearly-feeds [_]
+  (render-dated-archive :date-feed utils/posts-by-year)
+  (render :monthly-feeds))
+
+(defmethod render :date-feeds [_]
+  (render :yearly-feeds))

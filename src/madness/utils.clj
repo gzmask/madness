@@ -57,6 +57,55 @@
 
   (reduce #(assoc %1 %2 (posts-tagged blog %2)) {} (tags blog)))
 
+(defn- blog-dates
+  "Returns a set of all the blog posts that match the filter."
+
+  [blog f]
+
+  (set (map #(f (:date %1)) blog)))
+
+(defn- post-with-date?
+  "Checks whether a given post was made on a particular date. The `f`
+  function is used to transform the posts date before the comparsion."
+
+  [date f post]
+
+  (let [fdate (f (:date post))]
+    (= date fdate)))
+
+(defn- posts-with-date
+  "Returns all posts within a blog that have a particular date, where
+  the date of the posts is determined after transforming them with
+  function `f`."
+
+  [blog date f]
+
+  (filter (partial post-with-date? date f) blog))
+
+(defn group-blog-by-date
+  "Group all posts within a blog by date. Uses the supplied `f`
+  function to format and compare dates."
+
+  [blog f]
+
+  (reduce #(assoc %1 %2 (posts-with-date blog %2 f)) {}
+          (blog-dates blog f)))
+
+(defn posts-by-day
+  [d]
+
+  (time-format/unparse (time-format/formatter "yyyy/MM/dd") d))
+
+(defn posts-by-month
+  [d]
+
+  (time-format/unparse (time-format/formatter "yyyy/MM") d))
+
+(defn posts-by-year
+  [d]
+
+  (time-format/unparse (time-format/formatter "yyyy") d))
+
 (defn neighbours
   "Given a full blog, and a single post, find the previous and the
   next post that surround the current one."
