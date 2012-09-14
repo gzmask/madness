@@ -10,7 +10,7 @@
             :distribution :repo}
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [enlive/enlive "1.0.1"]
+                 [enlive/enlive "1.0.1" :exclusions [org.clojure/clojure]]
                  [clj-time "0.4.4" :exclusions [org.clojure/clojure]]
                  [fs "1.3.2"]]
   :profiles {:dev {:dependencies [[marginalia "0.7.0"]]}}
