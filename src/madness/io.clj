@@ -18,6 +18,6 @@
   [file str]
 
   (let [fn (str/join "/" [(cfg/dirs :output) file])]
-    (println "Writing " fn "...")
+    (println "Writing" fn "...")
     (fs/mkdirs (fs/parent fn))
     (spit fn str :encoding "UTF-8")))

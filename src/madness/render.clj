@@ -25,14 +25,8 @@
             [madness.blog.page :as blog-page]
             [madness.blog.atom :as blog-feed]
             [madness.config :as cfg]
-            [madness.utils :as utils]))
-
-;; Convenience Var containing all the blog posts
-(def blog-posts (blog/load-posts))
-;; Convenience Var contiaining all the blog pages
-(def blog-pages (blog/load-pages))
-;; Convenience Var containing all the blog posts, grouped by tags.
-(def blog-tag-grouped (utils/group-blog-by-tags blog-posts))
+            [madness.utils :as utils]
+            [madness.resources :as res]))
 
 (defn- render-to-file
   "Render a post or page to a file, using a custom render function."
@@ -75,7 +69,7 @@
 ;; [1]: #madness.blog.index
 ;;
 (defmethod render :index [_]
-  (render-to-file nil blog-posts blog-index/blog-index "index.html"))
+  (render-to-file nil res/posts blog-index/blog-index "index.html"))
 
 ;; ### The global archive
 ;;
@@ -92,7 +86,7 @@
 ;; [1]: #madness.blog.archive
 ;;
 (defmethod render :archive [_]
-  (render-to-file blog-posts blog-posts
+  (render-to-file res/posts res/posts
                   (partial blog-archive/blog-archive "Archive" "/blog/atom.xml")
                   "blog/archives/index.html"))
 
@@ -119,8 +113,9 @@
 ;; And another, that maps through the tags, and using the previous
 ;; method, renders an archive for each of them.
 (defmethod render :tags [_]
-  (dorun (map #(render :tag-archive blog-posts %1 (get blog-tag-grouped %1))
-              (keys blog-tag-grouped))))
+  (dorun (map #(render :tag-archive res/posts %1
+                       (get res/posts-tag-grouped %1))
+              (keys res/posts-tag-grouped))))
 
 ;; ### Date-based archives
 ;;
@@ -154,8 +149,8 @@
 
   [render-type f]
 
-  (let [dated-archive (utils/group-blog-by-date blog-posts f)]
-    (dorun (map #(render render-type blog-posts %1 (get dated-archive %1))
+  (let [dated-archive (utils/group-blog-by-date res/posts f)]
+    (dorun (map #(render render-type res/posts %1 (get dated-archive %1))
                 (keys dated-archive)))))
 
 ;; With these, we can render daily, montly and yearly archives easily.
@@ -207,7 +202,7 @@
 
 ;; And now that we can render a single post, we shall render them all!
 (defmethod render :posts [_]
-  (dorun (map (partial render :post blog-posts) blog-posts)))
+  (dorun (map (partial render :post res/posts) res/posts)))
 
 ;; ### Static pages
 ;;
@@ -228,7 +223,7 @@
 
 ;; Then map through all of them, to render them all.
 (defmethod render :pages [_]
-  (dorun (map (partial render :page blog-posts) blog-pages)))
+  (dorun (map (partial render :page res/posts) res/pages)))
 
 ;; ### Atom feeds
 ;;
@@ -247,7 +242,8 @@
 ;; The main feed will be saved into `blog/atom.xml`.
 (defmethod render :main-feed [_]
   (io/write-out-dir "blog/atom.xml"
-                    (blog-feed/emit-atom (cfg/atom-feed :title) "/blog/" blog-posts)))
+                    (blog-feed/emit-atom (cfg/atom-feed :title) "/blog/"
+                                         res/posts)))
 
 ;; A single per-tag feed is saved into something like
 ;; `blog/tag/atom.xml`, similarly to how the per-tag archives were
@@ -265,8 +261,8 @@
 ;; And as usual, since we can render a feed for a single tag, mapping
 ;; through all the tags is all it takes to render them all.
 (defmethod render :tag-feeds [_]
-  (dorun (map #(render :tag-feed %1 (get blog-tag-grouped %1))
-              (keys blog-tag-grouped))))
+  (dorun (map #(render :tag-feed %1 (get res/posts-tag-grouped %1))
+              (keys res/posts-tag-grouped))))
 
 ;; As with archives, we render atom feeds for each year, month and day
 ;; a blog post was posted on, in a very similar manner the archives
