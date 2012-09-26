@@ -3034,7 +3034,7 @@ net.brehaut.ClojureTools = (function (SH) {
 })(SyntaxHighlighter);
 </script><title>madness -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">madness</h1><h2 class="project-version">0.0.0-SNAPSHOT</h2><br /><p>Static site generator, based on <a href="https://github.com/cgrand/enlive/wiki">Enlive</a> and
   <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>.</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">enlive/enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.0.0</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.4.3</td></tr><tr><td class="dep-name">fs</td><td class="dotted"><hr /></td><td class="dep-version">1.3.2</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#madness">madness</a></li><li><a href="#madness.core">madness.core</a></li><li><a href="#madness.config">madness.config</a></li><li><a href="#madness.render">madness.render</a></li><li><a href="#madness.io">madness.io</a></li><li><a href="#madness.utils">madness.utils</a></li><li><a href="#madness.blog">madness.blog</a></li><li><a href="#madness.blog.nav">madness.blog.nav</a></li><li><a href="#madness.blog.recent">madness.blog.recent</a></li><li><a href="#madness.blog.post">madness.blog.post</a></li><li><a href="#madness.blog.page">madness.blog.page</a></li><li><a href="#madness.blog.archive">madness.blog.archive</a></li><li><a href="#madness.blog.index">madness.blog.index</a></li><li><a href="#madness.blog.atom">madness.blog.atom</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness" name="madness"><h1 class="project-name">madness</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Madness</h2>
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">enlive/enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.4.4</td></tr><tr><td class="dep-name">fs</td><td class="dotted"><hr /></td><td class="dep-version">1.3.2</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#madness">madness</a></li><li><a href="#madness.core">madness.core</a></li><li><a href="#madness.config">madness.config</a></li><li><a href="#madness.render">madness.render</a></li><li><a href="#madness.io">madness.io</a></li><li><a href="#madness.utils">madness.utils</a></li><li><a href="#madness.blog">madness.blog</a></li><li><a href="#madness.blog.nav">madness.blog.nav</a></li><li><a href="#madness.blog.recent">madness.blog.recent</a></li><li><a href="#madness.blog.post">madness.blog.post</a></li><li><a href="#madness.blog.page">madness.blog.page</a></li><li><a href="#madness.blog.archive">madness.blog.archive</a></li><li><a href="#madness.blog.index">madness.blog.index</a></li><li><a href="#madness.blog.atom">madness.blog.atom</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness" name="madness"><h1 class="project-name">madness</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Madness</h2>
 
 <p>Madness is a static site generator tool, primarily aimed at
 generating a blog, but also supports static pages too. It was
@@ -3272,10 +3272,8 @@ span, we divide 12 by the number of columns, and round it.</p>
             [madness.blog.page :as blog-page]
             [madness.blog.atom :as blog-feed]
             [madness.config :as cfg]
-            [madness.utils :as utils]))</pre></td></tr><tr><td class="docs"><p>Convenience Var containing all the blog posts</p>
-</td><td class="codes"><pre class="brush: clojure">(def blog-posts (blog/load-posts))</pre></td></tr><tr><td class="docs"><p>Convenience Var contiaining all the blog pages</p>
-</td><td class="codes"><pre class="brush: clojure">(def blog-pages (blog/load-pages))</pre></td></tr><tr><td class="docs"><p>Convenience Var containing all the blog posts, grouped by tags.</p>
-</td><td class="codes"><pre class="brush: clojure">(def blog-tag-grouped (utils/group-blog-by-tags blog-posts))</pre></td></tr><tr><td class="docs"><p>Render a post or page to a file, using a custom render function.</p>
+            [madness.utils :as utils]
+            [madness.resources :as res]))</pre></td></tr><tr><td class="docs"><p>Render a post or page to a file, using a custom render function.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn- render-to-file
   [all-posts current-post render-fn file]
   (io/write-out-dir file
@@ -3306,7 +3304,7 @@ through the archive, and they're not displayed on the index at all.</p>
 <p>For more information  about how the content area is  built, see the
 <a href="#madness.blog.index">blog.index</a> namespace.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :index [_]
-  (render-to-file nil blog-posts blog-index/blog-index &quot;index.html&quot;))</pre></td></tr><tr><td class="docs"><h3>The global archive</h3>
+  (render-to-file nil res/posts blog-index/blog-index &quot;index.html&quot;))</pre></td></tr><tr><td class="docs"><h3>The global archive</h3>
 
 <p>Renders the global archive to a file named <code>blog/archives/index.html</code>.</p>
 
@@ -3318,7 +3316,7 @@ post, followed by a limited set of recent posts, then the archived posts.</p>
 number is not limited. Madness does not implement any kind of
 archive paging.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :archive [_]
-  (render-to-file blog-posts blog-posts
+  (render-to-file res/posts res/posts
                   (partial blog-archive/blog-archive &quot;Archive&quot; &quot;/blog/atom.xml&quot;)
                   &quot;blog/archives/index.html&quot;))</pre></td></tr><tr><td class="docs"><h3>The tag archives</h3>
 
@@ -3339,8 +3337,9 @@ function that can render one.</p>
                              (str &quot;&quot; (utils/tag-to-url tag) &quot;atom.xml&quot;)) fn)))</pre></td></tr><tr><td class="docs"><p>And another, that maps through the tags, and using the previous
 method, renders an archive for each of them.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tags [_]
-  (dorun (map #(render :tag-archive blog-posts %1 (get blog-tag-grouped %1))
-              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="docs"><h3>Date-based archives</h3>
+  (dorun (map #(render :tag-archive res/posts %1
+                       (get res/posts-tag-grouped %1))
+              (keys res/posts-tag-grouped))))</pre></td></tr><tr><td class="docs"><h3>Date-based archives</h3>
 
 <p>Because posts are rendered into locations based on their creation
 date, and because it makes it easier to navigate bigger blogs, we
@@ -3366,8 +3365,8 @@ introduce a helper function!</p>
   archives for each and every key within the group.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn render-dated-archive
   [render-type f]
-  (let [dated-archive (utils/group-blog-by-date blog-posts f)]
-    (dorun (map #(render render-type blog-posts %1 (get dated-archive %1))
+  (let [dated-archive (utils/group-blog-by-date res/posts f)]
+    (dorun (map #(render render-type res/posts %1 (get dated-archive %1))
                 (keys dated-archive)))))</pre></td></tr><tr><td class="docs"><p>With these, we can render daily, montly and yearly archives easily.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :daily-archives [_]
   (render-dated-archive :date-archive utils/posts-by-day))</pre></td></tr><tr><td class="docs">
@@ -3403,7 +3402,7 @@ filename.</p>
   (let [fn (str &quot;.&quot; (:url post) &quot;index.html&quot;)]
     (render-to-file all-posts post blog-post/blog-post fn)))</pre></td></tr><tr><td class="docs"><p>And now that we can render a single post, we shall render them all!</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :posts [_]
-  (dorun (map (partial render :post blog-posts) blog-posts)))</pre></td></tr><tr><td class="docs"><h3>Static pages</h3>
+  (dorun (map (partial render :post res/posts) res/posts)))</pre></td></tr><tr><td class="docs"><h3>Static pages</h3>
 
 <p>Static pages are very much like blog posts, except they are not
 tagged, there is no previous or next page, and their URL is not
@@ -3416,7 +3415,7 @@ the filesystem.</p>
   (let [fn (str &quot;.&quot; (:url page))]
     (render-to-file all-posts page blog-page/blog-page fn)))</pre></td></tr><tr><td class="docs"><p>Then map through all of them, to render them all.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :pages [_]
-  (dorun (map (partial render :page blog-posts) blog-pages)))</pre></td></tr><tr><td class="docs"><h3>Atom feeds</h3>
+  (dorun (map (partial render :page res/posts) res/pages)))</pre></td></tr><tr><td class="docs"><h3>Atom feeds</h3>
 
 <p>Atom feeds are a bit different than the HTML representation, the
 feed has a well defined <a href="http://atomspec.org/">spec</a>. We're going to generate two
@@ -3429,7 +3428,8 @@ for the particular tag.</p>
 </td><td class="codes"></td></tr><tr><td class="docs"><p>The main feed will be saved into <code>blog/atom.xml</code>.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :main-feed [_]
   (io/write-out-dir &quot;blog/atom.xml&quot;
-                    (blog-feed/emit-atom (cfg/atom-feed :title) &quot;/blog/&quot; blog-posts)))</pre></td></tr><tr><td class="docs"><p>A single per-tag feed is saved into something like
+                    (blog-feed/emit-atom (cfg/atom-feed :title) &quot;/blog/&quot;
+                                         res/posts)))</pre></td></tr><tr><td class="docs"><p>A single per-tag feed is saved into something like
 <code>blog/tag/atom.xml</code>, similarly to how the per-tag archives were
 rendered.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tag-feed
@@ -3443,8 +3443,8 @@ rendered.</p>
                        tagged-posts))))</pre></td></tr><tr><td class="docs"><p>And as usual, since we can render a feed for a single tag, mapping
 through all the tags is all it takes to render them all.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tag-feeds [_]
-  (dorun (map #(render :tag-feed %1 (get blog-tag-grouped %1))
-              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="docs"><p>As with archives, we render atom feeds for each year, month and day
+  (dorun (map #(render :tag-feed %1 (get res/posts-tag-grouped %1))
+              (keys res/posts-tag-grouped))))</pre></td></tr><tr><td class="docs"><p>As with archives, we render atom feeds for each year, month and day
 a blog post was posted on, in a very similar manner the archives
 are rendered.</p>
 </td><td class="codes"></td></tr><tr><td class="docs">
@@ -3481,7 +3481,7 @@ are rendered.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn write-out-dir
   [file str]
   (let [fn (str/join &quot;/&quot; [(cfg/dirs :output) file])]
-    (println &quot;Writing &quot; fn &quot;...&quot;)
+    (println &quot;Writing&quot; fn &quot;...&quot;)
     (fs/mkdirs (fs/parent fn))
     (spit fn str :encoding &quot;UTF-8&quot;)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.utils" name="madness.utils"><h1 class="project-name">madness.utils</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Assorted utilities.</p>
 </td><td class="codes"><pre class="brush: clojure">(ns madness.utils
