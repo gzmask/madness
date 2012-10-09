@@ -1,0 +1,150 @@
+<article comments="1">
+  <title>syslog-ng, amqp and disk buffers</title>
+  <date>2012-10-09 18:00</date>
+  <tags>
+    <tag>Technology</tag>
+    <tag>syslog-ng</tag>
+  </tags>
+</article>
+
+<summary>
+  <p>
+    A <a href="/blog/2012/07/20/syslog-ng-and-disk-buffers/">few
+    months ago</a>, I wrote a piece
+    about <a href="http://www.balabit.com/network-security/syslog-ng">syslog-ng</a>
+    and disk buffers, wherein I
+    mentioned <a href="http://www.rabbitmq.com/">RabbitMQ</a>, and
+    sounded a gentle call for help. I do not know whether it was
+    that, or something else, but help arrived.
+  </p>
+</summary>
+
+<section>
+  <p>
+    A week or so ago, a new destination driver was submitted for
+    review: one that allows syslog-ng to publish messages to AMQP, in
+    a very straighforward and flexible way. While this is very
+    different to what I imagined and outlined in my earlier post, it
+    achieves almost the same thing.
+  </p>
+
+  <p>
+    I will not explain what and how the driver does in detail here,
+    that is for another post. Instead, I'll take a look at the
+    differences between the disk buffering the AMQP driver provides,
+    and the disk buffering available in the commercial edition of
+    syslog-ng.
+  </p>
+
+  <p>
+    Let's have a quick overview of some of the most important
+    properties first!
+  </p>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>syslog-ng PE</th>
+        <th>OSE + AMQP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Supported units</td>
+        <td>Supports all network destinations</td>
+        <td>Supports only the AMQP destination</td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan="3" style="text-align: center">Configurability</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th></th>
+        <td>Configurable from within <kbd>syslog-ng.conf</kbd></td>
+        <td>Separate, AMQP-side configuration</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Size</td>
+        <td>Maximum size configurable on a per-destination basis</td>
+        <td>Configuration only on the AMQP-side</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Memory / disk ratio</td>
+        <td>Can be configured via <code>mem-buf-size()</code>
+          and <code>disk-buf-size()</code></td>
+        <td><code>log-fifo-size()</code> and AMQP-side settings all
+          affect it</td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan="3" style="text-align: center">Reliability & storage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>When?</td>
+        <td>Stored on disk by syslog-ng, before it leaves through the
+          network.</td>
+        <td>Stored by the AMQP server, after it leaves through the
+          network.</td>
+      </tr>
+      <tr>
+        <td>Where?</td>
+        <td>Stored on the system running syslog-ng</td>
+        <td>Stored on the system running AMQP</td>
+      </tr>
+      <tr>
+        <td>How?</td>
+        <td>Care is taken to prevent message loss (especially
+          with <code>reliable(yes)</code> set)</td>
+        <td>Entirely up to the AMQP server implementation</td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan="3" style="text-align: center">Performance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Bottlenecks</td>
+        <td>Writing to a local disk is as fast as the disk itself</td>
+        <td>Messages have to go through a network socket, and then get
+          written to disk</td>
+      </tr>
+      <tr>
+        <td>Numbers!</td>
+        <td>I don't have solid numbers for PE's disk buffer speed,
+          unfortunately.</td>
+        <td>About 7000 messages / sec on my workstation, with the AMQP
+          server being the biggest bottleneck</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    As one can clearly see, while the AMQP driver does provide some
+    kind of disk buffering, that is not its strongest point - nor
+    should it be. For the purpose of disk buffering, syslog-ng PE wins
+    in pretty much every possible way: it's easier to configure, one
+    has more control over it, it performs much better.
+  </p>
+
+  <p>
+    In summary, the AMQP driver provides a much needed way to publish
+    structured messages, and allow very flexible consumer-side
+    configurations, where consumers can come and go, subscribe to
+    parts of the published stream, without having to change a single
+    bit on the publishing side. That is the big advantage of AMQP. The
+    fact that it can persist its queues to disk is a useful thing, but
+    does not in any way compete against syslog-ng PE's disk buffering
+    solution, which was <strong>built</strong> to provide stable,
+    reliable performance, and cater to the specific needs of disk
+    buffering.
+  </p>
+</section>
