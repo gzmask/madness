@@ -1,0 +1,7 @@
+#debian-link img {
+        background-color: #222;
+}
+
+#debian-link:hover img {
+        background-color: #888888;
+}
