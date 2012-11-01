@@ -32,16 +32,6 @@
   (second (first (re-seq (re-pattern (str ".*" (cfg/dirs :pages) "(.*)"))
                          path))))
 
-(defn- enabled?
-  "A very dumb little helper function, that merely checks if a value
-  is set or not - it's mostly here to make some of the code below
-  clearer."
-  [value]
-
-  (if (nil? value)
-    false
-    true))
-
 (defn read-page
   "Read a static page from a while, and restructure it into a
   representation that is easy to work with.
@@ -63,7 +53,9 @@
   (let [page (io/read-file file)]
     {:title (apply h/text (h/select page [:article :title])),
      :url (page-url (.getPath file))
-     :comments (-> (first (h/select page [:article])) :attrs :comments enabled?),
+     :comments (or
+                (-> (first (h/select page [:article])) :attrs :comments utils/enabled?)
+                (-> (h/text (first (h/select page [:article :comments]))) utils/enabled?)),
      :content (h/select page [:section])}))
 
 ;; ### Static page templates

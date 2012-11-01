@@ -42,18 +42,6 @@
   (str "/blog/" (time-format/unparse (time-format/formatter "yyyy/MM/dd") date)
        "/" (second (first (re-seq #"....-..-..-(.*)\.([^\.]*)$" fn))) "/"))
 
-(defn- enabled?
-  "A very dumb little helper function, that merely checks if a value
-  is set or not - it's mostly here to make some of the code below
-  clearer."
-  [value]
-
-  (if (or
-       (nil? value)
-       (= value ""))
-    false
-    true))
-
 (defn read-post
   "Read a blog post from a file, and restructure it into a
   representation that is easy to work with.
@@ -86,8 +74,8 @@
      :date date,
      :url (post-url date (.getName file))
      :comments (or
-                (-> (first (h/select post [:article])) :attrs :comments enabled?)
-                (-> (h/text (h/select post [:article :comments])) enabled?)),
+                (-> (first (h/select post [:article])) :attrs :comments utils/enabled?)
+                (-> (h/text (first (h/select post [:article :comments]))) utils/enabled?)),
      :content (h/select post [:section])}))
 
 ;; ### Blog post templates

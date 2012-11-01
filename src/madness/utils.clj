@@ -169,3 +169,15 @@
     (if (= "/" (first components))
       (s/join "/" (conj (vec (butlast (rest components))) fn))
       (s/join "/" (conj (vec (butlast components)) fn)))))
+
+(defn- enabled?
+  "A very dumb little helper function, that merely checks if a value
+  is set or not - it's mostly here to make some of the code below
+  clearer."
+  [value]
+
+  (if (or
+       (nil? value)
+       (= value ""))
+    false
+    true))
