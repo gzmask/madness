@@ -3,7 +3,6 @@ title: Debian repository
 comments: 1
 ---
 
-
 For some selected packages ([syslog-ng][sng] 3.3 & 3.4, and
 [Zorp GPL][zorp]), I provide up-to-date packages for a number of
 [Debian][debian] and [Ubuntu][ubuntu] releases - see the
@@ -69,3 +68,8 @@ pull in more build machines, and compile for other platforms aswell.
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="/assets/asylum/js/sources.list.js" type="text/javascript"></script>
+
+Note that selecting **both** *syslog-ng* and *syslog-ng-devel* makes
+little sense, as the packages in the latter replace the ones in the
+former. So unless you are really sure you want both - because, say you
+might wish to switch between the two -, choose only one.
