@@ -21,6 +21,7 @@
             [madness.utils :as utils]
             [madness.config :as cfg]
             [clojure.string :as str]
+            [madness.io :as io]
             [clj-time.format :as time-format]))
 
 ;; The date format used within blog files. Note that this is not the
@@ -39,7 +40,7 @@
   [date fn]
 
   (str "/blog/" (time-format/unparse (time-format/formatter "yyyy/MM/dd") date)
-       "/" (second (first (re-seq #"....-..-..-(.*).html" fn))) "/"))
+       "/" (second (first (re-seq #"....-..-..-(.*)\.([^\.]*)$" fn))) "/"))
 
 (defn- enabled?
   "A very dumb little helper function, that merely checks if a value
@@ -47,7 +48,9 @@
   clearer."
   [value]
 
-  (if (nil? value)
+  (if (or
+       (nil? value)
+       (= value ""))
     false
     true))
 
@@ -75,14 +78,16 @@
 
   [file]
 
-  (let [post (h/html-resource file)
+  (let [post (io/read-file file)
         date (time-format/parse blog-date-format (apply h/text (h/select post [:article :date])))]
     {:title (apply h/text (h/select post [:article :title])),
      :tags (map h/text (h/select post [:article :tags :tag])),
      :summary (h/select post [:summary :> h/any-node]),
      :date date,
      :url (post-url date (.getName file))
-     :comments (-> (first (h/select post [:article])) :attrs :comments enabled?),
+     :comments (or
+                (-> (first (h/select post [:article])) :attrs :comments enabled?)
+                (-> (h/text (h/select post [:article :comments])) enabled?)),
      :content (h/select post [:section])}))
 
 ;; ### Blog post templates

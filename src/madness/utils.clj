@@ -6,9 +6,10 @@
     :license {:name "GNU General Public License - v3"
               :url "http://www.gnu.org/licenses/gpl.txt"}}
 
-  (:require [clojure.string :as str]
+  (:require [clojure.string :as s]
             [clj-time.format :as time-format]
-            [net.cgrand.enlive-html :as h]))
+            [net.cgrand.enlive-html :as h]
+            [fs.core :as fs]))
 
 ;; A &lt;hr> element that is only visible on desktop resolutions.
 (def hr-desktop [{:tag :hr :attrs {:class "visible-desktop"}}])
@@ -25,7 +26,7 @@
 
   [tag]
 
-  (str "/blog/tags/" (str/replace (str/lower-case tag) " " "-") "/"))
+  (str "/blog/tags/" (s/replace (s/lower-case tag) " " "-") "/"))
 
 (defn date-format
   "Format a date object into human-readable form."
@@ -158,3 +159,13 @@
    (h/set-attr :href url)
    (h/set-attr :title title)
    (h/content " " title)))
+
+(defn replace-extension
+  "Replace the extension of a file with another."
+  [fn ext]
+
+  (let [components (fs/split fn)
+        fn (str (fs/name (last components)) ext)]
+    (if (= "/" (first components))
+      (s/join "/" (conj (vec (butlast (rest components))) fn))
+      (s/join "/" (conj (vec (butlast components)) fn)))))

@@ -20,6 +20,7 @@
             [madness.blog.nav :as blog-nav]
             [madness.utils :as utils]
             [madness.config :as cfg]
+            [madness.io :as io]
             [clojure.string :as str]
             [clj-time.format :as time-format]))
 
@@ -59,7 +60,7 @@
   
   [file]
 
-  (let [page (h/html-resource file)]
+  (let [page (io/read-file file)]
     {:title (apply h/text (h/select page [:article :title])),
      :url (page-url (.getPath file))
      :comments (-> (first (h/select page [:article])) :attrs :comments enabled?),

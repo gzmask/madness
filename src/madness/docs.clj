@@ -13,7 +13,7 @@
   (:use [marginalia.core]))
 
 (def docs #^{:private true}
-  ["../madness", "core", "config", "render", "io", "utils", "blog",
+  ["../madness", "core", "config", "resources", "render", "io", "utils", "blog",
    "blog/nav", "blog/recent", "blog/post", "blog/page",
    "blog/archive", "blog/index", "blog/atom"])
 

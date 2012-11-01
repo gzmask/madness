@@ -14,14 +14,7 @@
   (:require [madness.blog.post :as blog-post]
             [madness.blog.page :as blog-page]
             [madness.config :as cfg]
-            [fs.core :as fs]))
-
-(defn list-files
-  "List all HTML files within a given directory. Returns an array."
-  
-  [dir]
-
-  (sort #(compare %2 %1) (fs/find-files dir #".*\.html$")))
+            [madness.io :as io]))
 
 (defn load-posts
   "Load all posts for the blog. Returns a sequence of processed blog
@@ -32,7 +25,7 @@
 
   []
 
-  (map blog-post/read-post (list-files (cfg/dirs :posts))))
+  (map blog-post/read-post (io/find-files (cfg/dirs :posts))))
 
 (defn load-pages
   "Load all pages for the blog. Returns a sequence of processed blog
@@ -43,4 +36,4 @@
   
   []
 
-  (map blog-page/read-page (list-files (cfg/dirs :pages))))
+  (map blog-page/read-page (io/find-files (cfg/dirs :pages))))
