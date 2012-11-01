@@ -3034,7 +3034,7 @@ net.brehaut.ClojureTools = (function (SH) {
 })(SyntaxHighlighter);
 </script><title>madness -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">madness</h1><h2 class="project-version">0.0.0-SNAPSHOT</h2><br /><p>Static site generator, based on <a href="https://github.com/cgrand/enlive/wiki">Enlive</a> and
   <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>.</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">enlive/enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.4.4</td></tr><tr><td class="dep-name">fs</td><td class="dotted"><hr /></td><td class="dep-version">1.3.2</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#madness">madness</a></li><li><a href="#madness.core">madness.core</a></li><li><a href="#madness.config">madness.config</a></li><li><a href="#madness.resources">madness.resources</a></li><li><a href="#madness.render">madness.render</a></li><li><a href="#madness.io">madness.io</a></li><li><a href="#madness.utils">madness.utils</a></li><li><a href="#madness.blog">madness.blog</a></li><li><a href="#madness.blog.nav">madness.blog.nav</a></li><li><a href="#madness.blog.recent">madness.blog.recent</a></li><li><a href="#madness.blog.post">madness.blog.post</a></li><li><a href="#madness.blog.page">madness.blog.page</a></li><li><a href="#madness.blog.archive">madness.blog.archive</a></li><li><a href="#madness.blog.index">madness.blog.index</a></li><li><a href="#madness.blog.atom">madness.blog.atom</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness" name="madness"><h1 class="project-name">madness</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Madness</h2>
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">enlive/enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.4.4</td></tr><tr><td class="dep-name">fs</td><td class="dotted"><hr /></td><td class="dep-version">1.3.2</td></tr><tr><td class="dep-name">clj-yaml</td><td class="dotted"><hr /></td><td class="dep-version">0.4.0</td></tr><tr><td class="dep-name">org.pegdown/pegdown</td><td class="dotted"><hr /></td><td class="dep-version">1.1.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#madness">madness</a></li><li><a href="#madness.core">madness.core</a></li><li><a href="#madness.config">madness.config</a></li><li><a href="#madness.resources">madness.resources</a></li><li><a href="#madness.render">madness.render</a></li><li><a href="#madness.io">madness.io</a></li><li><a href="#madness.utils">madness.utils</a></li><li><a href="#madness.blog">madness.blog</a></li><li><a href="#madness.blog.nav">madness.blog.nav</a></li><li><a href="#madness.blog.recent">madness.blog.recent</a></li><li><a href="#madness.blog.post">madness.blog.post</a></li><li><a href="#madness.blog.page">madness.blog.page</a></li><li><a href="#madness.blog.archive">madness.blog.archive</a></li><li><a href="#madness.blog.index">madness.blog.index</a></li><li><a href="#madness.blog.atom">madness.blog.atom</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness" name="madness"><h1 class="project-name">madness</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Madness</h2>
 
 <p>Madness is a static site generator tool, primarily aimed at
 generating a blog, but also supports static pages too. It was
@@ -3292,7 +3292,7 @@ span, we divide 12 by the number of columns, and round it.</p>
             [madness.resources :as res]))</pre></td></tr><tr><td class="docs"><p>Render a post or page to a file, using a custom render function.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn- render-to-file
   [all-posts current-post render-fn file]
-  (io/write-out-dir file
+  (io/write-out-dir (utils/replace-extension file &quot;.html&quot;)
                     (apply str (render-fn current-post all-posts))))</pre></td></tr><tr><td class="docs"><p>Render a part of the site to files.</p>
 
 <h3>Rendering</h3>
@@ -3491,7 +3491,15 @@ are rendered.</p>
               :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
   (:require [madness.config :as cfg]
             [clojure.string :as str]
-            [fs.core :as fs]))</pre></td></tr><tr><td class="docs"><p>Given a filename, write a string into it, creating the file and the
+            [net.cgrand.enlive-html :as h]
+            [fs.core :as fs]
+            [clj-yaml.core :as y])
+  (:import (java.io StringReader)
+           (org.pegdown PegDownProcessor)))</pre></td></tr><tr><td class="docs"><p>List all HTML and Markdown files within a given directory. Returns
+   an array of java.io.File objects.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn find-files
+  [dir]
+  (sort #(compare %2 %1) (fs/find-files dir #&quot;.*\.(html|md|markdown|mdwn)$&quot;)))</pre></td></tr><tr><td class="docs"><p>Given a filename, write a string into it, creating the file and the
   directories if needed. The destination directory can be overridden
   via the configuration mechanism.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn write-out-dir
@@ -3499,22 +3507,84 @@ are rendered.</p>
   (let [fn (str/join &quot;/&quot; [(cfg/dirs :output) file])]
     (println &quot;Writing&quot; fn &quot;...&quot;)
     (fs/mkdirs (fs/parent fn))
-    (spit fn str :encoding &quot;UTF-8&quot;)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.utils" name="madness.utils"><h1 class="project-name">madness.utils</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Assorted utilities.</p>
+    (spit fn str :encoding &quot;UTF-8&quot;)))</pre></td></tr><tr><td class="docs"><p>Given a file type (a file-name extension) and a file, transform it
+  into a format that can be fed to Enlive, and conforms to the
+  requirements set by the rendering engine.</p>
+</td><td class="codes"><pre class="brush: clojure">(defmulti preprocess-file
+  (fn [type file] type))</pre></td></tr><tr><td class="docs"><p>Split metadata (things between "---" lines at the top of the
+  file) out of the file contents.</p>
+
+<p>  Returns a vector containing the metadata and the rest of the content.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- split-metadata-and-content
+  [content]
+  (let [idx (.indexOf content &quot;---&quot; 4)]
+    [(.substring content 4 idx) (.substring content (+ 3 idx))]))</pre></td></tr><tr><td class="docs"><p>Split the short summary and the body of a post into two. The end of
+  the short summary must be marked with <!-- more -->.</p>
+
+<p>  Returns a vector containing the short summary and the main contents.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- split-summary-from-content
+  [content]
+  (let [idx (.indexOf content &quot;&lt;!-- more --&gt;&quot;)]
+    (if (= idx -1)
+      [&quot;&quot; content]
+      [(.substring content 0 idx) (.substring content (+ 13 idx))])))</pre></td></tr><tr><td class="docs"><p>Wrap a value within a HTML element.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- html-wrap
+  [e v]
+  (str &quot;&lt;&quot; e &quot;&gt;&quot; v &quot;&lt;/&quot; e &quot;&gt;&quot;))</pre></td></tr><tr><td class="docs"><p>Convert a key-value pairs data part into a HTML tag string. If the
+  key is :tags, then the value shall be a list of <tag>
+  elements. Otherwise the value is left as-is.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- v-&gt;html
+  [k, v]
+  (if (= k :tags)
+    (reduce (fn [h v] (str h (html-wrap &quot;tag&quot; v))) &quot;&quot; v)
+    v))</pre></td></tr><tr><td class="docs"><p>Convert YAML-format meta-data to HTML string.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- yaml-&gt;html-string
+  [metadata]
+  (let [meta (y/parse-string metadata)]
+    (reduce (fn [h [k v]]
+              (str h (html-wrap (name k) (v-&gt;html k v))))
+            &quot;&quot; meta)))</pre></td></tr><tr><td class="docs"><p>Processing markdown files has three steps:</p>
+
+<ul>
+<li>Split the metadata from the content, and parse the former as if it was YAML.</li>
+<li>Split the short summary from the main data</li>
+<li>Assemble these three into a HTML format that the processing engine expects.</li>
+</ul>
+</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file &quot;.md&quot; [_ file]
+  (let [[metadata content] (split-metadata-and-content (slurp file))
+        [summary content] (split-summary-from-content content)]
+    (StringReader. (str (html-wrap &quot;article&quot; (yaml-&gt;html-string metadata))
+                        (html-wrap &quot;summary&quot; (.markdownToHtml (PegDownProcessor.) summary))
+                        (html-wrap &quot;section&quot; (.markdownToHtml (PegDownProcessor.) content))))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file &quot;.mdwn&quot; [_ file]
+  (preprocess-file &quot;.md&quot; file))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file &quot;.markdown&quot; [_ file]
+  (preprocess-file &quot;.md&quot; file))</pre></td></tr><tr><td class="docs"><p>Anything that is not markdown, is let through as-is, and we'll
+assume it is HTML.</p>
+</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file :default [_ file]
+  file)</pre></td></tr><tr><td class="docs"><p>Load and process a file. Based on the extension, the file will
+  either be processed as raw HTML, or preprocessed as Markdown first.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn read-file
+  [file]
+  (let [content (preprocess-file (-&gt; file .getName fs/extension)
+                                 file)]
+    (h/html-resource content)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.utils" name="madness.utils"><h1 class="project-name">madness.utils</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Assorted utilities.</p>
 </td><td class="codes"><pre class="brush: clojure">(ns madness.utils
   ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
     :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
     :license {:name &quot;GNU General Public License - v3&quot;
               :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [clojure.string :as str]
+  (:require [clojure.string :as s]
             [clj-time.format :as time-format]
-            [net.cgrand.enlive-html :as h]))</pre></td></tr><tr><td class="docs"><p>A &lt;hr> element that is only visible on desktop resolutions.</p>
+            [net.cgrand.enlive-html :as h]
+            [fs.core :as fs]))</pre></td></tr><tr><td class="docs"><p>A &lt;hr> element that is only visible on desktop resolutions.</p>
 </td><td class="codes"><pre class="brush: clojure">(def hr-desktop [{:tag :hr :attrs {:class &quot;visible-desktop&quot;}}])</pre></td></tr><tr><td class="docs"><p>Return the list of unique tags, sorted alphabetically.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn tags
   [blog]
   (apply sorted-set (mapcat :tags blog)))</pre></td></tr><tr><td class="docs"><p>Given a tag, return a relative URL that points to it.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn tag-to-url
   [tag]
-  (str &quot;/blog/tags/&quot; (str/replace (str/lower-case tag) &quot; &quot; &quot;-&quot;) &quot;/&quot;))</pre></td></tr><tr><td class="docs"><p>Format a date object into human-readable form.</p>
+  (str &quot;/blog/tags/&quot; (s/replace (s/lower-case tag) &quot; &quot; &quot;-&quot;) &quot;/&quot;))</pre></td></tr><tr><td class="docs"><p>Format a date object into human-readable form.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn date-format
   [date]
   (time-format/unparse (time-format/formatter &quot;yyyy-MM-dd&quot;) date))</pre></td></tr><tr><td class="docs"><p>Determine whether a post is tagged with a given tag.</p>
@@ -3593,7 +3663,14 @@ are rendered.</p>
   (h/do-&gt;
    (h/set-attr :href url)
    (h/set-attr :title title)
-   (h/content &quot; &quot; title)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog" name="madness.blog"><h1 class="project-name">madness.blog</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Load blog posts & pages</h2>
+   (h/content &quot; &quot; title)))</pre></td></tr><tr><td class="docs"><p>Replace the extension of a file with another.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn replace-extension
+  [fn ext]
+  (let [components (fs/split fn)
+        fn (str (fs/name (last components)) ext)]
+    (if (= &quot;/&quot; (first components))
+      (s/join &quot;/&quot; (conj (vec (butlast (rest components))) fn))
+      (s/join &quot;/&quot; (conj (vec (butlast components)) fn)))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog" name="madness.blog"><h1 class="project-name">madness.blog</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Load blog posts & pages</h2>
 
 <p>  To build a whole site, madness will first load all the posts and
   pages, and turn them into data structures that are easy to work
@@ -3607,20 +3684,17 @@ are rendered.</p>
   (:require [madness.blog.post :as blog-post]
             [madness.blog.page :as blog-page]
             [madness.config :as cfg]
-            [fs.core :as fs]))</pre></td></tr><tr><td class="docs"><p>List all HTML files within a given directory. Returns an array.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn list-files
-  [dir]
-  (sort #(compare %2 %1) (fs/find-files dir #&quot;.*\.html$&quot;)))</pre></td></tr><tr><td class="docs"><p>Load all posts for the blog. Returns a sequence of processed blog
+            [madness.io :as io]))</pre></td></tr><tr><td class="docs"><p>Load all posts for the blog. Returns a sequence of processed blog
   posts. See the <a href="#madness.blog.post">blog.post</a> namespace for more information about
   how a processed post looks like.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn load-posts
   []
-  (map blog-post/read-post (list-files (cfg/dirs :posts))))</pre></td></tr><tr><td class="docs"><p>Load all pages for the blog. Returns a sequence of processed blog
+  (map blog-post/read-post (io/find-files (cfg/dirs :posts))))</pre></td></tr><tr><td class="docs"><p>Load all pages for the blog. Returns a sequence of processed blog
   pages. See the <a href="#madness.blog.page">blog.page</a> namespace for more information about
   how a processed page looks like.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn load-pages
   []
-  (map blog-page/read-page (list-files (cfg/dirs :pages))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.nav" name="madness.blog.nav"><h1 class="project-name">madness.blog.nav</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Building blocks for navigation</h2>
+  (map blog-page/read-page (io/find-files (cfg/dirs :pages))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.nav" name="madness.blog.nav"><h1 class="project-name">madness.blog.nav</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Building blocks for navigation</h2>
 
 <p>  All HTML pages of the generated site will contain some common
   navigation items: a sidebar with recent items, and the list of all
@@ -3774,6 +3848,7 @@ non-desktop resolutions too.</p>
             [madness.utils :as utils]
             [madness.config :as cfg]
             [clojure.string :as str]
+            [madness.io :as io]
             [clj-time.format :as time-format]))</pre></td></tr><tr><td class="docs"><p>The date format used within blog files. Note that this is not the
 format we render dates as, but the format we expect them to be
 within blog posts!</p>
@@ -3786,12 +3861,14 @@ within blog posts!</p>
 </td><td class="codes"><pre class="brush: clojure">(defn- post-url
   [date fn]
   (str &quot;/blog/&quot; (time-format/unparse (time-format/formatter &quot;yyyy/MM/dd&quot;) date)
-       &quot;/&quot; (second (first (re-seq #&quot;....-..-..-(.*).html&quot; fn))) &quot;/&quot;))</pre></td></tr><tr><td class="docs"><p>A very dumb little helper function, that merely checks if a value
+       &quot;/&quot; (second (first (re-seq #&quot;....-..-..-(.*)\.([^\.]*)$&quot; fn))) &quot;/&quot;))</pre></td></tr><tr><td class="docs"><p>A very dumb little helper function, that merely checks if a value
   is set or not - it's mostly here to make some of the code below
   clearer.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn- enabled?
   [value]
-  (if (nil? value)
+  (if (or
+       (nil? value)
+       (= value &quot;&quot;))
     false
     true))</pre></td></tr><tr><td class="docs"><p>Read a blog post from a file, and restructure it into a
   representation that is easy to work with.</p>
@@ -3815,14 +3892,16 @@ within blog posts!</p>
   glancing over the code here.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn read-post
   [file]
-  (let [post (h/html-resource file)
+  (let [post (io/read-file file)
         date (time-format/parse blog-date-format (apply h/text (h/select post [:article :date])))]
     {:title (apply h/text (h/select post [:article :title])),
      :tags (map h/text (h/select post [:article :tags :tag])),
      :summary (h/select post [:summary :&gt; h/any-node]),
      :date date,
      :url (post-url date (.getName file))
-     :comments (-&gt; (first (h/select post [:article])) :attrs :comments enabled?),
+     :comments (or
+                (-&gt; (first (h/select post [:article])) :attrs :comments enabled?)
+                (-&gt; (h/text (h/select post [:article :comments])) enabled?)),
      :content (h/select post [:section])}))</pre></td></tr><tr><td class="docs"><h3>Blog post templates</h3>
 
 <p>Blog posts are almost entirely contained within a <code>hero-unit</code>
@@ -3933,6 +4012,7 @@ least, fill out the sidebar, using the tools provided by
             [madness.blog.nav :as blog-nav]
             [madness.utils :as utils]
             [madness.config :as cfg]
+            [madness.io :as io]
             [clojure.string :as str]
             [clj-time.format :as time-format]))</pre></td></tr><tr><td class="docs"><p>Given a file path, strips the pages directory, and returns the
   result, which will be used as the URL for a given page.</p>
@@ -3962,7 +4042,7 @@ least, fill out the sidebar, using the tools provided by
   glancing over the code here.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn read-page
   [file]
-  (let [page (h/html-resource file)]
+  (let [page (io/read-file file)]
     {:title (apply h/text (h/select page [:article :title])),
      :url (page-url (.getPath file))
      :comments (-&gt; (first (h/select page [:article])) :attrs :comments enabled?),
