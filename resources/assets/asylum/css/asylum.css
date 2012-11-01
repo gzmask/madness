@@ -5,3 +5,7 @@
 #debian-link:hover img {
         background-color: #888888;
 }
+
+#dist-select select {
+        color: #000;
+}
