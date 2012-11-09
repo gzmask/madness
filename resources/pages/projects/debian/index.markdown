@@ -61,10 +61,10 @@ pull in more build machines, and compile for other platforms aswell.
  </fieldset>
 </form>
 
-    deb       https://packages.madhouse-project.org/debian   wheezy   syslog-ng zorp
-    deb-src   https://packages.madhouse-project.org/debian   wheezy   syslog-ng zorp
+    deb       http://packages.madhouse-project.org/debian   wheezy   syslog-ng zorp
+    deb-src   http://packages.madhouse-project.org/debian   wheezy   syslog-ng zorp
     
-    deb       https://packages.madhouse-project.org/zorp-kernel   kernel   2.6
+    deb       http://packages.madhouse-project.org/zorp-kernel   kernel   2.6
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="/assets/asylum/js/sources.list.js" type="text/javascript"></script>
