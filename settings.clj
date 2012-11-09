@@ -3,5 +3,5 @@
  :recent-posts {:columns 3
                 :rows 2}
  :archive-posts {:columns 3}
- :atom {:base-url "http://asylum.madhouse-project.org"
+ :atom {:base-url "https://asylum.madhouse-project.org"
         :title "Asylum Archives"}}
