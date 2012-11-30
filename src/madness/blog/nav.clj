@@ -10,8 +10,8 @@
 
   ^{:author "Gergely Nagy <algernon@madhouse-project.org>"
     :copyright "Copyright (C) 2012 Gergely Nagy <algernon@madhouse-project.org>"
-    :license {:name "GNU General Public License - v3"
-              :url "http://www.gnu.org/licenses/gpl.txt"}}
+    :license {:name "Creative Commons Attribution-ShareAlike 3.0"
+              :url "http://creativecommons.org/licenses/by-sa/3.0/"}}
   
   (:require [net.cgrand.enlive-html :as h]
             [madness.config :as cfg]
