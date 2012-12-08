@@ -11,7 +11,7 @@ has not been in vain, for I have learned a lot during this
 time. Today, being in a foul mood, I sat down to work on the library
 to cheer myself up.
 
- [1]: //asylum.madhouse-project.org/blog/2012/04/30/logstore-reader/
+ [1]: /blog/2012/04/30/logstore-reader/
 
 <!-- more -->
 
