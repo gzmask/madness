@@ -74,7 +74,7 @@
     following:
   </p>
 
-  <pre class="prettyprint lang-clj">{:request {:request-method "GET",
+  <div class="pygmentize" data-language="clojure">{:request {:request-method "GET",
            :remote-ip "127.0.0.1",
            :uri "/api/stuff/",
            :accept ["application/json"],
@@ -85,7 +85,7 @@
                                   :path "/",
                                   :domain "example.org"}}
            :id "1234",
-           :timestamp "2012-09-04T11:52:00.0000+00:00Z"}}</pre>
+           :timestamp "2012-09-04T11:52:00.0000+00:00Z"}}</div>
 
   <p>
     Once this arrives to my own handler function, that will add its
@@ -98,14 +98,14 @@
     the state above:
   </p>
 
-  <pre class="prettyprint lang-clj">{:my-application {:stuff {:action "list",
+  <div class="pygmentize" data-language="clojure">{:my-application {:stuff {:action "list",
                           :items 6},
                   :instance "node-1",
                   :timestamp "2012-09-04T11:52:00.0008+00:00Z"},
  :response {:status 200,
             :content-type "application/json",
             :content-length 500,
-            :timestamp "2012-09-04T11:52:00.0010+00:00Z"}}</pre>
+            :timestamp "2012-09-04T11:52:00.0010+00:00Z"}}</div>
 
   <p>
     If I simply take this state, and store it, I can immediately
@@ -183,7 +183,7 @@
         and I want to dump the state there.
       </p>
 
-      <pre class="prettyprint lang-clj">(add-hook #'api/list #'log/dump-state)</pre>
+      <div class="pygmentize" data-language="clojure">(add-hook #'api/list #'log/dump-state)</div>
 
       <p>
         And that's about it. I can just fire up a REPL, and

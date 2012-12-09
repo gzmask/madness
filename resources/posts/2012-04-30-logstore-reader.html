@@ -61,7 +61,7 @@
     contents of a LogStore as easy as this:
   </p>
 
-  <pre class="prettyprint lang-clj">(ns logcat
+  <div class="pygmentize" data-language="clojure">(ns logcat
   (:require [balabit.logstore :as logstore]))
 
 (defun- lgs-print-msgs [record-index]
@@ -72,7 +72,7 @@
 (logstore/with-file "/path/to/messages.store"
   (let [indexed-records (zipmap (range (count (logstore/records))) (logstore/records))
         chunk-records (keys (filter #(= :chunk (type (val %))) indexed-records))]
-    (dorun (map lgs-print-msgs chunk-records))))</pre>
+    (dorun (map lgs-print-msgs chunk-records))))</div>
 
   <p>
     This should work for all LogStores, even if they're compressed and
@@ -93,7 +93,7 @@
     code like this:
   </p>
 
-  <pre class="prettyprint lang-clj">(defn- chunk-decode
+  <div class="pygmentize" data-language="clojure">(defn- chunk-decode
   "Does everything neccessary to turn the raw message data into
   something more comprehensible, something easier to work with.
 
@@ -101,7 +101,7 @@
   [header msgcnt data data-size]
   ((comp (partial chunk-data-deserialize header)
          (partial chunk-decompress header data-size))
-   data))</pre>
+   data))</div>
 
   <p>
     Depending on the chunk flags, a chunk can be either compressed or

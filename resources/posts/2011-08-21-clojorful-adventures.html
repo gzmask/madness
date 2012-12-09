@@ -25,7 +25,7 @@
     For reference, here's how the original Clojure function looked like:
   </p>
 
-  <pre class="prettyprint lang-clj">(defn trim-at-boundary [string max-len]
+  <div class="pygmentize" data-language="clojure">(defn trim-at-boundary [string max-len]
   (if (&lt; (.length string) max-len)
     string
     (str (s/take
@@ -33,14 +33,14 @@
                      (str %1 " " %2) %1)
                   (s/split string #"\s"))
           (- max-len 3))
-         " ...")))</pre>
+         " ...")))</div>
 
   <p>
     Do notice the subtle bug in the reduce function:
   </p>
 
-  <pre class="prettyprint lang-clj">(if (&lt; (+ (.length %1) (.length %2) 1) (- max-len 3))
-       (str %1 " " %2) %1)</pre>
+  <div class="pygmentize" data-language="clojure">(if (&lt; (+ (.length %1) (.length %2) 1) (- max-len 3))
+       (str %1 " " %2) %1)</div>
 
   <p>
     The intention was to stop reducing when our result would overflow,
@@ -66,7 +66,7 @@
     In the end, the result looks like this:
   </p>
 
-  <pre class="prettyprint lang-clj">(defn trim-at-boundary
+  <div class="pygmentize" data-language="clojure">(defn trim-at-boundary
   [string max-len]
   (if (&lt; (.length string) max-len)
     string
@@ -80,7 +80,7 @@
                          (list (str a " " b) false)))
                     (list (first words) false) (rest words)))
             stop-len)
-           "..."))))</pre>
+           "..."))))</div>
 
   <p>
     The major change is the reduction function: it first destructures

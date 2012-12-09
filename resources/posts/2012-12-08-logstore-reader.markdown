@@ -52,10 +52,10 @@ random record, and a random message within it too (and it can fail
 too, if the random record does not happen to be a chunk!). So how does
 the same look with the new API?
 
-<pre class="prettyprint lang-clj">(defn random-message-printer
+<div class="pygmentize" data-language="clojure">(defn random-message-printer
   ([] (random-message-printer "logstores/loggen.compressed.store"))
   ([filename]
-     (rand-nth (logstore/messages (logstore/from-file filename)))))</pre>
+     (rand-nth (logstore/messages (logstore/from-file filename)))))</div>
 
  [4]: https://github.com/algernon/balabit.logstore/blob/master/src/balabit/logstore/examples.clj#L54-L72
 

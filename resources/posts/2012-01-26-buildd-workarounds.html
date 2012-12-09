@@ -85,7 +85,7 @@
     the rules file could look like:
   </p>
 
-  <pre class="prettyprint lang-make">build: ;
+  <div class="pygmentize" data-language="make">build: ;
 build-arch:
 	# Do stuff to build arch-dependent stuff here
 build-indep:
@@ -96,7 +96,7 @@ binary-indep: build-indep
 	# ...
 binary: binary-arch binary-indep
 
-.PHONY: build build-arch build-indep binary-arch binary-indep binary</pre>
+.PHONY: build build-arch build-indep binary-arch binary-indep binary</div>
 
   <p>
     With <strong>dh</strong> short form, this looks a bit different,
@@ -118,7 +118,7 @@ binary: binary-arch binary-indep
     This will result in a rules file that could look like this:
   </p>
 
-  <pre class="prettyprint lang-make">build: ;
+  <div class="pygmentize" data-language="make">build: ;
 
 override_dh_auto_configure-arch:
 	dh_auto_configure -- --my-special-param
@@ -134,7 +134,7 @@ override_dh_auto_build-indep:
 	# running doxygen.
 
 %:
-	dh $@</pre>
+	dh $@</div>
 
   <p>
     And that's about it! We now have a package that won't build
