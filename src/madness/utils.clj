@@ -9,7 +9,8 @@
   (:require [clojure.string :as s]
             [clj-time.format :as time-format]
             [net.cgrand.enlive-html :as h]
-            [fs.core :as fs]))
+            [fs.core :as fs]
+            [conch.sh :refer [let-programs]]))
 
 ;; A &lt;hr> element that is only visible on desktop resolutions.
 (def hr-desktop [{:tag :hr :attrs {:class "visible-desktop"}}])
@@ -181,3 +182,20 @@
        (= value ""))
     false
     true))
+
+(defn pygmentize
+  "Syntax highlight some code."
+  [language text]
+  (let-programs [pygmentize "/usr/bin/pygmentize"]
+                (pygmentize "-fhtml" (str "-l" language)
+                            (str "-Ostripnl=False,encoding=utf-8")
+                            {:in text})))
+
+(defn pygmentize-node
+  "Syntax highlight a node. The node must have the language in the
+  data-language attribute."
+  [node]
+
+  (let [language (-> node :attrs :data-language)
+        new-content (pygmentize language (:content node))]
+    ((h/html-content new-content) node)))

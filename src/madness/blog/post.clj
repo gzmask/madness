@@ -187,6 +187,7 @@
                             (:content post)
                             (blog-post-footer post)
                             (blog-post-disqus post)))
+  [:.pygmentize] utils/pygmentize-node
   [:#post-neighbours] (h/substitute (blog-post-neighbours (utils/neighbours all-posts post)))
   [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
   [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))

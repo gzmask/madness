@@ -14,7 +14,8 @@
                  [clj-time "0.4.4" :exclusions [org.clojure/clojure]]
                  [fs "1.3.2"]
                  [clj-yaml "0.4.0"]
-                 [org.pegdown/pegdown "1.1.0"]]
+                 [org.pegdown/pegdown "1.1.0"]
+                 [me.raynes/conch "0.4.0"]]
   :profiles {:dev {:dependencies [[marginalia "0.7.0"]]}}
   :aliases {"build-docs" ["with-profile" "dev" "run" "-m" "madness.docs/generate-docs"]
             "madness" ["run" "-m" "madness.core"]})

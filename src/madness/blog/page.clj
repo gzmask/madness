@@ -101,5 +101,6 @@
                  (h/content (blog-page-title (:title page))
                             (:content page)
                             (blog-page-disqus page)))
+  [:.pygmentize] utils/pygmentize-node
   [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
   [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))
