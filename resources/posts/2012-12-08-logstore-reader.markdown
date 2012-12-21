@@ -57,7 +57,7 @@ the same look with the new API?
   ([filename]
      (rand-nth (logstore/messages (logstore/from-file filename)))))</div>
 
- [4]: https://github.com/algernon/balabit.logstore/blob/master/src/balabit/logstore/examples.clj#L54-L72
+ [4]: https://github.com/algernon/balabit.logstore/blob/22d078d5dfbb8e12ebd694e651daced105d8da1d/src/balabit/logstore/examples.clj#L54-L72
 
 Much more readable, far less low-level hackery is needed, and it is
 also more idiomatic.
