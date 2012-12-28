@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8" content="text/html" http-equiv="Content-Type" /><meta content="Static site generator, based on [Enlive][1] and
-  [Bootstrap][2].
-
-  [1]: https://github.com/cgrand/enlive/wiki
-  [2]: http://twitter.github.com/bootstrap/" name="description" /><style type="text/css">/**
+<html><head><meta charset="utf-8" content="text/html" http-equiv="Content-Type" /><meta content="Static site generator, based on Enlive." name="description" /><style type="text/css">/**
  * SyntaxHighlighter
  * http://alexgorbatchev.com/SyntaxHighlighter
  *
@@ -3032,145 +3028,337 @@ net.brehaut.ClojureTools = (function (SH) {
     build_tree: build_tree
   };
 })(SyntaxHighlighter);
-</script><title>madness -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">madness</h1><h2 class="project-version">0.0.0-SNAPSHOT</h2><br /><p>Static site generator, based on <a href="https://github.com/cgrand/enlive/wiki">Enlive</a> and
-  <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>.</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">enlive/enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.0.1</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.4.4</td></tr><tr><td class="dep-name">fs</td><td class="dotted"><hr /></td><td class="dep-version">1.3.2</td></tr><tr><td class="dep-name">clj-yaml</td><td class="dotted"><hr /></td><td class="dep-version">0.4.0</td></tr><tr><td class="dep-name">org.pegdown/pegdown</td><td class="dotted"><hr /></td><td class="dep-version">1.1.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#madness">madness</a></li><li><a href="#madness.core">madness.core</a></li><li><a href="#madness.config">madness.config</a></li><li><a href="#madness.resources">madness.resources</a></li><li><a href="#madness.render">madness.render</a></li><li><a href="#madness.io">madness.io</a></li><li><a href="#madness.utils">madness.utils</a></li><li><a href="#madness.blog">madness.blog</a></li><li><a href="#madness.blog.nav">madness.blog.nav</a></li><li><a href="#madness.blog.recent">madness.blog.recent</a></li><li><a href="#madness.blog.post">madness.blog.post</a></li><li><a href="#madness.blog.page">madness.blog.page</a></li><li><a href="#madness.blog.archive">madness.blog.archive</a></li><li><a href="#madness.blog.index">madness.blog.index</a></li><li><a href="#madness.blog.atom">madness.blog.atom</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness" name="madness"><h1 class="project-name">madness</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Madness</h2>
-
-<p>Madness is a static site generator tool, primarily aimed at
-generating a blog, but also supports static pages too. It was
-primarily built to support my own needs when I rebuilt
-<a href="http://asylum.madhouse-project.org/">my own site</a>, but perhaps it may prove useful for others
-aswell.</p>
-
-<p>Source is available on <a href="https://github.com/algernon/madness">github</a>, and this documentation is also
-available <a href="http://algernon.github.com/madness/">online</a>.</p>
-
-<p>The source code is licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>, the design &amp;
-posts on the <code>asylum</code> branch are under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a> license.</p>
-
-<h3>Requirements</h3>
-
-<p>I only had a few simple requirements when I looked for a static
-site generator:</p>
-
-<ul>
-<li><p><strong>Simple</strong> updating: I do not want a complicated process, one
-that involves copying one directory over another. If I want to
-upgrade from one version of the generator tool to the other, all
-I want to do, is merge, and resolve conflicts. Perhaps update my
-templates, but that's about it.</p>
-
-<p>I have a version control system for a reason, layering over that
-is counter productive.</p></li>
-<li><p>For similar reasons, I absolutely hate when templates are split
-into many many small files. I prefer them in one, as long as that
-makes sense.</p>
-
-<p>Since I do not need neither plugins, nor anything fancy like
-that, this works very well.</p></li>
-<li><p>The templates must not contain any code, at all. They're plain
-HTML mocks, at most with ids or classes added so that the
-generator can easily recognise parts of the template. But no code
-ever, should be allowed in a template. This rules out pretty much
-every templating language out there.</p>
-
-<p>Thankfully, with Enlive, this goal could be easily achieved.</p></li>
-<li><p>The engine must also support per-tag feeds, because if and when I
-decide to start publishing to a planet, it makes sense to only
-publish those parts of my blog, that are relevant for that
-particular planet.</p></li>
-</ul>
-
-<h3>Features</h3>
-
-<p>I found no static site generator that supported all of the above,
-and came with a reasonable theme aswell, so I ended up writing my
-own engine, and my own theme, and ended up with the following
-features:</p>
-
-<ul>
-<li><p>Easy to update: I work on two branches, <code>master</code> and
-<code>asylum</code>. The former has no templates, no posts, no pages, just
-the code. The latter is all about the templates, posts, pages,
-and has no extra code.</p>
-
-<p>Therefore, merging between them is easy. If there'd be any
-outside contributions, either to the theme, or the code, those
-would be straightforward to handle too.</p></li>
-<li><p>Single template for a single output format. I have no plugins to
-support, no need to include bits and pieces from other files. I
-can afford to have a single template, that I can preview in a
-browser as-is, and immediately do changes there.</p></li>
-<li><p>The templates are pure data, there is no code in them. Every bit
-of logic is within the code itself, the templates are pure.</p></li>
-<li><p>The engine supports per-tag archives and per-tag feeds,
-implementing date-based archives or feeds wouldn't be hard,
-either.</p></li>
-<li><p>It is written in a sane language, one that I feel comfortable
-with, one I can understand months later, even if I didn't write
-neither tests nor documentation originally (I really should have
-done both, though, out of principle if nothing else).</p></li>
-</ul>
-
-<h3>The templates</h3>
-
-<p>While the main <code>master</code> branch does not have any default template,
-the <code>asylum</code> branch does: one built upon Twitter's Bootstrap, in
-such a way that it displays well on any display ranging from
-smartphones to huge desktops.</p>
-
-<p>At least, that was the plan, and that's how it works on everything
-I tested it with so far.</p>
-
-<p>It's responsive, straightforward, and quite simple too, as far as I
-can tell. It also degrades well even down to text-mode browsers.</p>
-</td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(ns madness)</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.core" name="madness.core"><h1 class="project-name">madness.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Entry point into madness, usage:</p>
-
-<pre><code>$ lein run -m madness.core
-$ lein run -m madness.core :index :archive
-</code></pre>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.core
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [madness.render :as render]))</pre></td></tr><tr><td class="docs"><p>Takes a string, strips the first char (assumed to be <code>:</code>), and
-  returns a keyword.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- str-&gt;keyword
-  [s]
-  (keyword (apply str (rest s))))</pre></td></tr><tr><td class="docs"><p>The main entry point of Madness: when called without arguments,
-  generates everything. If called with a list of (string) keywords,
-  only generates the given parts of the blog.</p>
-
-<p>  The following keywords are understood:</p>
-
-<ul>
-<li><code>:index</code>: The main index page of the blog.</li>
-<li><code>:archive</code>: The main archive page of the blog.</li>
-<li><code>:tags</code>: All of the per-tag archives of the blog.</li>
-<li><code>:date-archives</code>: Yearly, monthly &amp; daily archives of the blog.</li>
-<li><code>:posts</code>: All of the posts that belong to the blog.</li>
-<li><code>:pages</code>: All of the pages that accompany the blog.</li>
-<li><code>:main-feed</code>: The main Atom feed.</li>
-<li><code>:tag-feeds</code>: The per-tag Atom feeds.</li>
-<li><code>:date-feeds</code>: Yearly, monthly &amp; daily atom feeds.</li>
-</ul>
-</td><td class="codes"><pre class="brush: clojure">(defn -main
-  ([] (-main &quot;:index&quot; &quot;:archive&quot; &quot;:tags&quot; &quot;:date-archives&quot; &quot;:posts&quot;
-             &quot;:main-feed&quot; &quot;:pages&quot; &quot;:tag-feeds&quot; &quot;:date-feeds&quot;))
-  ([&amp; args] (dorun (map render/render (map str-&gt;keyword args)))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.config" name="madness.config"><h1 class="project-name">madness.config</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Configuration handling for Madness.</h2>
-
-<p>  Madness can be configured by placing a file called <code>settings.clj</code> in
-  the root directory. Settings therein will override the defaults when
-  the file gets evaluated.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.config
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  ; Dummy :use, so that the meta-data above gets parsed correctly.
-  (:use [clojure.core]))</pre></td></tr><tr><td class="docs"><p>The default configuration values, settings in <code>settings.clj</code>
+</script><title>madness -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">madness</h1><h2 class="project-version">0.0.0-SNAPSHOT</h2><br /><p>Static site generator, based on Enlive.</p>
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.3.0</td></tr><tr><td class="dep-name">enlive/enlive</td><td class="dotted"><hr /></td><td class="dep-version">1.0.0</td></tr><tr><td class="dep-name">clj-time</td><td class="dotted"><hr /></td><td class="dep-version">0.4.3</td></tr><tr><td class="dep-name">org.clojars.amit/commons-io</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">marginalia</td><td class="dotted"><hr /></td><td class="dep-version">0.7.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#madness.blog">madness.blog</a></li><li><a href="#madness.blog.archive">madness.blog.archive</a></li><li><a href="#madness.blog.atom">madness.blog.atom</a></li><li><a href="#madness.blog.index">madness.blog.index</a></li><li><a href="#madness.blog.nav">madness.blog.nav</a></li><li><a href="#madness.blog.page">madness.blog.page</a></li><li><a href="#madness.blog.post">madness.blog.post</a></li><li><a href="#madness.blog.recent">madness.blog.recent</a></li><li><a href="#madness.config">madness.config</a></li><li><a href="#madness.core">madness.core</a></li><li><a href="#madness.io">madness.io</a></li><li><a href="#madness.render">madness.render</a></li><li><a href="#madness.utils">madness.utils</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog" name="madness.blog"><h1 class="project-name">madness.blog</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Post &amp; page loading functions.</p>
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog
+  (:require [madness.blog.post :as blog-post]
+            [madness.blog.page :as blog-page]
+            [madness.config :as cfg])
+  (:import (java.io File)
+           (org.apache.commons.io FileUtils FilenameUtils)))</pre></td></tr><tr><td class="docs"><p>List all HTML files within a given directory. Returns an array.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn list-files
+  [dir]
+  (let [d (File. dir)]
+    (if (.isDirectory d)
+      (sort #(compare %2 %1)
+       (FileUtils/listFiles d (into-array [&quot;html&quot;]) true)) [] )))</pre></td></tr><tr><td class="docs"><p>Load all posts for the blog. Returns a sequence of processed
+  blog posts.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn load-posts
+  []
+  (map blog-post/read-post (list-files (cfg/dirs :posts))))</pre></td></tr><tr><td class="docs"><p>Load all pages for the blog. Returns a sequence of processed blog
+  pages.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn load-pages
+  []
+  (map blog-page/read-page (list-files (cfg/dirs :pages))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.archive" name="madness.blog.archive"><h1 class="project-name">madness.blog.archive</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Blog archive templates &amp; snippets.</p>
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.archive
+  (:require [net.cgrand.enlive-html :as h]
+            [madness.blog.post :as blog-post]
+            [madness.blog :as blog]
+            [madness.blog.nav :as blog-nav]
+            [madness.utils :as utils]
+            [madness.config :as cfg]
+            [madness.blog.recent :as blog-recent]
+            [clojure.string :as str]))</pre></td></tr><tr><td class="docs"><p>Blah blah</p>
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet archive-post-item (cfg/template) [:.recent-post]
+  [post]
+  [:.recent-post] (h/remove-class &quot;recent-post&quot;)
+  [:h2] (h/add-class &quot;archived&quot;)
+  [:h2 :a] (utils/rewrite-link-with-title
+             (:url post) (:title post))
+  [:.post-footer] nil
+  [:p.summary] nil)</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet archive-post-row (cfg/template) [:#recents]
+  [posts]
+  [:#recents] (h/remove-attr :id)
+  [:#recent-posts :.recent-post]
+    (h/clone-for [p posts]
+                 (h/do-&gt;
+                  (h/substitute (archive-post-item p))
+                  (h/set-attr :class (str &quot;span&quot; (cfg/archive-posts :span)))))
+  [:#recent-posts] (h/do-&gt;
+                    (h/remove-attr :id)
+                    (h/remove-class &quot;visible-desktop&quot;)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-archive (cfg/template)
+  [title blog-posts all-posts]
+  [:.hero-unit :h1] (h/do-&gt;
+                     (h/content title)
+                     (h/set-attr :title title))
+  [:.hero-unit :p] nil
+  [:#hero-full] nil
+  [:#full-article-footer] nil
+  [:#post-neighbours] nil
+  [:#disqus] nil
+  [:#recents] (h/clone-for [recent (utils/blog-&gt;table
+                                    (cfg/recent-posts :columns)
+                                    (cfg/recent-posts :rows) blog-posts)]
+                           (h/do-&gt;
+                            (h/substitute (blog-recent/recent-post-row recent true))
+                            (h/before [{:tag :hr}])))
+  [:#archive] (h/clone-for [archive (utils/blog-&gt;table
+                                     (cfg/archive-posts :columns)
+                                     (cfg/archive-posts :rows)
+                                     (drop (dec (cfg/recent-posts :total)) blog-posts))]
+                           (h/do-&gt;
+                            (h/substitute (archive-post-row archive))
+                            (h/before utils/hr-desktop)))
+  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
+  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.atom" name="madness.blog.atom"><h1 class="project-name">madness.blog.atom</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.atom
+  (:require [clj-time.format :as time-format]
+            [clj-time.local :as time-local]
+            [net.cgrand.enlive-html :as h]
+            [clojure.string :as str]
+            [madness.config :as cfg]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def atom-date-formatter (time-format/formatter &quot;yyyy-MM-dd'T'HH:mm:ssZZ&quot;))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/deftemplate bare-post (cfg/template :empty)
+  [post]
+  [:html] (h/substitute (:summary post) (:content post)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn local-href-expand
+  [feed]
+  (str/replace feed #&quot;href=\&quot;(/[^\&quot;]*)\
+               (str &quot;href=\ (cfg/atom-feed :base-url) &quot;$1\)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet atom-post (cfg/template :atom) [:entry]
+  [site-base post]
+  [:title] (h/content (:title post))
+  [:link] (h/set-attr :href (str site-base (:url post)))
+  [:updated] (h/content (time-format/unparse
+                         atom-date-formatter (time-local/to-local-date-time (:date post))))
+  [:id] (h/content (str site-base (:url post)))
+  [:content] (h/content (apply str (bare-post post))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/deftemplate atom-feed (cfg/template :atom)
+  [title uri site-base posts]
+  [:feed :title] (h/content title)
+  [:feed] (h/set-attr :xmlns &quot;http://www.w3.org/2005/Atom&quot;)
+  [:#self] (h/do-&gt;
+            (h/remove-attr :id)
+            (h/set-attr :href (str site-base uri &quot;atom.xml&quot;)))
+  [:#base] (h/do-&gt;
+            (h/remove-attr :id)
+            (h/set-attr :href (str site-base uri)))
+  [:feed :id]
+    (h/content (str site-base uri))
+  [:updated] (h/content (time-format/unparse atom-date-formatter (time-local/local-now)))
+  [:entry] (h/clone-for [p posts]
+                        (h/substitute (atom-post site-base p))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn emit-atom
+  [title uri posts]
+  (local-href-expand (apply str (atom-feed title uri
+                                           (cfg/atom-feed :base-url) posts))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.index" name="madness.blog.index"><h1 class="project-name">madness.blog.index</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.index
+  (:require [net.cgrand.enlive-html :as h]
+            [madness.blog :as blog]
+            [madness.blog.nav :as blog-nav]
+            [madness.utils :as utils]
+            [madness.config :as cfg]
+            [madness.blog.recent :as blog-recent]
+            [clojure.string :as str]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet index-read-on (cfg/template) [:#hero-full]
+  [post]
+  [:#hero-full :a] (h/set-attr :href (:url post))
+  [:#hero-full] (h/remove-attr :id))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet index-post-date (cfg/template) [:#hero-date]
+  [post]
+  [:#hero-date] (h/do-&gt;
+                 (h/content (utils/date-format (:date post)))
+                 (h/remove-attr :id)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-index-first-title (cfg/template) [:.hero-unit :h1]
+  [post]
+  [:h1] (h/set-attr :title (:title post))
+  [:h1 :a] (utils/rewrite-link (:url post) (:title post)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-index (cfg/template)
+  [blog-posts _]
+  [:.hero-unit] (h/do-&gt;
+                 (h/content (blog-index-first-title (first blog-posts))
+                            (:summary (first blog-posts))
+                            (index-read-on (first blog-posts))))
+  [:#recents]
+    (h/clone-for [rows (utils/blog-&gt;table
+                        (cfg/recent-posts :columns)
+                        (cfg/recent-posts :rows) (rest blog-posts))]
+                 (h/do-&gt;
+                  (h/substitute (blog-recent/recent-post-row rows false))
+                  (h/before utils/hr-desktop)))
+  [:#post-neighbours] nil
+  [:#archive] nil
+  [:#disqus] nil
+  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts blog-posts)
+  [:#nav-tags :ul :li] (blog-nav/all-tags blog-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.nav" name="madness.blog.nav"><h1 class="project-name">madness.blog.nav</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.nav
+  (:require [net.cgrand.enlive-html :as h]
+            [madness.config :as cfg]
+            [madness.utils :as utils]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-item (cfg/template) [:#nav-recent-posts :ul :li]
+  [title url]
+  [:a] (utils/rewrite-link url title))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet tag-item (cfg/template) [:#nav-tags :ul :li]
+  [tag]
+  [:a] (utils/rewrite-link (utils/tag-to-url tag) tag))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn recent-posts
+  [all-posts]
+  (h/clone-for [post (take (cfg/recent-posts :total) all-posts)]
+               (h/substitute (recent-item (:title post) (:url post)))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn all-tags
+  [all-posts]
+  (h/clone-for [tag (utils/tags all-posts)]
+               (h/substitute (tag-item tag))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.page" name="madness.blog.page"><h1 class="project-name">madness.blog.page</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.page
+  (:require [net.cgrand.enlive-html :as h]
+            [madness.blog.nav :as blog-nav]
+            [madness.utils :as utils]
+            [madness.config :as cfg]
+            [clojure.string :as str]
+            [clj-time.format :as time-format]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn- enabled?
+  [value]
+  (if (nil? value)
+    false
+    true))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn- page-url
+  [path]
+  (second (first (re-seq (re-pattern (str &quot;.*&quot; (cfg/dirs :pages) &quot;(.*)&quot;))
+                         path))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn read-page
+  [file]
+  (let [page (h/html-resource file)]
+    {:title (apply h/text (h/select page [:article :title])),
+     :url (page-url (.getPath file))
+     :comments (-&gt; (first (h/select page [:article])) :attrs :comments enabled?),
+     :content (h/select page [:section])}))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-page-title (cfg/template) [:.hero-unit :h1]
+  [title]
+  [:h1] (h/do-&gt;
+         (h/content title)
+         (h/set-attr :title title)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-page-disqus (cfg/template) [:#disqus]
+  [page]
+  [:#disqus] (when (:comments page) identity))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-page (cfg/template)
+  [page all-posts]
+  [:title] (h/content (:title page) &quot; - Asylum&quot;)
+  [:#recents] nil
+  [:#archive] nil
+  [:#post-neighbours] nil
+  [:.hero-unit] (h/do-&gt;
+                 (h/content (blog-page-title (:title page))
+                            (:content page)
+                            (blog-page-disqus page)))
+  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
+  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.post" name="madness.blog.post"><h1 class="project-name">madness.blog.post</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.post
+  (:require [net.cgrand.enlive-html :as h]
+            [madness.blog.nav :as blog-nav]
+            [madness.utils :as utils]
+            [madness.config :as cfg]
+            [clojure.string :as str]
+            [clj-time.format :as time-format]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn- enabled?
+  [value]
+  (if (nil? value)
+    false
+    true))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(def blog-date-format ^{:private true}
+  (time-format/formatter &quot;yyyy-MM-dd HH:mm&quot;))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn- post-url
+  [date fn]
+  (str &quot;/blog/&quot; (time-format/unparse (time-format/formatter &quot;yyyy/MM/dd&quot;) date)
+       &quot;/&quot; (second (first (re-seq #&quot;....-..-..-(.*).html&quot; fn))) &quot;/&quot;))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn read-post
+  [file]
+  (let [post (h/html-resource file)
+        date (time-format/parse blog-date-format (apply h/text (h/select post [:article :date])))]
+    {:title (apply h/text (h/select post [:article :title])),
+     :tags (map h/text (h/select post [:article :tags :tag])),
+     :summary (h/select post [:summary :&gt; h/any-node]),
+     :date date,
+     :url (post-url date (.getName file))
+     :comments (-&gt; (first (h/select post [:article])) :attrs :comments enabled?),
+     :content (h/select post [:section])}))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-title (cfg/template) [:.hero-unit :h1]
+  [title]
+  [:h1] (h/do-&gt;
+         (h/content title)
+         (h/set-attr :title title)))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-tag (cfg/template) [:#full-article-footer :a]
+  [tag]
+  [:a] (h/do-&gt;
+        (h/set-attr :href (utils/tag-to-url tag))
+        (h/after &quot; &quot;))
+  [:a :span] (h/substitute tag))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-footer (cfg/template) [:#full-article-footer]
+  [post]
+  [:a] (h/clone-for [tag (:tags post)]
+                    (h/substitute (blog-post-tag tag)))
+  [:#post-date] (h/do-&gt;
+                 (h/content (utils/date-format (:date post)))
+                 (h/remove-attr :id))
+  [:#full-article-footer] (h/remove-attr :id))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-neighbours (cfg/template) [:#post-neighbours]
+  [neighbours]
+  [:.pull-left :a :span] (h/substitute (:title (first neighbours)))
+  [:.pull-left :a] (h/set-attr :href (:url (first neighbours)))
+  [:.pull-left] (if (empty? (first neighbours))
+                  nil
+                  identity)
+  [:.pull-right :a :span] (h/substitute (:title (last neighbours)))
+  [:.pull-right :a] (h/set-attr :href (:url (last neighbours)))
+  [:.pull-right] (if (empty? (last neighbours))
+                   nil
+                   identity)
+  [:#post-neighbours] (h/remove-attr :id))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-disqus (cfg/template) [:#disqus]
+  [post]
+  [:#disqus] (when (:comments post) identity))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-post (cfg/template)
+  [post all-posts]
+  [:title] (h/content (:title post) &quot; - Asylum&quot;)
+  [:#recents] nil
+  [:#archive] nil
+  [:.hero-unit] (h/do-&gt;
+                 (h/content (blog-post-title (:title post))
+                            (:summary post)
+                            (:content post)
+                            (blog-post-footer post)
+                            (blog-post-disqus post)))
+  [:#post-neighbours] (h/substitute (blog-post-neighbours (utils/neighbours all-posts post)))
+  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
+  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.recent" name="madness.blog.recent"><h1 class="project-name">madness.blog.recent</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.recent
+  (:require [net.cgrand.enlive-html :as h]
+            [madness.utils :as utils]
+            [madness.config :as cfg]))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-post-tag (cfg/template) [:#recent-posts :.tag]
+  [tag]
+  [:a] (h/do-&gt;
+        (h/remove-class &quot;tag&quot;)
+        (h/set-attr :href (utils/tag-to-url tag))
+        (h/after &quot; &quot;))
+  [:a :span] (h/substitute tag))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-post-item (cfg/template) [:.recent-post]
+  [post]
+  [:.recent-post] (h/remove-class &quot;recent-post&quot;)
+  [:h2 :a] (utils/rewrite-link-with-title
+             (:url post)
+             (:title post))
+  [:.post-date] (h/substitute (utils/date-format (:date post)))
+  [:.tag] (h/clone-for [tag (:tags post)]
+                       (h/substitute (recent-post-tag tag)))
+  [:p.summary] (h/do-&gt;
+                (h/remove-attr :class)
+                (h/substitute (:summary post))))</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-post-row (cfg/template) [:#recents]
+  [posts archive?]
+  [:#recents] (h/remove-attr :id)
+  [:#recent-posts :.recent-post]
+    (h/clone-for [p posts]
+                 (h/do-&gt;
+                  (h/substitute (recent-post-item p))
+                  (h/set-attr :class (str &quot;span&quot; (cfg/recent-posts :span)))))
+  [:#recent-posts] (h/do-&gt;
+                    (h/remove-attr :id)
+                    (if archive?
+                      (h/remove-class &quot;visible-desktop&quot;)
+                      identity)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.config" name="madness.config"><h1 class="project-name">madness.config</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Configuration handling for Madness.</p>
+</td><td class="codes"><pre class="brush: clojure">(ns madness.config)</pre></td></tr><tr><td class="docs"><p>The default configuration values, settings in <code>settings.clj</code>
   override these values.</p>
 
 <p>  The settings are as follows:</p>
@@ -3180,8 +3368,7 @@ $ lein run -m madness.core :index :archive
 roles, such as: <code>:default</code>, <code>:atom</code>, and <code>:empty</code>.</p>
 
 <p>The first is a one-file template to use for the whole site. It
-should include all the bits and pieces needed to build the site,
-more about that in the <a href="#madness.render">next section</a>.</p>
+should include all the bits and pieces needed to build the site.</p>
 
 <p>The second is the template for Atom feeds: the main feed and the
 per-tag feeds alike.</p>
@@ -3202,7 +3389,7 @@ Atom feeds.</p></li>
               :empty &quot;empty.html&quot;}
    :dirs {:posts &quot;resources/posts&quot;
           :pages &quot;resources/pages&quot;
-          :output &quot;public&quot;}
+          :output &quot;public/&quot;}
    :recent-posts {:columns 3
                   :rows 2}
    :archive-posts {:columns 3
@@ -3211,7 +3398,12 @@ Atom feeds.</p></li>
           :title nil}})</pre></td></tr><tr><td class="docs"><p>The final configuration for Madness - <code>settings.clj</code> merged into
   the <code>default-config</code>.</p>
 </td><td class="codes"><pre class="brush: clojure">(def config
-  (merge-with merge default-config (eval (read-string (slurp &quot;settings.clj&quot;)))))</pre></td></tr><tr><td class="docs"><p>Get the location of a template. Without arguments, returns the
+  (reduce
+   (fn [o, n]
+     (let [k (first n), vo (second o), vn (second n)]
+       (update-in o [k] merge vn)))
+   default-config
+   (eval (read-string (slurp &quot;settings.clj&quot;)))))</pre></td></tr><tr><td class="docs"><p>Get the location of a template. Without arguments, returns the
   location of the default template, otherwise the specified one.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn template
   [&amp; id]
@@ -3249,37 +3441,44 @@ span, we divide 12 by the number of columns, and round it.</p>
   (-&gt; config :dirs role))</pre></td></tr><tr><td class="docs"><p>Looks up a setting in <code>config</code>'s <code>:atom</code> map.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn atom-feed
   [setting]
-  (-&gt; config :atom setting))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.resources" name="madness.resources"><h1 class="project-name">madness.resources</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Madness resources</h2>
+  (-&gt; config :atom setting))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.core" name="madness.core"><h1 class="project-name">madness.core</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Entry point into Madness.</p>
+</td><td class="codes"><pre class="brush: clojure">(ns madness.core
+  (:require [madness.render :as render]))</pre></td></tr><tr><td class="docs"><p>Takes a string, strips the first char (assumed to be <code>:</code>), and
+  returns a keyword.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- str-&gt;keyword
+  [s]
+  (keyword (apply str (rest s))))</pre></td></tr><tr><td class="docs"><p>The main entry point of Madness: when called without arguments,
+  generates everything. If called with a list of (strng) keywords,
+  only generates the given parts of the blog.</p>
 
-<p>  Pretty much for convenience only, and to not reload all the posts
-  and pages every time we need them, this namespace contains a few
-  convenience Vars, with pages and posts preloaded.</p>
+<p>  The following keywords are understood:</p>
 
-<p>  These are heavily used by madness.render.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.resources
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [madness.blog :as blog]
-            [madness.utils :as utils]))</pre></td></tr><tr><td class="docs"><p>Convenience Var containing all the blog posts</p>
-</td><td class="codes"><pre class="brush: clojure">(defonce posts (blog/load-posts))</pre></td></tr><tr><td class="docs"><p>Convenience Var contiaining all the blog pages</p>
-</td><td class="codes"><pre class="brush: clojure">(defonce pages (blog/load-pages))</pre></td></tr><tr><td class="docs"><p>Convenience Var containing all the blog posts, grouped by tags.</p>
-</td><td class="codes"><pre class="brush: clojure">(defonce posts-tag-grouped (utils/group-blog-by-tags posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.render" name="madness.render"><h1 class="project-name">madness.render</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>High-level rendering</h2>
-
-<p>  In this part of the documentation, the various parts of the
-  templates will be explained in detail: how they are built up, how
-  madness recognises various parts of it, and so on and so forth. This
-  is a high-level overview, but pointers will be given to places that
-  go into the tinies details.</p>
-
-<p>  For a full-blown example, check the <a href="https://github.com/algernon/madness/tree/asylum">asylum</a> branch of this
-  project, which has templates, posts and pages too.</p>
+<ul>
+<li><code>:index</code>: The main index page of the blog.</li>
+<li><code>:archive</code>: The main archive page of the blog.</li>
+<li><code>:tags</code>: All of the per-tag archives of the blog.</li>
+<li><code>:posts</code>: All of the posts that belong to the blog.</li>
+<li><code>:pages</code>: All of the pages that accompany the blog.</li>
+<li><code>:main-feed</code>: The main Atom feed.</li>
+<li><code>:tag-feeds</code>: The per-tag Atom feeds.</li>
+</ul>
+</td><td class="codes"><pre class="brush: clojure">(defn -main
+  ([] (-main &quot;:index&quot; &quot;:archive&quot; &quot;:tags&quot; &quot;:posts&quot; &quot;:main-feed&quot; &quot;:pages&quot; &quot;:tag-feeds&quot;))
+  ([&amp; args] (dorun (map render/render (map str-&gt;keyword args)))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.io" name="madness.io"><h1 class="project-name">madness.io</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>I/O helper routines</p>
+</td><td class="codes"><pre class="brush: clojure">(ns madness.io
+  (:require [madness.config :as cfg]
+            [clojure.string :as str])
+  (:import (java.io File)
+           (org.apache.commons.io FileUtils FilenameUtils)))</pre></td></tr><tr><td class="docs"><p>Given a filename, write a string into it, creating the file and the
+  directories if needed. The destination directory can be overridden
+  via the configuration mechanism.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn write-out-dir
+  [file str]
+  (let [fn (str/join &quot;/&quot; [(cfg/dirs :output) file])]
+    (println &quot;Writing &quot; fn &quot;...&quot;)
+    (FileUtils/writeStringToFile
+     (File. fn) str &quot;UTF-8&quot;)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.render" name="madness.render"><h1 class="project-name">madness.render</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>High-level render functions</p>
 </td><td class="codes"><pre class="brush: clojure">(ns madness.render
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
   (:require [madness.io :as io]
             [madness.blog :as blog]
             [madness.blog.index :as blog-index]
@@ -3288,303 +3487,71 @@ span, we divide 12 by the number of columns, and round it.</p>
             [madness.blog.page :as blog-page]
             [madness.blog.atom :as blog-feed]
             [madness.config :as cfg]
-            [madness.utils :as utils]
-            [madness.resources :as res]))</pre></td></tr><tr><td class="docs"><p>Render a post or page to a file, using a custom render function.</p>
+            [madness.utils :as utils]))</pre></td></tr><tr><td class="docs"><p>Convenience Var containing all the blog posts</p>
+</td><td class="codes"><pre class="brush: clojure">(def blog-posts (blog/load-posts))</pre></td></tr><tr><td class="docs"><p>Convenience Var contiaining all the blog pages</p>
+</td><td class="codes"><pre class="brush: clojure">(def blog-pages (blog/load-pages))</pre></td></tr><tr><td class="docs"><p>Convenience Var containing all the blog posts, grouped by tags.</p>
+</td><td class="codes"><pre class="brush: clojure">(def blog-tag-grouped (utils/group-blog-by-tags blog-posts))</pre></td></tr><tr><td class="docs"><p>Render a post or page to a file, using a custom render function.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn- render-to-file
   [all-posts current-post render-fn file]
-  (io/write-out-dir (utils/replace-extension file &quot;.html&quot;)
+  (io/write-out-dir file
                     (apply str (render-fn current-post all-posts))))</pre></td></tr><tr><td class="docs"><p>Render a part of the site to files.</p>
-
-<h3>Rendering</h3>
-
-<p>Every part of the site - at least the HTML parts - have a common
-structure: a <a href="#madness.blog.nav">navigation bar</a>, the content area, a sidebar, and
-a footer. These are common to all pages and posts, archives and
-everything else too.</p>
-
-<p>What is inside the content area, varies by what page we're talking
-about - as it will be explained just below.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmulti render
-  (fn [part &amp; args] part))</pre></td></tr><tr><td class="docs"><h3>The site index</h3>
-
-<p>Renders the main entry point of the site into the content area, and
-saves the result into a file named <code>index.html</code>.</p>
-
-<p>The content area will consist of the latest blog post, followed by
-a limited number of recent items: the configuration controls how
-many of these are displayed at most.</p>
-
-<p>Blog entries that are too old to fit, will only be available
-through the archive, and they're not displayed on the index at all.</p>
-
-<p>For more information  about how the content area is  built, see the
-<a href="#madness.blog.index">blog.index</a> namespace.</p>
+  (fn [part &amp; args] part))</pre></td></tr><tr><td class="docs"><p>Render the index page into "index.html".</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :index [_]
-  (render-to-file nil res/posts blog-index/blog-index &quot;index.html&quot;))</pre></td></tr><tr><td class="docs"><h3>The global archive</h3>
-
-<p>Renders the global archive to a file named <code>blog/archives/index.html</code>.</p>
-
-<p>The archive is not much more than a title in place of a highlighted
-post, followed by a limited set of recent posts, then the archived posts.</p>
-
-<p>The archived posts are rendered differently than the recent posts
-(see the <a href="#madness.blog.archive">blog.archive</a> namespace!), and by default, their
-number is not limited. Madness does not implement any kind of
-archive paging.</p>
+  (render-to-file nil blog-posts blog-index/blog-index &quot;index.html&quot;))</pre></td></tr><tr><td class="docs"><p>Render the archives to "blog/archives/index.html".</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :archive [_]
-  (render-to-file res/posts res/posts
-                  (partial blog-archive/blog-archive &quot;Archive&quot; &quot;/blog/atom.xml&quot;)
-                  &quot;blog/archives/index.html&quot;))</pre></td></tr><tr><td class="docs"><h3>The tag archives</h3>
-
-<p>Each tag has an archive of its own, in files named after the tag,
-something like <code>blog/tag/index.html</code>.</p>
-
-<p>These pages are exactly the same as the global archive above,
-except that in the recent and archived posts area, only those posts
-are shown, that are tagged with the appropriate tag.</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>To render all the archives for each and every tag, we need a
-function that can render one.</p>
+  (render-to-file blog-posts blog-posts
+                  (partial blog-archive/blog-archive &quot;Archive&quot;)
+                  &quot;blog/archives/index.html&quot;))</pre></td></tr><tr><td class="docs"><p>Render the archive for a single tag.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tag-archive
   [_ all-posts tag tagged-posts]
   
   (let [fn (str &quot;.&quot; (utils/tag-to-url tag) &quot;index.html&quot;)]
     (render-to-file all-posts tagged-posts
-                    (partial blog-archive/blog-archive (str &quot;Tag: &quot; tag)
-                             (str &quot;&quot; (utils/tag-to-url tag) &quot;atom.xml&quot;)) fn)))</pre></td></tr><tr><td class="docs"><p>And another, that maps through the tags, and using the previous
-method, renders an archive for each of them.</p>
+                    (partial blog-archive/blog-archive (str &quot;Tag: &quot; tag)) fn)))</pre></td></tr><tr><td class="docs"><p>Render the archive for all tags.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tags [_]
-  (dorun (map #(render :tag-archive res/posts %1
-                       (get res/posts-tag-grouped %1))
-              (keys res/posts-tag-grouped))))</pre></td></tr><tr><td class="docs"><h3>Date-based archives</h3>
-
-<p>Because posts are rendered into locations based on their creation
-date, and because it makes it easier to navigate bigger blogs, we
-need archives for each year, month and date.</p>
-
-<p>These dated archives are exactly the same as the global archive,
-except that the recent and archived posts are limited to a
-particular date: a year, a month, or a day.</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>To render all the archives for each and every date a post was
-created on, we need a function that can render one.</p>
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-archive
-  [_ all-posts date dated-posts]
-
-  (let [uri (str &quot;/blog/&quot; date &quot;/&quot;)
-        fn (str &quot;.&quot; uri &quot;index.html&quot;)]
-    (render-to-file all-posts dated-posts
-                    (partial blog-archive/blog-archive
-                             (str &quot;Archive of posts @ &quot; date)
-                             (str &quot;&quot; uri &quot;atom.xml&quot;)) fn)))</pre></td></tr><tr><td class="docs"><p>And since all the dated archives follow the same pattern, lets
-introduce a helper function!</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>Group blog posts by date, using the function <code>f</code> (which is expected
-  to return a formatted date when given a blog post), and render the
-  archives for each and every key within the group.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn render-dated-archive
-  [render-type f]
-  (let [dated-archive (utils/group-blog-by-date res/posts f)]
-    (dorun (map #(render render-type res/posts %1 (get dated-archive %1))
-                (keys dated-archive)))))</pre></td></tr><tr><td class="docs"><p>With these, we can render daily, montly and yearly archives easily.</p>
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :daily-archives [_]
-  (render-dated-archive :date-archive utils/posts-by-day))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :monthly-archives [_]
-  (render-dated-archive :date-archive utils/posts-by-month)
-  (render :daily-archives))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :yearly-archives [_]
-  (render-dated-archive :date-archive utils/posts-by-year)
-  (render :monthly-archives))</pre></td></tr><tr><td class="docs"><p>And for convenience, we have a function that can be called from the
-command line, and will generate all of the above dated archives.</p>
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-archives [_]
-  (render :yearly-archives))</pre></td></tr><tr><td class="docs"><h3>Blog posts</h3>
-
-<p>Blog posts are pretty simple: they show the post itself, the date
-it was posted, the tags it is tagged with, and any previous or next
-articles, for easier navigation.</p>
-
-<p>There is no recent post or archived posts area here, but commenting
-can be enabled on a per-post basis.</p>
-
-<p>For more information on how a post is rendered, see the
-<a href="#madness.blog.post">blog.post</a> namespace.</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>Similar to how it was done with the tag archives before, to render
-all posts, we must first be able to render one. Fortunately for us,
-blog posts have an <code>:url</code> property, which we can re-use for their
-filename.</p>
-
-<p>By default (see [blog.post<a href="#madness.blog.post">1</a>), this will be of the
-<code>YEAR/MONTH/DATE/title/</code> format, to which, we append <code>index.html</code>.</p>
+  (dorun (map #(render :tag-archive blog-posts %1 (get blog-tag-grouped %1))
+              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="docs"><p>Render a single post.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :post
   [_ all-posts post]
 
   (let [fn (str &quot;.&quot; (:url post) &quot;index.html&quot;)]
-    (render-to-file all-posts post blog-post/blog-post fn)))</pre></td></tr><tr><td class="docs"><p>And now that we can render a single post, we shall render them all!</p>
+    (render-to-file all-posts post blog-post/blog-post fn)))</pre></td></tr><tr><td class="docs"><p>Render all posts.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :posts [_]
-  (dorun (map (partial render :post res/posts) res/posts)))</pre></td></tr><tr><td class="docs"><h3>Static pages</h3>
-
-<p>Static pages are very much like blog posts, except they are not
-tagged, there is no previous or next page, and their URL is not
-date based, but determined (see <a href="#madness.blog.page">blog.page</a>) by their place on
-the filesystem.</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>As always, we render a single page first.</p>
+  (dorun (map (partial render :post blog-posts) blog-posts)))</pre></td></tr><tr><td class="docs"><p>Render a single page.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :page
   [_ all-posts page]
 
   (let [fn (str &quot;.&quot; (:url page))]
-    (render-to-file all-posts page blog-page/blog-page fn)))</pre></td></tr><tr><td class="docs"><p>Then map through all of them, to render them all.</p>
+    (render-to-file all-posts page blog-page/blog-page fn)))</pre></td></tr><tr><td class="docs"><p>Render all pages.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :pages [_]
-  (dorun (map (partial render :page res/posts) res/pages)))</pre></td></tr><tr><td class="docs"><h3>Atom feeds</h3>
-
-<p>Atom feeds are a bit different than the HTML representation, the
-feed has a well defined <a href="http://atomspec.org/">spec</a>. We're going to generate two
-kinds of feeds: a global one, including all blog posts (but only
-blog posts, not pages), and per-tag feeds, that only include posts
-for the particular tag.</p>
-
-<p>For more information about how a feed is assembled, see the
-<a href="#madness.blog.atom">blog.atom</a> namespace!</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>The main feed will be saved into <code>blog/atom.xml</code>.</p>
+  (dorun (map (partial render :page blog-posts) blog-pages)))</pre></td></tr><tr><td class="docs"><p>Render the main feed.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :main-feed [_]
   (io/write-out-dir &quot;blog/atom.xml&quot;
-                    (blog-feed/emit-atom (cfg/atom-feed :title) &quot;/blog/&quot;
-                                         res/posts)))</pre></td></tr><tr><td class="docs"><p>A single per-tag feed is saved into something like
-<code>blog/tag/atom.xml</code>, similarly to how the per-tag archives were
-rendered.</p>
+                    (blog-feed/emit-atom (cfg/atom-feed :title) &quot;/blog/&quot; blog-posts)))</pre></td></tr><tr><td class="docs"><p>Render the feed for a single tag.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tag-feed
   [_ tag tagged-posts]
 
   (let [fn (str &quot;.&quot; (utils/tag-to-url tag) &quot;atom.xml&quot;)]
     (io/write-out-dir fn
                       (blog-feed/emit-atom
-                       (str (cfg/atom-feed :title) &quot;: &quot; tag)
+                       (str (cfg/atom-feed :title) &quot;:&quot; tag)
                        (utils/tag-to-url tag)
-                       tagged-posts))))</pre></td></tr><tr><td class="docs"><p>And as usual, since we can render a feed for a single tag, mapping
-through all the tags is all it takes to render them all.</p>
+                       tagged-posts))))</pre></td></tr><tr><td class="docs"><p>Render the feeds for all tags.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :tag-feeds [_]
-  (dorun (map #(render :tag-feed %1 (get res/posts-tag-grouped %1))
-              (keys res/posts-tag-grouped))))</pre></td></tr><tr><td class="docs"><p>As with archives, we render atom feeds for each year, month and day
-a blog post was posted on, in a very similar manner the archives
-are rendered.</p>
-</td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-feed
-  [_ _ date dated-posts]
-
-  (let [uri (str &quot;/blog/&quot; date &quot;/&quot;)
-        fn (str &quot;.&quot; uri &quot;atom.xml&quot;)]
-    (io/write-out-dir fn
-                      (blog-feed/emit-atom
-                       (str (cfg/atom-feed :title) &quot; @ &quot; date)
-                       uri
-                       dated-posts))))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :daily-feeds [_]
-  (render-dated-archive :date-feed utils/posts-by-day))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :monthly-feeds [_]
-  (render-dated-archive :date-feed utils/posts-by-month)
-  (render :daily-feeds))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :yearly-feeds [_]
-  (render-dated-archive :date-feed utils/posts-by-year)
-  (render :monthly-feeds))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod render :date-feeds [_]
-  (render :yearly-feeds))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.io" name="madness.io"><h1 class="project-name">madness.io</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>I/O helper routines</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.io
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [madness.config :as cfg]
-            [clojure.string :as str]
-            [net.cgrand.enlive-html :as h]
-            [fs.core :as fs]
-            [clj-yaml.core :as y])
-  (:import (java.io StringReader)
-           (org.pegdown PegDownProcessor)))</pre></td></tr><tr><td class="docs"><p>List all HTML and Markdown files within a given directory. Returns
-   an array of java.io.File objects.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn find-files
-  [dir]
-  (sort #(compare %2 %1) (fs/find-files dir #&quot;.*\.(html|md|markdown|mdwn)$&quot;)))</pre></td></tr><tr><td class="docs"><p>Given a filename, write a string into it, creating the file and the
-  directories if needed. The destination directory can be overridden
-  via the configuration mechanism.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn write-out-dir
-  [file str]
-  (let [fn (str/join &quot;/&quot; [(cfg/dirs :output) file])]
-    (println &quot;Writing&quot; fn &quot;...&quot;)
-    (fs/mkdirs (fs/parent fn))
-    (spit fn str :encoding &quot;UTF-8&quot;)))</pre></td></tr><tr><td class="docs"><p>Given a file type (a file-name extension) and a file, transform it
-  into a format that can be fed to Enlive, and conforms to the
-  requirements set by the rendering engine.</p>
-</td><td class="codes"><pre class="brush: clojure">(defmulti preprocess-file
-  (fn [type file] type))</pre></td></tr><tr><td class="docs"><p>Split metadata (things between "---" lines at the top of the
-  file) out of the file contents.</p>
-
-<p>  Returns a vector containing the metadata and the rest of the content.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- split-metadata-and-content
-  [content]
-  (let [idx (.indexOf content &quot;---&quot; 4)]
-    [(.substring content 4 idx) (.substring content (+ 3 idx))]))</pre></td></tr><tr><td class="docs"><p>Split the short summary and the body of a post into two. The end of
-  the short summary must be marked with <!-- more -->.</p>
-
-<p>  Returns a vector containing the short summary and the main contents.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- split-summary-from-content
-  [content]
-  (let [idx (.indexOf content &quot;&lt;!-- more --&gt;&quot;)]
-    (if (= idx -1)
-      [&quot;&quot; content]
-      [(.substring content 0 idx) (.substring content (+ 13 idx))])))</pre></td></tr><tr><td class="docs"><p>Wrap a value within a HTML element.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- html-wrap
-  [e v]
-  (str &quot;&lt;&quot; e &quot;&gt;&quot; v &quot;&lt;/&quot; e &quot;&gt;&quot;))</pre></td></tr><tr><td class="docs"><p>Convert a key-value pairs data part into a HTML tag string. If the
-  key is :tags, then the value shall be a list of <tag>
-  elements. Otherwise the value is left as-is.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- v-&gt;html
-  [k, v]
-  (if (= k :tags)
-    (reduce (fn [h v] (str h (html-wrap &quot;tag&quot; v))) &quot;&quot; v)
-    v))</pre></td></tr><tr><td class="docs"><p>Convert YAML-format meta-data to HTML string.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- yaml-&gt;html-string
-  [metadata]
-  (let [meta (y/parse-string metadata)]
-    (reduce (fn [h [k v]]
-              (str h (html-wrap (name k) (v-&gt;html k v))))
-            &quot;&quot; meta)))</pre></td></tr><tr><td class="docs"><p>Processing markdown files has three steps:</p>
-
-<ul>
-<li>Split the metadata from the content, and parse the former as if it was YAML.</li>
-<li>Split the short summary from the main data</li>
-<li>Assemble these three into a HTML format that the processing engine expects.</li>
-</ul>
-</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file &quot;.md&quot; [_ file]
-  (let [[metadata content] (split-metadata-and-content (slurp file))
-        [summary content] (split-summary-from-content content)]
-    (StringReader. (str (html-wrap &quot;article&quot; (yaml-&gt;html-string metadata))
-                        (html-wrap &quot;summary&quot; (.markdownToHtml (PegDownProcessor.) summary))
-                        (html-wrap &quot;section&quot; (.markdownToHtml (PegDownProcessor.) content))))))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file &quot;.mdwn&quot; [_ file]
-  (preprocess-file &quot;.md&quot; file))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file &quot;.markdown&quot; [_ file]
-  (preprocess-file &quot;.md&quot; file))</pre></td></tr><tr><td class="docs"><p>Anything that is not markdown, is let through as-is, and we'll
-assume it is HTML.</p>
-</td><td class="codes"><pre class="brush: clojure">(defmethod preprocess-file :default [_ file]
-  file)</pre></td></tr><tr><td class="docs"><p>Load and process a file. Based on the extension, the file will
-  either be processed as raw HTML, or preprocessed as Markdown first.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn read-file
-  [file]
-  (let [content (preprocess-file (-&gt; file .getName fs/extension)
-                                 file)]
-    (h/html-resource content)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.utils" name="madness.utils"><h1 class="project-name">madness.utils</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Assorted utilities.</p>
+  (dorun (map #(render :tag-feed %1 (get blog-tag-grouped %1))
+              (keys blog-tag-grouped))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.utils" name="madness.utils"><h1 class="project-name">madness.utils</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Assorted utilities.</p>
 </td><td class="codes"><pre class="brush: clojure">(ns madness.utils
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [clojure.string :as s]
+  (:require [clojure.string :as str]
             [clj-time.format :as time-format]
-            [net.cgrand.enlive-html :as h]
-            [fs.core :as fs]))</pre></td></tr><tr><td class="docs"><p>A &lt;hr> element that is only visible on desktop resolutions.</p>
+            [net.cgrand.enlive-html :as h]))</pre></td></tr><tr><td class="docs"><p>A &lt;hr> element that is only visible on desktop resolutions.</p>
 </td><td class="codes"><pre class="brush: clojure">(def hr-desktop [{:tag :hr :attrs {:class &quot;visible-desktop&quot;}}])</pre></td></tr><tr><td class="docs"><p>Return the list of unique tags, sorted alphabetically.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn tags
   [blog]
   (apply sorted-set (mapcat :tags blog)))</pre></td></tr><tr><td class="docs"><p>Given a tag, return a relative URL that points to it.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn tag-to-url
   [tag]
-  (str &quot;/blog/tags/&quot; (s/replace (s/lower-case tag) &quot; &quot; &quot;-&quot;) &quot;/&quot;))</pre></td></tr><tr><td class="docs"><p>Format a date object into human-readable form.</p>
+  (str &quot;/blog/tags/&quot; (str/replace (str/lower-case tag) &quot; &quot; &quot;-&quot;) &quot;/&quot;))</pre></td></tr><tr><td class="docs"><p>Format a date object into human-readable form.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn date-format
   [date]
   (time-format/unparse (time-format/formatter &quot;yyyy-MM-dd&quot;) date))</pre></td></tr><tr><td class="docs"><p>Determine whether a post is tagged with a given tag.</p>
@@ -3598,34 +3565,7 @@ assume it is HTML.</p>
   posts as values.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn group-blog-by-tags
   [blog]
-  (reduce #(assoc %1 %2 (posts-tagged blog %2)) {} (tags blog)))</pre></td></tr><tr><td class="docs"><p>Returns a set of all the blog posts that match the filter.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- blog-dates
-  [blog f]
-  (set (map #(f (:date %1)) blog)))</pre></td></tr><tr><td class="docs"><p>Checks whether a given post was made on a particular date. The <code>f</code>
-  function is used to transform the posts date before the comparsion.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- post-with-date?
-  [date f post]
-  (let [fdate (f (:date post))]
-    (= date fdate)))</pre></td></tr><tr><td class="docs"><p>Returns all posts within a blog that have a particular date, where
-  the date of the posts is determined after transforming them with
-  function <code>f</code>.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- posts-with-date
-  [blog date f]
-  (filter (partial post-with-date? date f) blog))</pre></td></tr><tr><td class="docs"><p>Group all posts within a blog by date. Uses the supplied <code>f</code>
-  function to format and compare dates.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn group-blog-by-date
-  [blog f]
-  (reduce #(assoc %1 %2 (posts-with-date blog %2 f)) {}
-          (blog-dates blog f)))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn posts-by-day
-  [d]
-  (time-format/unparse (time-format/formatter &quot;yyyy/MM/dd&quot;) d))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn posts-by-month
-  [d]
-  (time-format/unparse (time-format/formatter &quot;yyyy/MM&quot;) d))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn posts-by-year
-  [d]
-  (time-format/unparse (time-format/formatter &quot;yyyy&quot;) d))</pre></td></tr><tr><td class="docs"><p>Given a full blog, and a single post, find the previous and the
+  (reduce #(assoc %1 %2 (posts-tagged blog %2)) {} (tags blog)))</pre></td></tr><tr><td class="docs"><p>Given a full blog, and a single post, find the previous and the
   next post that surround the current one.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn neighbours
   [blog post]
@@ -3663,624 +3603,5 @@ assume it is HTML.</p>
   (h/do-&gt;
    (h/set-attr :href url)
    (h/set-attr :title title)
-   (h/content &quot; &quot; title)))</pre></td></tr><tr><td class="docs"><p>Replace the extension of a file with another.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn replace-extension
-  [fn ext]
-  (let [components (fs/split fn)
-        fn (str (fs/name (last components)) ext)]
-    (if (= &quot;/&quot; (first components))
-      (s/join &quot;/&quot; (conj (vec (butlast (rest components))) fn))
-      (s/join &quot;/&quot; (conj (vec (butlast components)) fn)))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog" name="madness.blog"><h1 class="project-name">madness.blog</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Load blog posts & pages</h2>
-
-<p>  To build a whole site, madness will first load all the posts and
-  pages, and turn them into data structures that are easy to work
-  with. This is far from efficient, but even for a moderately sized
-  site, neither speed nor memory requirements are particularly bad.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [madness.blog.post :as blog-post]
-            [madness.blog.page :as blog-page]
-            [madness.config :as cfg]
-            [madness.io :as io]))</pre></td></tr><tr><td class="docs"><p>Load all posts for the blog. Returns a sequence of processed blog
-  posts. See the <a href="#madness.blog.post">blog.post</a> namespace for more information about
-  how a processed post looks like.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn load-posts
-  []
-  (map blog-post/read-post (io/find-files (cfg/dirs :posts))))</pre></td></tr><tr><td class="docs"><p>Load all pages for the blog. Returns a sequence of processed blog
-  pages. See the <a href="#madness.blog.page">blog.page</a> namespace for more information about
-  how a processed page looks like.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn load-pages
-  []
-  (map blog-page/read-page (io/find-files (cfg/dirs :pages))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.nav" name="madness.blog.nav"><h1 class="project-name">madness.blog.nav</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Building blocks for navigation</h2>
-
-<p>  All HTML pages of the generated site will contain some common
-  navigation items: a sidebar with recent items, and the list of all
-  available tags.</p>
-
-<p>  The functions herein implement the recent item &amp; tag lists on the
-  sidebar.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.nav
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [net.cgrand.enlive-html :as h]
-            [madness.config :as cfg]
-            [madness.utils :as utils]))</pre></td></tr><tr><td class="docs"><p>The sidebar must have a part with the id of <code>#nav-recent-posts</code>,
-under which must be an unordered list (with only one item in the
-template). The single item of that list will be used as the
-template snippet for displaying recent items on the sidebar.</p>
-
-<p>The list item itself, must contain an anchor, whose <code>href</code> and
-content this snippet will change to the URL and title of the post,
-respectively.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-item (cfg/template) [:#nav-recent-posts :ul :li]
-  [title url]
-  [:a] (utils/rewrite-link url title))</pre></td></tr><tr><td class="docs"><p>Similarly to recent items, the sidebar must also contain a
-<code>#nav-tags</code> item, also with an unordered list beneath it, where the
-single element of the template must also have an anchor.</p>
-
-<p>The anchor's <code>href</code> and textual content will be rewritten by this
-snippet to the URL for the tag archive, and the name of the tag
-itself.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet tag-item (cfg/template) [:#nav-tags :ul :li]
-  [tag]
-  [:a] (utils/rewrite-link (utils/tag-to-url tag) tag))</pre></td></tr><tr><td class="docs"><p>To render all recent posts, we simply clone the snippet above for
-every recent post we should display. How many are displayed, is
-controlled by the configuration.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn recent-posts
-  [all-posts]
-  (h/clone-for [post (take (cfg/recent-posts :total) all-posts)]
-               (h/substitute (recent-item (:title post) (:url post)))))</pre></td></tr><tr><td class="docs"><p>And to display all tags, we also clone the <code>tag-item</code> snippet above
-for each and every unique tag.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn all-tags
-  [all-posts]
-  (h/clone-for [tag (utils/tags all-posts)]
-               (h/substitute (tag-item tag))))</pre></td></tr><tr><td class="docs"><p>These last two functions - <code>recent-posts</code> and <code>all-tags</code> - will be
-used by the various page rendering templates in <a href="#madness.blog.archive">blog.archive</a>,
-<a href="#madness.blog.post">blog.post</a>, and <a href="#madness.blog.page">blog.page</a>.</p>
-</td><td class="codes"></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.recent" name="madness.blog.recent"><h1 class="project-name">madness.blog.recent</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Recent posts on archive & index pages</h2>
-
-<p>  The archive pages - along with the site index - will display a
-  number of recent and (in case of archive pages) archived posts. The
-  snippets herein lay the foundation for rendering those on all these
-  pages.</p>
-
-<p>  One important thing to note, is that recent and archived posts are
-  not displayed on non-desktop resolutions, unless we're rendering an
-  archive page. That is, on a smartphone, the index page will not have
-  any recent posts shown.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.recent
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [net.cgrand.enlive-html :as h]
-            [madness.utils :as utils]
-            [madness.config :as cfg]))</pre></td></tr><tr><td class="docs"><p>The first nippet to care about is the tag list of a recent post
-item. We use the element with a <code>tag</code> class under the
-<code>#recent-posts</code> element of the template as a basis for the snippet.</p>
-
-<p>We replace the <code>href</code> (as it should be an anchor), and pick out a
-<code>&amp;lt;span&gt;</code> element from under it, and replace that with the tag's
-name. The reason we use a separate element for the tag name, is
-because we want to allow the template to also add an icon somewhere
-onto the tag button.</p>
-
-<p>Madness does not enforce the icon, but makes it possible to use one.</p>
-
-<p>This snippet is for a single tag, it will need to be cloned for all
-tags, see later!</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-post-tag (cfg/template) [:#recent-posts :.tag]
-  [tag]
-  [:a] (h/do-&gt;
-        (h/remove-class &quot;tag&quot;)
-        (h/set-attr :href (utils/tag-to-url tag))
-        (h/after &quot; &quot;))
-  [:a :span] (h/substitute tag))</pre></td></tr><tr><td class="docs"><p>We'll use the element with a <code>recent-post</code> class as the basis for a
-single recent post item. This should have a header (&lt;h2>), and
-an link under it - the anchor's <code>href</code> and textual content will be
-rewritten appropriately.</p>
-
-<p>The same <code>recent-post</code> element must also have a child with a
-<code>post-date</code> class, whose content will be substituted by the date
-the blog post was made upon.</p>
-
-<p>Then there is the paragraph, with a class of <code>summary</code>, which will
-be replaced by the blog post's summary, and of course the <code>tag</code>
-classed element will be replaced by the list of tags
-(<code>recent-post-tag</code> above cloned for all tags).</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-post-item (cfg/template) [:.recent-post]
-  [post]
-  [:.recent-post] (h/remove-class &quot;recent-post&quot;)
-  [:h2 :a] (utils/rewrite-link-with-title
-             (:url post)
-             (:title post))
-  [:.post-date] (h/substitute (utils/date-format (:date post)))
-  [:.tag] (h/clone-for [tag (:tags post)]
-                       (h/substitute (recent-post-tag tag)))
-  [:p.summary] (h/do-&gt;
-                (h/remove-attr :class)
-                (h/substitute (:summary post))))</pre></td></tr><tr><td class="docs"><p>And finally, we are now able to assemble a whole row of recent
-posts! We'll use the <code>#recents</code> element as a basis for our
-template.</p>
-
-<p>Since there can be multiple rows, we'll remove the id, and for each
-item on the row, we'll clone the <code>recent-post-item</code> snippet,
-replacing the <code>.recent-post</code> element in the template.</p>
-
-<p>If we're rendering an archive, we'll also remove the
-<code>visible-desktop</code> class, since archives should be visible on
-non-desktop resolutions too.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet recent-post-row (cfg/template) [:#recents]
-  [posts archive?]
-  [:#recents] (h/remove-attr :id)
-  [:#recent-posts :.recent-post]
-    (h/clone-for [p posts]
-                 (h/do-&gt;
-                  (h/substitute (recent-post-item p))
-                  (h/set-attr :class (str &quot;span&quot; (cfg/recent-posts :span)))))
-  [:#recent-posts] (h/do-&gt;
-                    (h/remove-attr :id)
-                    (if archive?
-                      (h/remove-class &quot;visible-desktop&quot;)
-                      identity)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.post" name="madness.blog.post"><h1 class="project-name">madness.blog.post</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Loading & rendering individual blog posts</h2>
-
-<p>  For the sake of ease, blog posts are fully loaded first, and turned
-  into a structure that is easy to work with. This namespace
-  implements the low-level loading, restructuring and rendering of
-  individual blog posts.</p>
-
-<p>  Blog posts are under <code>resources/posts</code> by default, and they all must
-  have a filename that starts with a date (in YYYY-MM-DD format),
-  followed by the short title of the post, that will be used for the
-  URL.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.post
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [net.cgrand.enlive-html :as h]
-            [madness.blog.nav :as blog-nav]
-            [madness.utils :as utils]
-            [madness.config :as cfg]
-            [clojure.string :as str]
-            [madness.io :as io]
-            [clj-time.format :as time-format]))</pre></td></tr><tr><td class="docs"><p>The date format used within blog files. Note that this is not the
-format we render dates as, but the format we expect them to be
-within blog posts!</p>
-</td><td class="codes"><pre class="brush: clojure">(def blog-date-format ^{:private true}
-  (time-format/formatter &quot;yyyy-MM-dd HH:mm&quot;))</pre></td></tr><tr><td class="docs"><p>Given a parsed date and a source filename, return the URI for the blog post.</p>
-
-<p>  The source filenames will be stripped of the date part, and the date
-  within the post itself will be used to construct the final URL of
-  the form <code>/blog/yyyy/MM/dd/title/</code>.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- post-url
-  [date fn]
-  (str &quot;/blog/&quot; (time-format/unparse (time-format/formatter &quot;yyyy/MM/dd&quot;) date)
-       &quot;/&quot; (second (first (re-seq #&quot;....-..-..-(.*)\.([^\.]*)$&quot; fn))) &quot;/&quot;))</pre></td></tr><tr><td class="docs"><p>A very dumb little helper function, that merely checks if a value
-  is set or not - it's mostly here to make some of the code below
-  clearer.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- enabled?
-  [value]
-  (if (or
-       (nil? value)
-       (= value &quot;&quot;))
-    false
-    true))</pre></td></tr><tr><td class="docs"><p>Read a blog post from a file, and restructure it into a
-  representation that is easy to work with.</p>
-
-<p>  Each blog post must have an <code>article</code> element, which must also have
-  <code>title</code>, <code>date</code>, and <code>tags</code> children - all of their purpose should
-  already be clear. The <code>article</code> element may also have a <code>comments</code>
-  propery, which, when set, will enable commenting on the particular
-  post.</p>
-
-<p>  A blog post must also have a <code>summary</code> element, the contents of
-  which will be used when rendering the post for the purposes of
-  recent posts, or as the summary on the main index page. The summary
-  is also part of the blog post, and when viewing the entire post, it
-  will start with the summary.</p>
-
-<p>  Following that, the entire contents of the <code>section</code> element of the
-  blog post will be displayed.</p>
-
-<p>  The structure this function generates, should be pretty clear by
-  glancing over the code here.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn read-post
-  [file]
-  (let [post (io/read-file file)
-        date (time-format/parse blog-date-format (apply h/text (h/select post [:article :date])))]
-    {:title (apply h/text (h/select post [:article :title])),
-     :tags (map h/text (h/select post [:article :tags :tag])),
-     :summary (h/select post [:summary :&gt; h/any-node]),
-     :date date,
-     :url (post-url date (.getName file))
-     :comments (or
-                (-&gt; (first (h/select post [:article])) :attrs :comments enabled?)
-                (-&gt; (h/text (h/select post [:article :comments])) enabled?)),
-     :content (h/select post [:section])}))</pre></td></tr><tr><td class="docs"><h3>Blog post templates</h3>
-
-<p>Blog posts are almost entirely contained within a <code>hero-unit</code>
-class, with only the previous/next links outside of it.</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>One of the first things one sees about a post, is its title, which
-is the <code>h1</code> element of the <code>hero-unit</code> in the template.</p>
-
-<p>This snippet uses that element as the title template, replacing the
-<code>title</code> attribute of it, and its textual content with the title of
-the post itself.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-title (cfg/template) [:.hero-unit :h1]
-  [title]
-  [:h1] (h/do-&gt;
-         (h/content title)
-         (h/set-attr :title title)))</pre></td></tr><tr><td class="docs"><h4>Full article footer</h4>
-
-<p>Posts, when viewed in full, and not only their summary, have a
-footer, which holds their tags and the date they were posted on,
-these all live under the <code>#full-article-footer</code> element.</p>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>The full article footer has only a single link in the template: the
-snippet that we'll use to render a single tag.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-tag (cfg/template) [:#full-article-footer :a]
-  [tag]
-  [:a] (h/do-&gt;
-        (h/set-attr :href (utils/tag-to-url tag))
-        (h/after &quot; &quot;))
-  [:a :span] (h/substitute tag))</pre></td></tr><tr><td class="docs"><p>The full footer contains a date, the <code>#post-date</code> element, and
-we'll also render the tags there too. Both the <code>#post-date</code> and the
-<code>#full-article-footer</code> ids will be removed.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-footer (cfg/template) [:#full-article-footer]
-  [post]
-  [:a] (h/clone-for [tag (:tags post)]
-                    (h/substitute (blog-post-tag tag)))
-  [:#post-date] (h/do-&gt;
-                 (h/content (utils/date-format (:date post)))
-                 (h/remove-attr :id))
-  [:#full-article-footer] (h/remove-attr :id))</pre></td></tr><tr><td class="docs"><h4>Post navigation</h4>
-
-<p>To ease navigating between posts, previous and next posts (if
-available) will be shown outside of the <code>hero-unit</code>. These we'll
-call <code>#post-neighbours</code>, and this element must have two children:
-one with a <code>pull-left</code> class (for the next post), and another with
-<code>pull-right</code> (for the previous post).</p>
-
-<p>Both of these need to have an <code>a</code> element, whose <code>href</code> will be
-rewritten, and that element must have a <code>span</code> child, to be
-replaced by the title of the previous or next post.</p>
-
-<p>The <code>#post-neighbours</code> id will be removed from the final rendering,
-as it is only used to easily identify the snippet within the full
-template.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-neighbours (cfg/template) [:#post-neighbours]
-  [neighbours]
-  [:.pull-left :a :span] (h/substitute (:title (first neighbours)))
-  [:.pull-left :a] (h/set-attr :href (:url (first neighbours)))
-  [:.pull-left] (if (empty? (first neighbours))
-                  nil
-                  identity)
-  [:.pull-right :a :span] (h/substitute (:title (last neighbours)))
-  [:.pull-right :a] (h/set-attr :href (:url (last neighbours)))
-  [:.pull-right] (if (empty? (last neighbours))
-                   nil
-                   identity)
-  [:#post-neighbours] (h/remove-attr :id))</pre></td></tr><tr><td class="docs"><h4>Commenting</h4>
-
-<p>If commenting is enabled for a post, the <code>#disqus</code> element should
-be left intact, as-is. Otherwise, it will be removed, that is all
-this snippet does.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-post-disqus (cfg/template) [:#disqus]
-  [post]
-  [:#disqus] (when (:comments post) identity))</pre></td></tr><tr><td class="docs"><h4>Putting it all together</h4>
-
-<p>To put a full blog post together, we alter the page title, disable
-the recent and archived post areas, rearrange the <code>hero-unit</code>, pull
-in the next/prev links into <code>#post-neighbours</code>, and last but not
-least, fill out the sidebar, using the tools provided by
-<a href="#madness.blog.nav">blog.nav</a>.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-post (cfg/template)
-  [post all-posts]
-  [:title] (h/content (:title post) &quot; - Asylum&quot;)
-  [:#recents] nil
-  [:#archive] nil
-  [:.hero-unit] (h/do-&gt;
-                 (h/content (blog-post-title (:title post))
-                            (:summary post)
-                            (:content post)
-                            (blog-post-footer post)
-                            (blog-post-disqus post)))
-  [:#post-neighbours] (h/substitute (blog-post-neighbours (utils/neighbours all-posts post)))
-  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
-  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.page" name="madness.blog.page"><h1 class="project-name">madness.blog.page</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Loading & rendering of individual static pages</h2>
-
-<p>  For the sake of ease, static pages are fully loaded first, and
-  turned into a structure that is easy to work with. This namespace
-  implements the low-level loading, restructuring and rendering of
-  individual static pages.</p>
-
-<p>  Static pages are under <code>resources/pages</code> by default, and their path
-  below that will be reused as-is for the URL of the generated
-  page. That is, <code>resources/pages/foo/bar/index.html</code> becomes
-  <code>/foo/bar/index.html</code>.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.page
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [net.cgrand.enlive-html :as h]
-            [madness.blog.nav :as blog-nav]
-            [madness.utils :as utils]
-            [madness.config :as cfg]
-            [madness.io :as io]
-            [clojure.string :as str]
-            [clj-time.format :as time-format]))</pre></td></tr><tr><td class="docs"><p>Given a file path, strips the pages directory, and returns the
-  result, which will be used as the URL for a given page.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- page-url
-  [path]
-  (second (first (re-seq (re-pattern (str &quot;.*&quot; (cfg/dirs :pages) &quot;(.*)&quot;))
-                         path))))</pre></td></tr><tr><td class="docs"><p>A very dumb little helper function, that merely checks if a value
-  is set or not - it's mostly here to make some of the code below
-  clearer.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn- enabled?
-  [value]
-  (if (nil? value)
-    false
-    true))</pre></td></tr><tr><td class="docs"><p>Read a static page from a while, and restructure it into a
-  representation that is easy to work with.</p>
-
-<p>  Each static page must have an <code>article</code> element, where the only
-  required child is the <code>title</code>. It can also - optionally - have a
-  <code>comments</code> property, which, when set, will enable commenting on the
-  particular page.</p>
-
-<p>  Apart from the <code>article</code> element, only a <code>section</code> element is
-  required, whose contents will be used as the main content of the
-  static page.</p>
-
-<p>  The structure this function generates, should be pretty clear by
-  glancing over the code here.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn read-page
-  [file]
-  (let [page (io/read-file file)]
-    {:title (apply h/text (h/select page [:article :title])),
-     :url (page-url (.getPath file))
-     :comments (-&gt; (first (h/select page [:article])) :attrs :comments enabled?),
-     :content (h/select page [:section])}))</pre></td></tr><tr><td class="docs"><h3>Static page templates</h3>
-</td><td class="codes"></td></tr><tr><td class="docs"><p>The first thing about a page, is its header, the <code>h1</code> element of
-the <code>hero-unit</code> in the template.</p>
-
-<p>This snippet uses that element as the title template, replacing the
-<code>title</code> attribute of it, and its textual content with the title of
-the page itself.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-page-title (cfg/template) [:.hero-unit :h1]
-  [title]
-  [:h1] (h/do-&gt;
-         (h/content title)
-         (h/set-attr :title title)))</pre></td></tr><tr><td class="docs"><p>If commenting is enabled for a post, the <code>#disqus</code> element should
-be left intact, as-is. Otherwise, it will be removed, that is all
-this snippet does.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-page-disqus (cfg/template) [:#disqus]
-  [page]
-  [:#disqus] (when (:comments page) identity))</pre></td></tr><tr><td class="docs"><h4>Putting it all together</h4>
-
-<p>To put a full page together, we alter the page title, disable the
-recent and archived post areas, along with the <code>#post-neighbours</code>,
-as pages do not have those. We also rearrange the <code>hero-unit</code>, and
-last but not least, fill out the sidebar, using the tools provided
-by <a href="#madness.blog.nav">blog.nav</a>.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-page (cfg/template)
-  [page all-posts]
-  [:title] (h/content (:title page) &quot; - Asylum&quot;)
-  [:#recents] nil
-  [:#archive] nil
-  [:#post-neighbours] nil
-  [:.hero-unit] (h/do-&gt;
-                 (h/content (blog-page-title (:title page))
-                            (:content page)
-                            (blog-page-disqus page)))
-  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
-  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.archive" name="madness.blog.archive"><h1 class="project-name">madness.blog.archive</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Low-level archive rendering</h2>
-
-<p>  Archives are pages that do not have any content, but the title, an
-  archive-specific Atom feed, and a list of recent posts, and
-  optionally archived posts.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.archive
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [net.cgrand.enlive-html :as h]
-            [madness.blog.post :as blog-post]
-            [madness.blog :as blog]
-            [madness.blog.nav :as blog-nav]
-            [madness.utils :as utils]
-            [madness.config :as cfg]
-            [madness.blog.recent :as blog-recent]
-            [clojure.string :as str]))</pre></td></tr><tr><td class="docs"><p>This snippet renders a single item for the archived posts table. It
-takes the post as argument, and rewrites the <code>recent-post</code> item
-from the template, replacing the class with <code>archived</code>, updating
-its link and title, and also removing any other content part that
-appears on a recent post.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet archive-post-item (cfg/template) [:.recent-post]
-  [post]
-  [:.recent-post] (h/remove-class &quot;recent-post&quot;)
-  [:h2] (h/add-class &quot;archived&quot;)
-  [:h2 :a] (utils/rewrite-link-with-title
-             (:url post) (:title post))
-  [:.post-footer] nil
-  [:p.summary] nil)</pre></td></tr><tr><td class="docs"><p>Renders a single row of archived posts, using the <code>#recents</code>
-element of the template as source.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet archive-post-row (cfg/template) [:#recents]
-  [posts]
-  [:#recents] (h/remove-attr :id)
-  [:#recent-posts :.recent-post]
-    (h/clone-for [p posts]
-                 (h/do-&gt;
-                  (h/substitute (archive-post-item p))
-                  (h/set-attr :class (str &quot;span&quot; (cfg/archive-posts :span)))))
-  [:#recent-posts] (h/do-&gt;
-                    (h/remove-attr :id)
-                    (h/remove-class &quot;visible-desktop&quot;)))</pre></td></tr><tr><td class="docs"><p>Renders the whole archive page, be that the main one, or the
-per-tag archives. The page will include the title, a list of recent
-posts, followed by archived ones, and of course the sidebar. This
-also updates the Atom feed in the page (the <code>#main-rss</code> and
-<code>#rss-feed</code> elements) with the supplied URL. Everything else is
-disabled.</p>
-
-<p>Uses the <code>#recents</code> and <code>#archive</code> elements of the template mostly.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-archive (cfg/template)
-  [title feed-url blog-posts all-posts]
-  [:.hero-unit :h1] (h/do-&gt;
-                     (h/content title)
-                     (h/set-attr :title title))
-  [:.hero-unit :p] nil
-  [:#hero-full] nil
-  [:#full-article-footer] nil
-  [:#post-neighbours] nil
-  [:#disqus] nil
-  [:#rss-feed] (h/set-attr :href feed-url)
-  [:#main-rss] (h/do-&gt;
-                (h/remove-attr :id)
-                (h/set-attr :href feed-url))
-  [:#recents] (h/clone-for [recent (utils/blog-&gt;table
-                                    (cfg/recent-posts :columns)
-                                    (cfg/recent-posts :rows) blog-posts)]
-                           (h/do-&gt;
-                            (h/substitute (blog-recent/recent-post-row recent true))
-                            (h/before [{:tag :hr}])))
-  [:#archive] (h/clone-for [archive (utils/blog-&gt;table
-                                     (cfg/archive-posts :columns)
-                                     (cfg/archive-posts :rows)
-                                     (drop (dec (cfg/recent-posts :total)) blog-posts))]
-                           (h/do-&gt;
-                            (h/substitute (archive-post-row archive))
-                            (h/before utils/hr-desktop)))
-  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
-  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.index" name="madness.blog.index"><h1 class="project-name">madness.blog.index</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Rendering the index page</h2>
-
-<p>  The index is the root document of the generated site, it has a
-  featured - the most recent - blog post, and a list of recent items,
-  but no archived ones.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.index
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [net.cgrand.enlive-html :as h]
-            [madness.blog :as blog]
-            [madness.blog.nav :as blog-nav]
-            [madness.utils :as utils]
-            [madness.config :as cfg]
-            [madness.blog.recent :as blog-recent]
-            [clojure.string :as str]))</pre></td></tr><tr><td class="docs"><p>The featured article has a "Read on" button, which is the
-<code>#hero-full</code> element. It should be, or should have an <code>a</code> child,
-whose <code>href</code> this snippet sill replace, and remove the id.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet index-read-on (cfg/template) [:#hero-full]
-  [post]
-  [:#hero-full :a] (h/set-attr :href (:url post))
-  [:#hero-full] (h/remove-attr :id))</pre></td></tr><tr><td class="docs"><p>The featured article also have a title, the <code>h1</code> child of the
-<code>hero-unit</code> element. The <code>h1</code> must have an <code>a</code> child, whose <code>href</code>
-and textual content will be replaced by the featured article's URL
-and title, respectively.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet blog-index-first-title (cfg/template) [:.hero-unit :h1]
-  [post]
-  [:h1] (h/set-attr :title (:title post))
-  [:h1 :a] (utils/rewrite-link (:url post) (:title post)))</pre></td></tr><tr><td class="docs"><h3>Putting it all together</h3>
-
-<p>The index page has a featured article, in the <code>hero-unit</code> element,
-a set of recent posts in the <code>#recents</code> element, generated using
-the tools provided by <a href="#madness.blog.recent">blog.recent</a>.</p>
-
-<p>There are no neighbours, no archive, no comments, but the sidebar
-is, of course, filled out, using the functions provided by
-<a href="#madness.blog.nav">blog.nav</a>.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-index (cfg/template)
-  [blog-posts _]
-  [:.hero-unit] (h/do-&gt;
-                 (h/content (blog-index-first-title (first blog-posts))
-                            (:summary (first blog-posts))
-                            (index-read-on (first blog-posts))))
-  [:#recents]
-    (h/clone-for [rows (utils/blog-&gt;table
-                        (cfg/recent-posts :columns)
-                        (cfg/recent-posts :rows) (rest blog-posts))]
-                 (h/do-&gt;
-                  (h/substitute (blog-recent/recent-post-row rows false))
-                  (h/before utils/hr-desktop)))
-  [:#post-neighbours] nil
-  [:#archive] nil
-  [:#disqus] nil
-  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts blog-posts)
-  [:#nav-tags :ul :li] (blog-nav/all-tags blog-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.atom" name="madness.blog.atom"><h1 class="project-name">madness.blog.atom</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Rendering Atom feeds</h2>
-
-<p>  Atom feeds are considerably easier to render than HTML pages, there
-  is much less markup and design to pay attention to.</p>
-</td><td class="codes"><pre class="brush: clojure">(ns madness.blog.atom
-  ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :license {:name &quot;GNU General Public License - v3&quot;
-              :url &quot;http://www.gnu.org/licenses/gpl.txt&quot;}}
-  (:require [clj-time.format :as time-format]
-            [clj-time.local :as time-local]
-            [net.cgrand.enlive-html :as h]
-            [clojure.string :as str]
-            [madness.config :as cfg]))</pre></td></tr><tr><td class="docs"><p>Atom feeds need a special date format, this is that one.</p>
-</td><td class="codes"><pre class="brush: clojure">(def atom-date-formatter
-  (time-format/formatter &quot;yyyy-MM-dd'T'HH:mm:ssZZ&quot;))</pre></td></tr><tr><td class="docs"><p>We'll need to include the full post in the Atom feed, the summary
-and the content after one another, but we need to render only
-those, and those alone, without the rest of the design.</p>
-
-<p>For this, we use an empty template, and replace it wholly with the
-rendered summary + content combination.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/deftemplate bare-post (cfg/template :empty)
-  [post]
-  [:html] (h/substitute (:summary post) (:content post)))</pre></td></tr><tr><td class="docs"><p>Since Atom feeds are published, links therein should be
-  absolute. This little function replaces all local links - any, that
-  starts with / - with their expanded, fully qualified version.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn local-href-expand
-  [feed]
-  (str/replace feed #&quot;href=\&quot;(/[^\&quot;]*)\&quot;&quot;
-               (str &quot;href=\&quot;&quot; (cfg/atom-feed :base-url) &quot;$1\&quot;&quot;)))</pre></td></tr><tr><td class="docs"><p>A single atom post has a <code>title</code>, a <code>link</code>, an <code>updated</code> date, an
-<code>id</code>, and <code>content</code>. This snippet takes the <code>entry</code> element from
-the source template, and fills it in appropriately.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/defsnippet atom-post (cfg/template :atom) [:entry]
-  [site-base post]
-  [:title] (h/content (:title post))
-  [:link] (h/set-attr :href (str site-base (:url post)))
-  [:updated] (h/content (time-format/unparse
-                         atom-date-formatter (time-local/to-local-date-time (:date post))))
-  [:id] (h/content (str site-base (:url post)))
-  [:content] (h/content (apply str (bare-post post))))</pre></td></tr><tr><td class="docs"><p>Finally, assembling the whole atom feed is as simple as setting a
-the <code>title</code> and <code>id</code> under <code>feed</code>, with the site title and our base
-uri, respectively, updating the <code>updated</code> element, and adding the
-entries, by cloning the <code>atom-post</code> snippet above for each entry
-within the feed.</p>
-
-<p>The Atom feed also has two links: one with <code>rel=self</code>, and another,
-the base URI. The former must be marked with a <code>#self</code> id in the
-source template, the latter with <code>#base</code>. The extra ids will be
-removed from the result, they're only there so that the parts can
-be easily identified within the template.</p>
-</td><td class="codes"><pre class="brush: clojure">(h/deftemplate atom-feed (cfg/template :atom)
-  [title uri site-base posts]
-  [:feed :title] (h/content title)
-  [:feed] (h/set-attr :xmlns &quot;http://www.w3.org/2005/Atom&quot;)
-  [:#self] (h/do-&gt;
-            (h/remove-attr :id)
-            (h/set-attr :href (str site-base uri &quot;atom.xml&quot;)))
-  [:#base] (h/do-&gt;
-            (h/remove-attr :id)
-            (h/set-attr :href (str site-base uri)))
-  [:feed :id]
-    (h/content (str site-base uri))
-  [:updated] (h/content (time-format/unparse atom-date-formatter (time-local/local-now)))
-  [:entry] (h/clone-for [p posts]
-                        (h/substitute (atom-post site-base p))))</pre></td></tr><tr><td class="docs"><p>To finalise the Atom feed, local links shall be expanded, after the
-  feed has been generated. This function puts that all together, and
-  should be the only function used from this namespace.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn emit-atom
-  [title uri posts]
-  (local-href-expand (apply str (atom-feed title uri
-                                           (cfg/atom-feed :base-url) posts))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+   (h/content &quot; &quot; title)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/fogus/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
        SyntaxHighlighter.all()</script></body></html>
