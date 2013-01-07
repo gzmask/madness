@@ -48,7 +48,6 @@ pull in more build machines, and compile for other platforms aswell.
     </optgroup>
     <optgroup label="Ubuntu">
      <option value="ubuntu-lucid">Ubuntu 10.04 LTS (Lucid Lynx)</option>
-     <option value="ubuntu-natty">Ubuntu 11.04 (Natty Narwhal)</option>
      <option value="ubuntu-oneiric">Ubuntu 11.10 (Oneiric Ocelot)</option>
      <option value="ubuntu-precise">Ubuntu 12.04 LTS (Precise Pangolin)</option>
      <option value="ubuntu-quantal">Ubuntu 12.10 (Quantal Quetzal)</option>
