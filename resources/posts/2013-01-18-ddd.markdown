@@ -1,0 +1,75 @@
+---
+title: Dontcare-driven development
+date: 2013-01-18 12:30
+tags: [Technology, Hacking]
+comments: 1
+---
+
+There are a number of development processes, [test-driven][tdd],
+[hammock-driven][hdd] and a whole lot of others. I practiced, and
+continue to practice some of them, whichever I feel is most
+appropriate for the task at hand. However, I also found a model that
+works extremely well for me, and this is what I will present you
+today: **dontcare-driven development**.
+
+ [tdd]: https://en.wikipedia.org/wiki/Test-driven_development
+ [hdd]: https://www.youtube.com/watch?v=f84n5oFoZBc
+
+<!-- more -->
+
+The core idea behind the model is this:
+
+> <em>If you ignore a problem long enough, when you later come back to
+> it, you will find it solved.</em>
+
+You may think this is a terrible advice, and you'd be right, too! But
+lets explore how a software development problem can "<em>solve
+itself</em>" first!
+
+The most obvious - and from the perspective of a lazy hacker, the best
+and easiest - solution is when it becomes
+[somebody else's problem][sep], and someone else solves it. This is
+great, but happens rarely, and assumes that there is a willing and
+capable community around the software, where I mean community in a
+broad sense, that includes other members of the development team
+aswell. Of course, this has a few downsides too, such as no guarantees
+of the problem ever becoming solved. Waiting for others to solve one's
+problem is also a bad practice in the long run.
+
+ [sep]: https://en.wikipedia.org/wiki/Somebody_Else's_Problem
+
+However, this is not the only way a problem can suddenly disappear!
+Not counting magical events and such, there's the case of the human
+subconscious: a part of one's brain that tends to function
+independently of the cognitive self. During the past decade or so that
+I spent writing things, I found that my best ideas come to me when I'm
+severely sleep-deprived, when my consciousness is fading, and the
+crazy-colorful fields of the unconscious shine through.
+
+Expanding on this observation, I began to experiment. When I faced a
+problem I could not solve easily, that kept me thinking for days at a
+time, I started to ignore it on purpose, and not think about it at
+all. That seriously pissed off my unconscious it seems, because when I
+revisited the issue some months later, the solution was crystal
+clear. In other cases since, after waking up from my routine
+power-naps I do on the tram to work, I often had this distant feeling
+that I solved something. Sometimes I even had vague recollections of
+what I was dreaming about - it's a very interesting phenomena -, and
+these dreams often involved these ignored issues.
+
+Most of the code I wrote during the past year, was not born from a
+conscious thought, but from an idea that's been at the back of my mind
+for weeks or months prior, that I left there to ripe, without actively
+thinking about it. I'm fairly satisfied with the result, and the
+method too. I sleep better (though less, but for other reasons),
+knowing that it doesn't go to waste. I dare taking on tasks that look
+difficult on the first attempt, because I know how to trick myself
+into solving it in my sleep, so to say.
+
+I like to think that **dontcare-driven development** is an expansion
+of [hammock-driven development][hdd], because it is essentially the
+same thing, just done by ["<em>someone else</em>"][sep].
+
+ [hdd]: https://www.youtube.com/watch?v=f84n5oFoZBc
+
+I'm algernon, and I dream in code.
