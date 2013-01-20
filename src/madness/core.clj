@@ -39,3 +39,14 @@
   ([] (-main ":index" ":archive" ":tags" ":date-archives" ":posts"
              ":main-feed" ":pages" ":tag-feeds" ":date-feeds"))
   ([& args] (dorun (map render/render (map str->keyword args)))))
+
+(defn madness-fragments
+  "Render post fragments, posts that are not wrapped within the
+  overall design.
+
+  Takes one ore more post URLs, and renders them to the standard
+  output."
+
+  [& post-urls]
+
+  (dorun (map (partial render/render :post-fragment) post-urls)))

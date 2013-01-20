@@ -18,4 +18,5 @@
                  [me.raynes/conch "0.4.0"]]
   :profiles {:dev {:dependencies [[marginalia "0.7.0"]]}}
   :aliases {"build-docs" ["with-profile" "dev" "run" "-m" "madness.docs/generate-docs"]
-            "madness" ["run" "-m" "madness.core"]})
+            "madness" ["run" "-m" "madness.core"]
+            "madness-fragment" ["run" "-m" "madness.core/madness-fragments"]})

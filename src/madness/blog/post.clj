@@ -191,3 +191,17 @@
   [:#post-neighbours] (h/substitute (blog-post-neighbours (utils/neighbours all-posts post)))
   [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
   [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))
+
+;; To help cross posting to other engines, lets have a template that
+;; only contains the rendered summary and content of the post, and
+;; nothing else.
+;;
+;; This uses an empty template, but still does code highlighting.
+;;
+(h/deftemplate blog-post-fragment (cfg/template :empty)
+  [post _]
+
+  [:html] (h/do->
+           (h/substitute (:summary post)
+                         (:content post)))
+  [:.pygmentize] utils/pygmentize-node)

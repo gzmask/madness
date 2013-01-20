@@ -35,6 +35,12 @@
   (io/write-out-dir (utils/replace-extension file ".html")
                     (apply str (render-fn current-post all-posts))))
 
+(defn- render-to-stdout
+  "Render a post or page to stdout, using a custom render function."
+  [all-posts current-post render-fn]
+
+  (println (apply str (render-fn current-post all-posts))))
+
 ;; ### Rendering
 ;;
 ;; Every part of the site - at least the HTML parts - have a common
@@ -203,6 +209,18 @@
 ;; And now that we can render a single post, we shall render them all!
 (defmethod render :posts [_]
   (dorun (map (partial render :post res/posts) res/posts)))
+
+;; To help cross-posting to other engines, it is useful to be able to
+;; render only the content of a post, a fragment, without the rest of
+;; the page wrapped around it.
+;;
+;; These fragments shall be rendered to standard output, as they
+;; should not hit the disk by default.
+(defmethod render :post-fragment
+  [_ post-url]
+
+  (let [post (first (filter #(= (:url %) post-url) res/posts))]
+    (dorun (render-to-stdout nil post blog-post/blog-post-fragment))))
 
 ;; ### Static pages
 ;;
