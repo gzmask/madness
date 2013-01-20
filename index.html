@@ -3159,7 +3159,14 @@ $ lein run -m madness.core :index :archive
 </td><td class="codes"><pre class="brush: clojure">(defn -main
   ([] (-main &quot;:index&quot; &quot;:archive&quot; &quot;:tags&quot; &quot;:date-archives&quot; &quot;:posts&quot;
              &quot;:main-feed&quot; &quot;:pages&quot; &quot;:tag-feeds&quot; &quot;:date-feeds&quot;))
-  ([&amp; args] (dorun (map render/render (map str-&gt;keyword args)))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.config" name="madness.config"><h1 class="project-name">madness.config</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Configuration handling for Madness.</h2>
+  ([&amp; args] (dorun (map render/render (map str-&gt;keyword args)))))</pre></td></tr><tr><td class="docs"><p>Render post fragments, posts that are not wrapped within the
+  overall design.</p>
+
+<p>  Takes one ore more post URLs, and renders them to the standard
+  output.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn madness-fragments
+  [&amp; post-urls]
+  (dorun (map (partial render/render :post-fragment) post-urls)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.config" name="madness.config"><h1 class="project-name">madness.config</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Configuration handling for Madness.</h2>
 
 <p>  Madness can be configured by placing a file called <code>settings.clj</code> in
   the root directory. Settings therein will override the defaults when
@@ -3293,7 +3300,10 @@ span, we divide 12 by the number of columns, and round it.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn- render-to-file
   [all-posts current-post render-fn file]
   (io/write-out-dir (utils/replace-extension file &quot;.html&quot;)
-                    (apply str (render-fn current-post all-posts))))</pre></td></tr><tr><td class="docs"><p>Render a part of the site to files.</p>
+                    (apply str (render-fn current-post all-posts))))</pre></td></tr><tr><td class="docs"><p>Render a post or page to stdout, using a custom render function.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn- render-to-stdout
+  [all-posts current-post render-fn]
+  (println (apply str (render-fn current-post all-posts))))</pre></td></tr><tr><td class="docs"><p>Render a part of the site to files.</p>
 
 <h3>Rendering</h3>
 
@@ -3418,7 +3428,17 @@ filename.</p>
   (let [fn (str &quot;.&quot; (:url post) &quot;index.html&quot;)]
     (render-to-file all-posts post blog-post/blog-post fn)))</pre></td></tr><tr><td class="docs"><p>And now that we can render a single post, we shall render them all!</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod render :posts [_]
-  (dorun (map (partial render :post res/posts) res/posts)))</pre></td></tr><tr><td class="docs"><h3>Static pages</h3>
+  (dorun (map (partial render :post res/posts) res/posts)))</pre></td></tr><tr><td class="docs"><p>To help cross-posting to other engines, it is useful to be able to
+render only the content of a post, a fragment, without the rest of
+the page wrapped around it.</p>
+
+<p>These fragments shall be rendered to standard output, as they
+should not hit the disk by default.</p>
+</td><td class="codes"><pre class="brush: clojure">(defmethod render :post-fragment
+  [_ post-url]
+
+  (let [post (first (filter #(= (:url %) post-url) res/posts))]
+    (dorun (render-to-stdout nil post blog-post/blog-post-fragment))))</pre></td></tr><tr><td class="docs"><h3>Static pages</h3>
 
 <p>Static pages are very much like blog posts, except they are not
 tagged, there is no previous or next page, and their URL is not
@@ -4006,7 +4026,17 @@ least, fill out the sidebar, using the tools provided by
   [:.pygmentize] utils/pygmentize-node
   [:#post-neighbours] (h/substitute (blog-post-neighbours (utils/neighbours all-posts post)))
   [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
-  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.page" name="madness.blog.page"><h1 class="project-name">madness.blog.page</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Loading & rendering of individual static pages</h2>
+  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))</pre></td></tr><tr><td class="docs"><p>To help cross posting to other engines, lets have a template that
+only contains the rendered summary and content of the post, and
+nothing else.</p>
+
+<p>This uses an empty template, but still does code highlighting.</p>
+</td><td class="codes"><pre class="brush: clojure">(h/deftemplate blog-post-fragment (cfg/template :empty)
+  [post _]
+  [:html] (h/do-&gt;
+           (h/substitute (:summary post)
+                         (:content post)))
+  [:.pygmentize] utils/pygmentize-node)</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#madness.blog.page" name="madness.blog.page"><h1 class="project-name">madness.blog.page</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><h2>Loading & rendering of individual static pages</h2>
 
 <p>  For the sake of ease, static pages are fully loaded first, and
   turned into a structure that is easy to work with. This namespace
