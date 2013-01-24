@@ -1,7 +1,7 @@
 ---
 title: An Emacs well trained
 date: 2013-01-20 17:00
-tags: [Technology, Hacking]
+tags: [Technology, Hacking, Video]
 comments: 1
 ---
 
