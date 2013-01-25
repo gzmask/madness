@@ -31,7 +31,7 @@ ported to other platforms, such as JavaScript
 ([ClojureScript][cljs])-, the language is being adopted quickly by
 many organisations around the world.
 
-## Who's using Clojure in production? [<img src="/assets/asylum/images/posts/twitter.png" width="32" height="32">][storm-power]
+## Who's using Clojure in production?
 
 It's used at [Twitter](http://twitter.com/) (see
 [Storm](http://storm-project.net/), a distributed and fault tolerant
