@@ -7,7 +7,7 @@
   site, neither speed nor memory requirements are particularly bad."
 
   ^{:author "Gergely Nagy <algernon@madhouse-project.org>"
-    :copyright "Copyright (C) 2012 Gergely Nagy <algernon@madhouse-project.org>"
+    :copyright "Copyright (C) 2012, 2013 Gergely Nagy <algernon@madhouse-project.org>"
     :license {:name "Creative Commons Attribution-ShareAlike 3.0"
               :url "http://creativecommons.org/licenses/by-sa/3.0/"}}
   (:require [madness.blog.post :as blog-post]
@@ -17,14 +17,16 @@
 
 (defn load-posts
   "Load all posts for the blog. Returns a sequence of processed blog
-  posts. See the [blog.post][1] namespace for more information about
-  how a processed post looks like.
+  posts, sorted by date, newest first. See the [blog.post][1]
+  namespace for more information about how a processed post looks
+  like.
 
   [1]: #madness.blog.post"
 
   []
 
-  (map blog-post/read-post (io/find-files (cfg/dirs :posts))))
+  (sort-by :date #(compare %2 %1)
+           (map blog-post/read-post (io/find-files (cfg/dirs :posts)))))
 
 (defn load-pages
   "Load all pages for the blog. Returns a sequence of processed blog
