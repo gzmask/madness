@@ -3720,18 +3720,20 @@ assume it is HTML.</p>
   site, neither speed nor memory requirements are particularly bad.</p>
 </td><td class="codes"><pre class="brush: clojure">(ns madness.blog
   ^{:author &quot;Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
-    :copyright &quot;Copyright (C) 2012 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
+    :copyright &quot;Copyright (C) 2012, 2013 Gergely Nagy &lt;algernon@madhouse-project.org&gt;&quot;
     :license {:name &quot;Creative Commons Attribution-ShareAlike 3.0&quot;
               :url &quot;http://creativecommons.org/licenses/by-sa/3.0/&quot;}}
   (:require [madness.blog.post :as blog-post]
             [madness.blog.page :as blog-page]
             [madness.config :as cfg]
             [madness.io :as io]))</pre></td></tr><tr><td class="docs"><p>Load all posts for the blog. Returns a sequence of processed blog
-  posts. See the <a href="#madness.blog.post">blog.post</a> namespace for more information about
-  how a processed post looks like.</p>
+  posts, sorted by date, newest first. See the <a href="#madness.blog.post">blog.post</a>
+  namespace for more information about how a processed post looks
+  like.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn load-posts
   []
-  (map blog-post/read-post (io/find-files (cfg/dirs :posts))))</pre></td></tr><tr><td class="docs"><p>Load all pages for the blog. Returns a sequence of processed blog
+  (sort-by :date #(compare %2 %1)
+           (map blog-post/read-post (io/find-files (cfg/dirs :posts)))))</pre></td></tr><tr><td class="docs"><p>Load all pages for the blog. Returns a sequence of processed blog
   pages. See the <a href="#madness.blog.page">blog.page</a> namespace for more information about
   how a processed page looks like.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn load-pages
