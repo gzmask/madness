@@ -13,6 +13,11 @@ reasons, and more, we're glad to host the first
 [Budapest Clojure User Group Meetup][bcug] in our office, on the 29th
 of January!
 
+ [balabit]: http://www.balabit.com/
+ [bcug]: http://www.meetup.com/Budapest-Clojure-User-Group/
+
+<!-- more -->
+
 **But what is [Clojure][clj]?** It is a modern dialect of the
 [LISP][lisp] family of programming languages, originally built on top
 of the [Java Virtual Machine][jvm], a functional language, with strong
@@ -23,8 +28,6 @@ focus on concurrencty, and being practical.
  [clj]: http://www.clojure.org/
  [lisp]: https://en.wikipedia.org/wiki/Lisp_(programming_language)
  [jvm]: http://en.wikipedia.org/wiki/Java_virtual_machine
-
-<!-- more -->
 
 Due to these properties and more - including but not limited to being
 ported to other platforms, such as JavaScript
