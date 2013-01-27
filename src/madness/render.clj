@@ -13,7 +13,7 @@
   [1]: https://github.com/algernon/madness/tree/asylum"
 
   ^{:author "Gergely Nagy <algernon@madhouse-project.org>"
-    :copyright "Copyright (C) 2012 Gergely Nagy <algernon@madhouse-project.org>"
+    :copyright "Copyright (C) 2012-2013 Gergely Nagy <algernon@madhouse-project.org>"
     :license {:name "Creative Commons Attribution-ShareAlike 3.0"
               :url "http://creativecommons.org/licenses/by-sa/3.0/"}}
 
@@ -44,9 +44,9 @@
 ;; ### Rendering
 ;;
 ;; Every part of the site - at least the HTML parts - have a common
-;; structure: a [navigation bar][1], the content area, a sidebar, and
-;; a footer. These are common to all pages and posts, archives and
-;; everything else too.
+;; structure: a [navigation bar][1], the content area, and a footer,
+;; and whatever else the template may contain. These are common to all
+;; pages and posts, archives and everything else too.
 ;;
 ;; What is inside the content area, varies by what page we're talking
 ;; about - as it will be explained just below.

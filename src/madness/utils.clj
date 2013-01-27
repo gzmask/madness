@@ -36,6 +36,14 @@
 
   (time-format/unparse (time-format/formatter "yyyy-MM-dd") date))
 
+(defn date-to-url
+  "Given a date, return a relative URL that points to the yearly
+  archives."
+
+  [date]
+
+  (str "/blog/" (time-format/unparse (time-format/formatter "yyyy") date) "/"))
+
 (defn post-tagged?
   "Determine whether a post is tagged with a given tag."
 

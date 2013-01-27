@@ -12,7 +12,7 @@
   URL."
 
   ^{:author "Gergely Nagy <algernon@madhouse-project.org>"
-    :copyright "Copyright (C) 2012 Gergely Nagy <algernon@madhouse-project.org>"
+    :copyright "Copyright (C) 2012-2013 Gergely Nagy <algernon@madhouse-project.org>"
     :license {:name "Creative Commons Attribution-ShareAlike 3.0"
               :url "http://creativecommons.org/licenses/by-sa/3.0/"}}
   
@@ -80,18 +80,19 @@
 
 ;; ### Blog post templates
 ;;
-;; Blog posts are almost entirely contained within a `hero-unit`
-;; class, with only the previous/next links outside of it.
+;; Blog posts are almost entirely contained within the
+;; `#madness-article` element, with only the previous/next links
+;; outside of it.
 
 ;; One of the first things one sees about a post, is its title, which
-;; is the `h1` element of the `hero-unit` in the template.
+;; is the `h2` element of the `#madness-article` in the template.
 ;;
 ;; This snippet uses that element as the title template, replacing the
 ;; `title` attribute of it, and its textual content with the title of
 ;; the post itself.
-(h/defsnippet blog-post-title (cfg/template) [:.hero-unit :h1]
+(h/defsnippet blog-post-title (cfg/template) [:#madness-article :h2]
   [title]
-  [:h1] (h/do->
+  [:h2] (h/do->
          (h/content title)
          (h/set-attr :title title)))
 
@@ -99,79 +100,95 @@
 ;;
 ;; Posts, when viewed in full, and not only their summary, have a
 ;; footer, which holds their tags and the date they were posted on,
-;; these all live under the `#full-article-footer` element.
+;; these all live under the `#madness-article-meta` element.
 
 ;; The full article footer has only a single link in the template: the
 ;; snippet that we'll use to render a single tag.
-(h/defsnippet blog-post-tag (cfg/template) [:#full-article-footer :a]
+(h/defsnippet blog-post-tag (cfg/template) [:#madness-article-tags :a]
   [tag]
 
-  [:a] (h/do->
-        (h/set-attr :href (utils/tag-to-url tag))
-        (h/after " "))
+  [:a] (h/set-attr :href (utils/tag-to-url tag))
   [:a :span] (h/substitute tag))
 
-;; The full footer contains a date, the `#post-date` element, and
-;; we'll also render the tags there too. Both the `#post-date` and the
-;; `#full-article-footer` ids will be removed.
-(h/defsnippet blog-post-footer (cfg/template) [:#full-article-footer]
+;; The post meta-data - as mentioned just before - lives in
+;; `#madness-article-meta`, and contains the date of the post, and the
+;; tags.
+(h/defsnippet blog-post-meta (cfg/template)
+  [:.madness-article-meta]
+
   [post]
 
-  [:a] (h/clone-for [tag (:tags post)]
-                    (h/substitute (blog-post-tag tag)))
-  [:#post-date] (h/do->
-                 (h/content (utils/date-format (:date post)))
-                 (h/remove-attr :id))
-  [:#full-article-footer] (h/remove-attr :id))
+  [:#madness-article-date] (h/do->
+                            (h/set-attr :href (utils/date-to-url (:date post)))
+                            (h/content (utils/date-format (:date post))))
+  [:#madness-article-tags :a] (h/clone-for
+                               [tag (butlast (:tags post))]
+                               (h/do->
+                                (h/substitute (blog-post-tag tag))
+                                (h/after ", ")))
+  [:#madness-article-tags] (h/append
+                            (blog-post-tag (last (:tags post))))
+  [:#madness-article-tags] (h/remove-attr :id))
 
 ;; #### Post navigation
 ;;
 ;; To ease navigating between posts, previous and next posts (if
-;; available) will be shown outside of the `hero-unit`. These we'll
-;; call `#post-neighbours`, and this element must have two children:
-;; one with a `pull-left` class (for the next post), and another with
-;; `pull-right` (for the previous post).
+;; available) will be shown outside of the `#madness-article`. These
+;; we'll call `#madness-article-neighbours`, and this element must
+;; have two children:  `#madness-article-next` and
+;; `#madness-article-prev` for links to the next and previous posts,
+;; respectively.
 ;;
 ;; Both of these need to have an `a` element, whose `href` will be
 ;; rewritten, and that element must have a `span` child, to be
 ;; replaced by the title of the previous or next post.
 ;;
-;; The `#post-neighbours` id will be removed from the final rendering,
-;; as it is only used to easily identify the snippet within the full
-;; template.
-(h/defsnippet blog-post-neighbours (cfg/template) [:#post-neighbours]
+(h/defsnippet blog-post-neighbours (cfg/template) [:#madness-article-neighbours]
   [neighbours]
 
-  [:.pull-left :a :span] (h/substitute (:title (first neighbours)))
-  [:.pull-left :a] (h/set-attr :href (:url (first neighbours)))
-  [:.pull-left] (if (empty? (first neighbours))
-                  nil
-                  identity)
+  [:#madness-article-next :a] (h/set-attr :href (:url (first neighbours)))
+  [:#madness-article-next :a :span] (h/substitute (:title (first neighbours)))
+  [:#madness-article-next] (if (empty? (first neighbours))
+                             nil
+                             (h/remove-attr :id))
   
-  [:.pull-right :a :span] (h/substitute (:title (last neighbours)))
-  [:.pull-right :a] (h/set-attr :href (:url (last neighbours)))
-  [:.pull-right] (if (empty? (last neighbours))
-                   nil
-                   identity)
-  [:#post-neighbours] (h/remove-attr :id))
+  [:#madness-article-prev :a :span] (h/substitute (:title (last neighbours)))
+  [:#madness-article-prev :a] (h/set-attr :href (:url (last neighbours)))
+  [:#madness-article-prev] (if (empty? (last neighbours))
+                             nil
+                             (h/remove-attr :id))
+  [:#madness-article-neighbours] (h/remove-attr :id))
 
 ;; #### Commenting
 ;;
-;; If commenting is enabled for a post, the `#disqus` element should
-;; be left intact, as-is. Otherwise, it will be removed, that is all
-;; this snippet does.
-(h/defsnippet blog-post-disqus (cfg/template) [:#disqus]
+;; If commenting is enabled for a post, the
+;; `#madness-article-comments` element should be left intact,
+;; as-is. Otherwise, it will be removed, that is all this snippet
+;; does.
+(h/defsnippet blog-post-comments (cfg/template) [:#madness-article-comments]
   [post]
 
-  [:#disqus] (when (:comments post) identity))
+  [:#madness-article-comments] (when (:comments post) (h/remove-attr :id)))
+
+;; A blog post title is contained within `#madness-article`, in a `h2`
+;; element, which must have an `a` child. These two will be updated to
+;; contain the title of the given blog post.
+(h/defsnippet blog-post-title (cfg/template)
+  [:#madness-article :h2]
+
+  [post]
+
+  [:h2] (h/set-attr :title (:title post))
+  [:h2 :a] (utils/rewrite-link (:url post) (:title post))
+  [:#madness-article] (h/remove-attr :id))
 
 ;; #### Putting it all together
 ;;
 ;; To put a full blog post together, we alter the page title, disable
-;; the recent and archived post areas, rearrange the `hero-unit`, pull
-;; in the next/prev links into `#post-neighbours`, and last but not
-;; least, fill out the sidebar, using the tools provided by
-;; [blog.nav][1].
+;; the recent and archived post areas, rearrange the
+;; `#madness-article`, pull in the next/prev links into
+;; `#post-neighbours`, and last but not least, fill out the global tag
+;; & recent post lists, using the tools provided by [blog.nav][1].
 ;;
 ;; [1]: #madness.blog.nav
 ;;
@@ -179,18 +196,40 @@
   [post all-posts]
 
   [:title] (h/content (:title post) " - Asylum")
-  [:#recents] nil
-  [:#archive] nil
-  [:.hero-unit] (h/do->
-                 (h/content (blog-post-title (:title post))
-                            (:summary post)
-                            (:content post)
-                            (blog-post-footer post)
-                            (blog-post-disqus post)))
+
+  ; Navigation bar
+  [:#madness-recent-posts :li] (blog-nav/recent-posts all-posts)
+  [:#madness-recent-posts] (h/remove-attr :id)
+  [:#madness-tags :li] (blog-nav/all-tags all-posts)
+  [:#madness-tags] (h/remove-attr :id)
+
+  ; Article
+  [:#madness-article :h2] (h/substitute
+                           (blog-post-title post))
+  [:#madness-article-content] (h/substitute
+                               (:summary post)
+                               (:content post))
+  [:.madness-article-meta] (h/substitute
+                            (blog-post-meta post))
+
+  [:#madness-article-read-more] nil
+
+  ; Footer
+  [:#madness-article-comments] (h/substitute (blog-post-comments post))
+  [:#madness-article-neighbours] (h/substitute (blog-post-neighbours (utils/neighbours all-posts post)))
+
+  ; Archive
+  [:#madness-archive-recent-posts] nil
+  [:#madness-archive-archived-posts] nil
+
+  ; Misc
   [:.pygmentize] utils/pygmentize-node
-  [:#post-neighbours] (h/substitute (blog-post-neighbours (utils/neighbours all-posts post)))
-  [:#nav-recent-posts :ul :li] (blog-nav/recent-posts all-posts)
-  [:#nav-tags :ul :li] (blog-nav/all-tags all-posts))
+
+  ; Cleanup
+  [:#main-feed] (h/remove-attr :id)
+  [:#rss-feed] (h/remove-attr :id)
+  [:#madness-content-area] (h/remove-attr :id)
+  [:#madness-article] (h/remove-attr :id))
 
 ;; To help cross posting to other engines, lets have a template that
 ;; only contains the rendered summary and content of the post, and

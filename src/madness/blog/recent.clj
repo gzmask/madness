@@ -12,12 +12,13 @@
   any recent posts shown."
 
   ^{:author "Gergely Nagy <algernon@madhouse-project.org>"
-    :copyright "Copyright (C) 2012 Gergely Nagy <algernon@madhouse-project.org>"
+    :copyright "Copyright (C) 2012-2013 Gergely Nagy <algernon@madhouse-project.org>"
     :license {:name "Creative Commons Attribution-ShareAlike 3.0"
               :url "http://creativecommons.org/licenses/by-sa/3.0/"}}
   
   (:require [net.cgrand.enlive-html :as h]
             [madness.utils :as utils]
+            [madness.blog.post :as blog-post]
             [madness.config :as cfg]))
 
 ;; The first nippet to care about is the tag list of a recent post
@@ -57,19 +58,36 @@
 ;; classed element will be replaced by the list of tags
 ;; (`recent-post-tag` above cloned for all tags).
 ;;
-(h/defsnippet recent-post-item (cfg/template) [:.recent-post]
+
+(h/defsnippet blog-recent-meta (cfg/template)
+  [:#madness-recent-article-meta]
+
   [post]
 
-  [:.recent-post] (h/remove-class "recent-post")
-  [:h2 :a] (utils/rewrite-link-with-title
+  [:#madness-recent-article-date] (h/do->
+                                   (h/set-attr :href (utils/date-to-url (:date post)))
+                                   (h/content (utils/date-format (:date post))))
+  [:#madness-recent-article-tags :a] (h/clone-for
+                               [tag (butlast (:tags post))]
+                               (h/do->
+                                (h/substitute (blog-post/blog-post-tag tag))
+                                (h/after ", ")))
+  [:#madness-recent-article-tags] (h/append
+                            (blog-post/blog-post-tag (last (:tags post))))
+  [:#madness-recent-article-tags] (h/remove-attr :id)
+  
+  [:#madness-recent-article-meta] (h/remove-attr :id))
+
+(h/defsnippet recent-post-item (cfg/template) [:#madness-archive-recent-post]
+  [post]
+
+  [:#madness-archive-recent-post] (h/remove-attr :id)
+  [:h3 :a] (utils/rewrite-link-with-title
              (:url post)
              (:title post))
-  [:.post-date] (h/substitute (utils/date-format (:date post)))
-  [:.tag] (h/clone-for [tag (:tags post)]
-                       (h/substitute (recent-post-tag tag)))
-  [:p.summary] (h/do->
-                (h/remove-attr :class)
-                (h/substitute (:summary post))))
+  [:#madness-recent-article-meta] (h/substitute (blog-recent-meta post))
+
+  [:#madness-recent-article-summary] (h/substitute (:summary post)))
 
 ;; And finally, we are now able to assemble a whole row of recent
 ;; posts! We'll use the `#recents` element as a basis for our
@@ -82,17 +100,13 @@
 ;; If we're rendering an archive, we'll also remove the
 ;; `visible-desktop` class, since archives should be visible on
 ;; non-desktop resolutions too.
-(h/defsnippet recent-post-row (cfg/template) [:#recents]
+(h/defsnippet recent-post-row (cfg/template) [:#madness-archive-recent-post-row]
   [posts archive?]
 
-  [:#recents] (h/remove-attr :id)
-  [:#recent-posts :.recent-post]
+  [:#madness-archive-recent-post-row] (h/remove-attr :id)
+  [:#madness-archive-recent-post]
     (h/clone-for [p posts]
                  (h/do->
                   (h/substitute (recent-post-item p))
-                  (h/set-attr :class (str "span" (cfg/recent-posts :span)))))
-  [:#recent-posts] (h/do->
-                    (h/remove-attr :id)
-                    (if archive?
-                      (h/remove-class "visible-desktop")
-                      identity)))
+                  (h/set-attr :class (str "span" (cfg/recent-posts :span)))
+                  (h/remove-attr :id))))
