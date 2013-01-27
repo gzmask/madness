@@ -18,10 +18,6 @@ footer {
         font-size: 125%;
 }
 
-.brand:hover {
-        background-color: #e5e5e5 !important;
-}
-
 #dist-select select {
         background: #efefef;
         color: #000;
