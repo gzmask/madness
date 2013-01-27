@@ -1,0 +1,38 @@
+/* -*- css -*- */
+
+body {
+        padding-top: 90px;
+}
+
+@media (max-width: 979px) {
+        body {
+                padding-top: 0px;
+        }
+}
+
+footer {
+        padding: 0 2em;
+}
+
+.large-text {
+        font-size: 125%;
+}
+
+#dist-select select {
+        background: #efefef;
+        color: #000;
+}
+
+.madness-article-meta {
+        margin-bottom: 1.5em;
+        padding-bottom: 0.5em;
+        border-bottom: 1px dotted #999;
+}
+
+.madness-post-title {
+        overflow-y: visible;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        white-space: nowrap;
+}
