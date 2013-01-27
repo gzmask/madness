@@ -2,7 +2,6 @@
 title: An Emacs well trained
 date: 2013-01-20 17:00
 tags: [Technology, Hacking, Video]
-comments: 1
 ---
 
 Inspired by a [recent post from Athos][1], I recorded a short video

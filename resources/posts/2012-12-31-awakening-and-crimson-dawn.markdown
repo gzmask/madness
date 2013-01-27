@@ -2,7 +2,6 @@
 title: Awakening & Crimson Dawn
 date: 2012-12-31 22:00
 tags: [Fiction, The Pilgrim]
-comments: 1
 ---
 
 A few months from now, the 18th of February will be an important day

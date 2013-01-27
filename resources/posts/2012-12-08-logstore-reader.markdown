@@ -2,7 +2,6 @@
 title: LogStore news
 date: 2012-12-08 23:15
 tags: [Technology, Clojure, Hacking, syslog-ng]
-comments: 1
 ---
 
 It has been a while ago that I last worked on the

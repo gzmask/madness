@@ -2,7 +2,6 @@
 title: Markdown madness
 date: 2012-11-01 15:00
 tags: [News, Technology, Clojure]
-comments: 1
 ---
 
 When I [migrated][1] this site to my own [engine][2], I lost support

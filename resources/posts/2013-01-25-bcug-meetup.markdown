@@ -2,7 +2,6 @@
 title: "Clojure, BalaBit, Budapest. We invite you to see history being made!"
 date: 2013-01-25 20:00
 tags: [Technology, Clojure, News]
-comments: 1
 ---
 
 We here at [BalaBit][balabit] - being an innovative tech company - are

@@ -1,6 +1,5 @@
 ---
 title: Debian repository
-comments: 1
 ---
 
 For some selected packages ([syslog-ng][sng] 3.3 & 3.4, and

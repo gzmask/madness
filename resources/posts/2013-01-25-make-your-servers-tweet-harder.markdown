@@ -2,7 +2,6 @@
 title: "Make your servers tweet harder"
 date: 2013-01-25 18:00
 tags: [Technology, syslog-ng]
-comments: 1
 ---
 
 A couple of years ago, [Peter Gyongyosi][gyp] wrote a piece titled
