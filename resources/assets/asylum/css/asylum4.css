@@ -40,3 +40,7 @@ footer {
         -o-text-overflow: ellipsis;
         white-space: nowrap;
 }
+
+.madness-read-on {
+        margin: 1em;
+}
