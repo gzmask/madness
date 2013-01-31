@@ -1,0 +1,114 @@
+---
+title: "syslog-ng 3.4.1 released"
+date: 2013-01-31 13:15
+tags: [News, syslog-ng]
+---
+
+I'm proud to announce that culminating a year's worth of development,
+[syslog-ng][sng] 3.4.1 [has been released][341-release]! This is the
+first stable release from the 3.4 branch, the successor of 3.3, which
+was originally released in October, 2011. This is the first time I
+have the privilege to maintain a branch of syslog-ng from even before
+its first stable release (I [took over 3.3][33-takeover] in last May;
+3.4 with RC1). It sports a fair amount of new major features compared
+to previous stable releases, and is a worthy successor of the 3.3
+branch (which will continue to be maintained and supported for a good
+while too).
+
+ [sng]: http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/overview
+ [341-release]: https://lists.balabit.hu/pipermail/syslog-ng-announce/2013-January/000154.html
+ [33-takeover]: https://lists.balabit.hu/pipermail/syslog-ng/2012-May/018885.html
+
+<!-- more -->
+
+## Highlights of the year
+
+It is hard to keep the list of highlights reasonably short, there are
+so many great improvements and features that it really is a hard job
+selecting only a few.
+
+### [Junctions & channels][junctions]
+
+One of the first big changes to land in 3.4 was
+[**junctions**][junctions], which improve the flexibility of the
+syslog-ng configuration language. This allows combining sources with
+their closely tied processing functionality (like parser, rewrite and
+filter statements), among other things.
+
+ [junctions]: http://bazsi.blogs.balabit.com/2012/01/syslog-ng-flexibility-improvements/
+
+### [value-pairs() key rewriting support][vp-key-rewrite]
+
+The [**value-pairs()**][value-pairs] feature that was introduced in
+3.3 now supports renaming keys in bulk, by applying various
+transformations onto them. This makes it very easy to rearrange keys
+into different structures, thereby increasing the flexibility
+syslog-ng provides, and making it even easier to integrate it with
+pretty much anything out there.
+
+ [value-pairs]: https://www.balabit.com/sites/default/files/documents/syslog-ng-ose-3.3-guides/syslog-ng-ose-v3.3-guide-admin-en.html/concepts-value-pairs.html
+ [vp-key-rewrite]:
+ https://github.com/balabit/syslog-ng-3.4/commit/ddc7c2539bd66fa35e8df441e4baf58e87b6708d
+
+### [AMQP destination][amqp-dest]
+
+The [**AMQP**][amqp-dest] destinatin plugin is important in many ways:
+not only is it a useful plugin, to which none similar existed before
+in syslog-ng, it is also the first complete plugin that was
+contributed by a third party.
+
+The destination allows one to publish log messages to an AMQP-capable
+messaging server, such as [rabbitmq][rabbitmq], in a very elegant and
+smart way, that allows for very fine-grained message processing on
+both sides.
+
+ [amqp-dest]: https://github.com/balabit/syslog-ng-3.4/commit/efdee1072316674459b354f58b7621d9d97be4da
+ [rabbitmq]: http://www.rabbitmq.com/
+
+### [Improved JSON support][json-parser]
+
+In the world of HTML5 and the web, JSON is one of the most used
+serialization formats. Former versions of syslog-ng already supported
+emitting messages in JSON format, but those were flat structures only,
+and syslog-ng was not able to parse JSON serialized messages, either.
+
+With the release of 3.4, this all changed: the
+<code>$(format-json)</code> template function emits structured JSON,
+treating the internal representation of key names as if they were in
+dot-notation.
+
+Furthermore, we have a [**json-parser**] too, which makes syslog-ng
+able to receive JSON formatted data, and do a lot of interesting
+things with it.
+
+ [json-parser]: https://github.com/balabit/syslog-ng-3.4/commit/e5569687bba2551c89a78faee55bcf8b4944066f
+
+## Contributors!
+
+Compared to the [first commit on the 3.4 branch][3.4-first], a total
+of **727** patches have been committed, producing the following
+diffstat:
+
+>  395 files changed, 28908 insertions(+), 13491 deletions(-)
+
+That is a huge amount of work, work that would not have been possible
+without the tremendous amount of help the community contributed, in
+form of bug reports, requests, patches and even whole plugins!
+
+I would hereby like to thank all the people who contributed to
+syslog-ng's development in one form or another. In no particular
+order: Balazs Scheidler, Evan Rempel, Chris Johnson, Ben Lentz, Jose
+Pedro Oliveira, Peter Czanik, Balint Kovacs, Brian Kroth, Jan
+Schaumann, Tamas Pal, Viktor Juhasz, Attila Nagy, Conrad Hoffman,
+Csaba Major, Cy Schubert, Eun Kyung, Marvin Nipper, Michael Hocke,
+Peter Gyongyosi, Sandor Geller, "Sergey", shih dane, Alexander
+Komyagin, "EgonB", Imre Lazar, Mark Ulmer, Patrick Hemmer, Attila
+Magyar, Peter Gyorko, Martin Grauel, Hendrik Völker, Heiko Gerstung,
+Andreas Piesk, Matthias Runge, Jakub Jankowski, Russ Milne, Daniel
+Neubacher, "Dit", Lennert Buytenhek, Jan Schaumann, Anton Koldaev,
+Dave Reisner, Alex Zimnitsky, Alexander Komyagin, "Mads", Mark
+Wooding, Cary Taylor, Eric Lindvall, Zoltan Fried, Robert Fekete,
+Traiano Welcome, "whille", Yuri Arabadji and everyone else I may have
+forgotten (sorry!).
+
+ [3.4-first]: https://github.com/balabit/syslog-ng-3.4/commit/5a12e99e264a262a0f465d5d63a57c14cf72e644
