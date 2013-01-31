@@ -77,9 +77,9 @@ With the release of 3.4, this all changed: the
 treating the internal representation of key names as if they were in
 dot-notation.
 
-Furthermore, we have a [**json-parser**] too, which makes syslog-ng
-able to receive JSON formatted data, and do a lot of interesting
-things with it.
+Furthermore, we have a [**json-parser**][json-parser] too, which makes
+syslog-ng able to receive JSON formatted data, and do a lot of
+interesting things with it.
 
  [json-parser]: https://github.com/balabit/syslog-ng-3.4/commit/e5569687bba2551c89a78faee55bcf8b4944066f
 
