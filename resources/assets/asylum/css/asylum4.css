@@ -10,6 +10,12 @@ body {
         }
 }
 
+@media (max-width: 1210px) {
+        .visible-large {
+                display: none !important;
+        }
+}
+
 footer {
         padding: 0 2em;
 }
