@@ -3236,7 +3236,7 @@ look that up from the config, or simply multiply the number of rows
 and columns, and add one, so that the result is suitable for
 <code>range</code>.</p>
 </td><td class="codes"><pre class="brush: clojure">(defmethod recent-posts :total [_]
-  (or (-&gt; config :recent-posts :total)
+  (or (-&gt; config :recent-posts :total inc)
       (inc (* (recent-posts :columns)
               (recent-posts :rows)))))</pre></td></tr><tr><td class="docs"><p>And to determine how many columns a single recent item should span,
 we divide 12 by the number of columns, and round it.</p>
@@ -3783,7 +3783,7 @@ every recent post we should display. How many are displayed, is
 controlled by the configuration.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn recent-posts
   [all-posts]
-  (h/clone-for [post (take (cfg/recent-posts :total) all-posts)]
+  (h/clone-for [post (take (dec (cfg/recent-posts :total)) all-posts)]
                (h/substitute (recent-item (:title post) (:url post)))))</pre></td></tr><tr><td class="docs"><p>And to display all tags, we also clone the <code>tag-item</code> snippet above
 for each and every unique tag.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn all-tags
@@ -4267,7 +4267,8 @@ URL. Everything else is disabled.</p>
      (h/clone-for [rows (utils/blog-&gt;table
                          (cfg/archive-posts :columns)
                          (cfg/archive-posts :rows)
-                         (drop (dec (cfg/recent-posts :total)) blog-posts))]
+                         (drop (* (cfg/recent-posts :columns)
+                                  (cfg/recent-posts :rows)) blog-posts))]
                   (h/do-&gt;
                    (h/substitute (archive-post-row rows))))
   ; Cleanup
