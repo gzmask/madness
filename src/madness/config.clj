@@ -88,7 +88,7 @@
 ;; and columns, and add one, so that the result is suitable for
 ;; `range`.
 (defmethod recent-posts :total [_]
-  (or (-> config :recent-posts :total)
+  (or (-> config :recent-posts :total inc)
       (inc (* (recent-posts :columns)
               (recent-posts :rows)))))
 

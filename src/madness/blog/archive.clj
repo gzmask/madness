@@ -100,7 +100,8 @@
      (h/clone-for [rows (utils/blog->table
                          (cfg/archive-posts :columns)
                          (cfg/archive-posts :rows)
-                         (drop (dec (cfg/recent-posts :total)) blog-posts))]
+                         (drop (* (cfg/recent-posts :columns)
+                                  (cfg/recent-posts :rows)) blog-posts))]
                   (h/do->
                    (h/substitute (archive-post-row rows))))
   ; Cleanup

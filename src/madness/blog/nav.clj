@@ -48,7 +48,7 @@
 (defn recent-posts
   [all-posts]
 
-  (h/clone-for [post (take (cfg/recent-posts :total) all-posts)]
+  (h/clone-for [post (take (dec (cfg/recent-posts :total)) all-posts)]
                (h/substitute (recent-item (:title post) (:url post)))))
 
 ;; And to display all tags, we also clone the `tag-item` snippet above
