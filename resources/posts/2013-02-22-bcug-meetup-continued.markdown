@@ -1,6 +1,6 @@
 ---
 title: "Budapest Clojure User Group Meetup, continued"
-date: 2013-02-22 23:30
+date: 2013-02-22 23:20
 tags: [Technology, Clojure, News]
 ---
 
