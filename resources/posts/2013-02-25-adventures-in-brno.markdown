@@ -1,6 +1,6 @@
 ---
 title: "Adventures in Brno"
-date: 2013-02-24 23:50
+date: 2013-02-25 16:00
 tags: [News, Rants]
 ---
 
