@@ -95,7 +95,7 @@ only it would be that easy... You see, there were a couple of
 complicating factors, among them my complete lack of knowledge of the
 local language, and me not having any money on be but euros and a bank
 card. Thankfully, at the reception, they recommended me a pizza place
-where I can order from, I can play with a bank card, and they have an
+where I can order from, I can pay with a bank card, and they have an
 english website too! What could possibly go wrong?
 
 Everything, of course. First of all, I was unable to access my bank
