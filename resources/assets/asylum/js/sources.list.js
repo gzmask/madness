@@ -1,17 +1,17 @@
 $(document).ready(
     function () {
         function get_data_from_distrib_form () {
-            var distrel = $("#dist-select select").val().split("-");
+            var distrel = $("#distro-select").val().split("-");
             var components = [];
             var zorp_extra = false;
 
-            if ($("#cb-sng").attr('checked')) {
-                components.push("syslog-ng");
+            var sng = $("#sng-select").val();
+            if (sng != "syslog-ng-none") {
+                components.push(sng);
             }
-            if ($("#cb-sng-dev").attr('checked')) {
-                components.push("syslog-ng-devel");
-            }
-            if ($("#cb-zorp").attr('checked')) {
+
+            var zorp = $("#zorp-select").val();
+            if (zorp != "zorp-none") {
                 components.push("zorp");
                 zorp_extra = true;
             }

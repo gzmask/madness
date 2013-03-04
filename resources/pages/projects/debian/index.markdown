@@ -39,7 +39,7 @@ machines, and compile for other platforms aswell.
 
 <form class="form-inline" id="dist-select">
  <fieldset>
-  <select class="inline input-xlarge">
+  <select class="inline input-xlarge" id="distro-select">
     <optgroup label="Debian">
      <option value="debian-squeeze">Debian 6.0 (Squeeze; stable)</option>
      <option value="debian-wheezy" selected>Debian 7.0 (Wheezy)</option>
@@ -53,21 +53,28 @@ machines, and compile for other platforms aswell.
      <option value="ubuntu-raring">Ubuntu 13.04 (Raring Ringtail)</option>
     </optgroup>
   </select>
-  <label class="checkbox inline"><input id="cb-sng" checked type="checkbox">syslog-ng</label>
-  <label class="checkbox inline"><input id="cb-sng-dev" type="checkbox">syslog-ng-devel</label>
-  <label class="checkbox inline"><input id="cb-zorp" checked type="checkbox">zorp</label>
+  <select class="inline input-xlarge" id="sng-select">
+    <option value="syslog-ng-none">No syslog-ng</option>
+    <optgroup label="syslog-ng stable">
+     <option value="syslog-ng">Latest syslog-ng stable release (3.3)</option>
+     <option value="syslog-ng-3.3" selected>syslog-ng 3.3</option>
+    </optgroup>
+    <optgroup label="syslog-ng devel">
+     <option value="syslog-ng-devel">Latest syslog-ng devel release (3.4)</option>
+     <option value="syslog-ng-3.4">syslog-ng 3.4</option>
+    </optgroup>
+  </select>
+  <select class="inline input-xlarge" id="zorp-select">
+    <option value="zorp-none">No zorp</option>
+    <option value="zorp" selected>zorp</option>
+  </select>
  </fieldset>
 </form>
 
-    deb       http://packages.madhouse-project.org/debian   wheezy   syslog-ng zorp
-    deb-src   http://packages.madhouse-project.org/debian   wheezy   syslog-ng zorp
+    deb       http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.3 zorp
+    deb-src   http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.3 zorp
     
     deb       http://packages.madhouse-project.org/zorp-kernel   kernel   2.6
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="/assets/asylum/js/sources.list.js" type="text/javascript"></script>
-
-Note that selecting **both** *syslog-ng* and *syslog-ng-devel* makes
-little sense, as the packages in the latter replace the ones in the
-former. So unless you are really sure you want both - because, say you
-might wish to switch between the two -, choose only one.
