@@ -41,34 +41,56 @@ $(document).ready(
         }
 
         function validate_selection(data) {
+            var alert_text = null;
+
             if (data.release == "natty" ||
                 data.release == "lucid") {
-                if (data.components.indexOf ("syslog-ng-devel") != -1) {
+                if (data.components.indexOf ("syslog-ng-devel") != -1 ||
+                    data.components.indexOf ("syslog-ng-3.4") != -1) {
                     data.components.splice(data.components.indexOf ("syslog-ng-devel"), 1);
+                    alert_text = "The selected distribution does not have packages for syslog-ng-3.4 or syslog-ng-devel.";
                 }
             }
             if (data.release == "raring") {
                 if (data.components.indexOf ("zorp") != -1) {
                     data.components.splice(data.components.indexOf ("zorp"), 1);
+                    alert_text = "The selected distribution does not have packages for zorp."
                 }
+            }
+
+            if (alert_text) {
+                $("#alert-box").text(alert_text).fadeIn();
+            } else {
+                $("#alert-box").fadeOut();
             }
             return data;
         }
 
         function reset_controls(data) {
-            if (data.release == "natty" ||
-                data.release == "lucid") {
-                $("#cb-sng-dev").attr("disabled", true);
-            } else {
-                $("#cb-sng-dev").removeAttr("disabled");
-            }
-            if (data.release == "raring") {
-                $("#cb-zorp").attr("disabled", true);
-            } else {
-                $("#cb-zorp").removeAttr("disabled");
-            }
-        }
+            $("#sng-select").find("option")
+                .each(function (x) {
+                          if (this.value == "syslog-ng-devel" ||
+                              this.value == "syslog-ng-3.4") {
+                              if (data.release == "natty" ||
+                                  data.release == "lucid") {
+                                  $(this).attr("disabled", true);
+                              } else {
+                                  $(this).removeAttr("disabled");
+                              }
+                          }
+                      });
 
+            $("#zorp-select").find("option")
+                .each(function (x) {
+                          if (this.value == "zorp") {
+                              if (data.release == "raring") {
+                                  $(this).attr("disabled", true);
+                              } else {
+                                  $(this).removeAttr("disabled")
+                              }
+                          }
+                      });
+        }
 
         $("#dist-select").change (
             function () {

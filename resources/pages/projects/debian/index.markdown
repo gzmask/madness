@@ -78,3 +78,7 @@ machines, and compile for other platforms aswell.
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="/assets/asylum/js/sources.list.js" type="text/javascript"></script>
+
+<div id="alert-box" class="alert alert-block alert-error fade in"
+     style="display: none">
+</div>
