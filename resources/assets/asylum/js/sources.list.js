@@ -25,7 +25,6 @@ $(document).ready(
         }
 
         function redraw_sources_list(data) {
-            console.log(data);
             var new_text = 
                 "deb       http://packages.madhouse-project.org/" + data.dist + "   " + data.release + "   " + data.components.join(" ") + "\n" +
                 "deb-src   http://packages.madhouse-project.org/" + data.dist + "   " + data.release + "   " + data.components.join(" ") + "\n";
