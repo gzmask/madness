@@ -13,7 +13,9 @@
     the <a href="https://duckduckgo.com/">Great Duck</a> what it knows about
     <a href="https://duckduckgo.com/?q=Gergely+Nagy+%2Balgernon&kl=hu-hu">me</a>.
     Quite a lot, actually: I have my dirty fingerprints on all kinds
-    of strange stuff.
+    of strange stuff. You can see some of theese thanks to the Duck,
+    and you can see another set if you visit the <a href="#nav-social"
+    id="click-social">Social</a> menu above.
   </p>
 
   <p>
@@ -39,4 +41,15 @@
     if we ever meet, stick with algernon, thank you), and I work as a
     software engineer at <a href="https://www.balabit.com/">BalaBit</a>.
   </p>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#click-social").on ("click", function (x) {
+        $("#nav-social").click();
+        return false;
+      });
+    });
+  </script>
 </section>
