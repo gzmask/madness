@@ -1,4 +1,4 @@
-{:template {:default "asylum4-main.html",
+{:template {:default "asylum5-main.html",
             :atom "asylum3-atom.xml"},
  :recent-posts {:columns 3
                 :rows 0
