@@ -41,16 +41,18 @@ Fortunately, the answer is pretty clear, and short!
 <!-- more -->
 
 <p class="inline" style="text-align: center">
- <a href="/assets/asylum/images/posts/some-more-madness/asylum-front-page.v4.png">
-  <img class="img-polaroid inline" width="342" height="192" 
+ <a href="/assets/asylum/images/posts/some-more-madness/asylum-front-page.v4.png"
+    data-toggle="lightbox" data-target="#lb-v4">
+  <img class="img-polaroid inline rel-tooltip" width="342" height="192"
    alt="The (old) Asylum v4 design" title="The (old) Asylum v4 design"
-   rel="tooltip" data-placement="left"
+   data-placement="left"
    src="/assets/asylum/images/posts/some-more-madness/asylum-front-page.v4.thumb.png">
  </a>
- <a href="/assets/asylum/images/posts/straight-jacket/asylum-front-page.v5.png">
-  <img class="img-polaroid inline" width="342" height="192" 
+ <a href="/assets/asylum/images/posts/straight-jacket/asylum-front-page.v5.png"
+    data-toggle="lightbox" data-target="#lb-v5">
+  <img class="img-polaroid inline rel-tooltip" width="342" height="192"
    alt="The (new) Asylum v5 design" title="The (new) Asylum v5 design"
-   rel="tooltip" data-placement="right"
+   data-placement="right"
    src="/assets/asylum/images/posts/straight-jacket/asylum-front-page.v5.thumb.png">
  </a>
 </p>
@@ -80,3 +82,28 @@ don't, I still like this newest design better! It also has the added
 side-effect of being even more mobile friendly: previously, parts of
 the menu were expandable on mobile screens, now they're not shown at
 all, because no mobile user expanded them, ever.
+
+<div id="lb-v4" class="lightbox hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class='lightbox-header'>
+        <button type="button" class="close" data-dismiss="lightbox" aria-hidden="true">&times;</button>
+    </div>
+    <div class='lightbox-content'>
+        <img src="/assets/asylum/images/posts/some-more-madness/asylum-front-page.v4.png"
+             alt="The (old) Asylum v4 design">
+    </div>
+</div>
+
+<div id="lb-v5" class="lightbox hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class='lightbox-header'>
+        <button type="button" class="close" data-dismiss="lightbox" aria-hidden="true">&times;</button>
+    </div>
+    <div class='lightbox-content'>
+        <img src="/assets/asylum/images/posts/straight-jacket/asylum-front-page.v5.png"
+             alt="The (new) Asylum v5 design">
+    </div>
+</div>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.5/bootstrap-lightbox.min.css"
+      rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.5/bootstrap-lightbox.js"
+        type="text/javascript"></script>
