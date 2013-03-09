@@ -76,7 +76,6 @@ machines, and compile for other platforms aswell.
     
     deb       http://packages.madhouse-project.org/zorp-kernel   kernel   2.6
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="/assets/asylum/js/sources.list.js" type="text/javascript"></script>
 
 <div id="alert-box" class="alert alert-block alert-error fade in"
