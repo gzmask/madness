@@ -1,12 +1,21 @@
 /* -*- css -*- */
 
 body {
-        padding-top: 90px;
+        padding-top: 1em;
+}
+
+#madness-top-nav {
+        position: absolute;
+        right: 1em;
+        border-radius: 5px;
 }
 
 @media (max-width: 979px) {
         body {
-                padding-top: 0px;
+                padding-top: 0.5em;
+        }
+        .contents {
+                margin-top: 3em;
         }
 }
 
@@ -20,8 +29,14 @@ footer {
         padding: 0 2em;
 }
 
-.large-text {
-        font-size: 125%;
+#madness-navigation a, #madness-navigation span {
+        opacity: 0.5;
+        display: inline;
+}
+
+#madness-navigation a:hover, #madness-navigation span:hover, #madness-navigation h4 a {
+        opacity: 1;
+        background: transparent;
 }
 
 #dist-select select {
