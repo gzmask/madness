@@ -1,6 +1,6 @@
 ---
 title: "DPL platform"
-date: 2013-03-10 21:00
+date: 2013-03-10 19:00
 tags: [Debian, News]
 ---
 
