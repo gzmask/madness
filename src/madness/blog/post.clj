@@ -76,7 +76,7 @@
      :comments (or
                 (-> (first (h/select post [:article])) :attrs :comments utils/enabled?)
                 (-> (h/text (first (h/select post [:article :comments]))) utils/enabled?)),
-     :content (h/select post [:section])}))
+     :content (h/select post [:section :> h/any-node])}))
 
 ;; ### Blog post templates
 ;;
