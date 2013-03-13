@@ -224,7 +224,7 @@ But back to the more important point: my organising, presentation and
 leading skills. I'm a co-organiser of the
 [Budapest Clojure User Group meetups][bcug], I started to encourage
 GSoC participation at my day job [last year][bb-gsoc2012] (we
-participated thanks to [OpenSuSE][opensuse] who gave us a slot), and
+participated thanks to [OpenSUSE][opensuse] who gave us a slot), and
 I'm driving it [this year][bb-gsoc2013], aiming to become a mentoring
 organisation of our own. I'm doing regular talks and presentations,
 participate in code retreats, meetups and other similar events where I
