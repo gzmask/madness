@@ -5,5 +5,5 @@
                 :total 10}
  :archive-posts {:columns 3
                  :rows -1}
- :atom {:base-url "https://asylum.madhouse-project.org"
+ :atom {:base-url "http://asylum.madhouse-project.org"
         :title "Asylum Archives"}}
