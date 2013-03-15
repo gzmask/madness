@@ -2,21 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title>Asylum Archives</title>
-  <link href="https://asylum.madhouse-project.org/blog/atom.xml"
+  <link href="http://asylum.madhouse-project.org/blog/atom.xml"
         rel="self" id="self"/>
-  <link href="https://asylum.madhouse-project.org/" id="base" />
+  <link href="http://asylum.madhouse-project.org/" id="base" />
   <updated>2012-06-20T01:15:22+02:00</updated>
   <id>http://asylum.madhouse-project.org/</id>
   <author>
     <name><![CDATA[Gergely Nagy]]></name>
+    <uri>http://asylum.madhouse-project.org/</uri>
   </author>
+  <rights>Copyright (c) 2010-2013 Gergely Nagy</rights>
   <generator uri="https://github.com/algernon/madness">Madness</generator>
 
   <entry>
     <title type="html">Title of the post</title>
-    <link href="https://asylum.madhouse-project.org/blog/2012/06/24/title/"/>
+    <link href="http://asylum.madhouse-project.org/blog/2012/06/24/title/"/>
     <updated>2012-06-24T22:00:00+02:00</updated>
+    <published>2012-06-20T01:15:22+02:00</published>
     <id>https://asylum.madhouse-project.org/blog/2012/06/24/title/</id>
+    <rights>Copyright (c) 2010-2013 Gergely Nagy</rights>
+    <category term="tag-name" label="Tag" />
     <content type="html">&lt;p&gt;And these are the contents...&lt;/p&gt;</content>
   </entry>
 
