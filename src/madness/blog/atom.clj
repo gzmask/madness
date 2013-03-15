@@ -40,9 +40,20 @@
   (str/replace feed #"href=\"(/[^\"]*)\""
                (str "href=\"" (cfg/atom-feed :base-url) "$1\"")))
 
-;; A single atom post has a `title`, a `link`, an `updated` date, an
-;; `id`, and `content`. This snippet takes the `entry` element from
-;; the source template, and fills it in appropriately.
+;; Atom entries have categories, this snippet takes the category
+;; element of an entry from the template, and fills it out, according
+;; to the tag given as a parameter.
+(h/defsnippet atom-post-tag (cfg/template :atom) [:entry :category]
+  [tag]
+
+  [:category] (h/do->
+               (h/set-attr :term (str/replace (str/lower-case tag) " " "-"))
+               (h/set-attr :label tag)))
+
+;; A single atom post has a `title`, a `link`, an `updated` and
+;; `published` date, an `id`, `content` and multiple `category`
+;; elements. This snippet takes the `entry` element from the source
+;; template, and fills it in appropriately.
 (h/defsnippet atom-post (cfg/template :atom) [:entry]
   [site-base post]
 
@@ -50,7 +61,12 @@
   [:link] (h/set-attr :href (str site-base (:url post)))
   [:updated] (h/content (time-format/unparse
                          atom-date-formatter (time-local/to-local-date-time (:date post))))
+  [:published] (h/content (time-format/unparse
+                           atom-date-formatter (time-local/to-local-date-time (:date post))))
   [:id] (h/content (str site-base (:url post)))
+  [:category] (h/clone-for
+               [tag (:tags post)]
+               (h/substitute (atom-post-tag tag)))
   [:content] (h/content (apply str (bare-post post))))
 
 ;; Finally, assembling the whole atom feed is as simple as setting a
