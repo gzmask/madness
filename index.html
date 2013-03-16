@@ -3671,14 +3671,16 @@ assume it is HTML.</p>
   row.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn blog-&gt;table
   [columns rows blog-posts]
-  (loop [posts blog-posts
-         c 0
-         result []]
-    (if (or (empty? posts) (and (&gt; rows 0) (&gt;= c rows)))
-      result
-      (recur (drop columns posts)
-             (inc c)
-             (conj result (take columns posts))))))</pre></td></tr><tr><td class="docs"><p>Rewrite an anchor element's href and content.</p>
+  (if (zero? rows)
+    []
+    (loop [posts blog-posts
+           c 0
+           result []]
+      (if (or (empty? posts) (and (&gt; rows 0) (&gt;= c rows)))
+        result
+        (recur (drop columns posts)
+               (inc c)
+               (conj result (take columns posts)))))))</pre></td></tr><tr><td class="docs"><p>Rewrite an anchor element's href and content.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn rewrite-link
   [url content]
   (h/do-&gt;
@@ -3954,7 +3956,7 @@ within blog posts!</p>
      :comments (or
                 (-&gt; (first (h/select post [:article])) :attrs :comments utils/enabled?)
                 (-&gt; (h/text (first (h/select post [:article :comments]))) utils/enabled?)),
-     :content (h/select post [:section])}))</pre></td></tr><tr><td class="docs"><h3>Blog post templates</h3>
+     :content (h/select post [:section :&gt; h/any-node])}))</pre></td></tr><tr><td class="docs"><h3>Blog post templates</h3>
 
 <p>Blog posts are almost entirely contained within the
 <code>#madness-article</code> element, with only the previous/next links
@@ -4365,16 +4367,29 @@ rendered summary + content combination.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn local-href-expand
   [feed]
   (str/replace feed #&quot;href=\&quot;(/[^\&quot;]*)\&quot;&quot;
-               (str &quot;href=\&quot;&quot; (cfg/atom-feed :base-url) &quot;$1\&quot;&quot;)))</pre></td></tr><tr><td class="docs"><p>A single atom post has a <code>title</code>, a <code>link</code>, an <code>updated</code> date, an
-<code>id</code>, and <code>content</code>. This snippet takes the <code>entry</code> element from
-the source template, and fills it in appropriately.</p>
+               (str &quot;href=\&quot;&quot; (cfg/atom-feed :base-url) &quot;$1\&quot;&quot;)))</pre></td></tr><tr><td class="docs"><p>Atom entries have categories, this snippet takes the category
+element of an entry from the template, and fills it out, according
+to the tag given as a parameter.</p>
+</td><td class="codes"><pre class="brush: clojure">(h/defsnippet atom-post-tag (cfg/template :atom) [:entry :category]
+  [tag]
+  [:category] (h/do-&gt;
+               (h/set-attr :term (str/replace (str/lower-case tag) &quot; &quot; &quot;-&quot;))
+               (h/set-attr :label tag)))</pre></td></tr><tr><td class="docs"><p>A single atom post has a <code>title</code>, a <code>link</code>, an <code>updated</code> and
+<code>published</code> date, an <code>id</code>, <code>content</code> and multiple <code>category</code>
+elements. This snippet takes the <code>entry</code> element from the source
+template, and fills it in appropriately.</p>
 </td><td class="codes"><pre class="brush: clojure">(h/defsnippet atom-post (cfg/template :atom) [:entry]
   [site-base post]
   [:title] (h/content (:title post))
   [:link] (h/set-attr :href (str site-base (:url post)))
   [:updated] (h/content (time-format/unparse
                          atom-date-formatter (time-local/to-local-date-time (:date post))))
+  [:published] (h/content (time-format/unparse
+                           atom-date-formatter (time-local/to-local-date-time (:date post))))
   [:id] (h/content (str site-base (:url post)))
+  [:category] (h/clone-for
+               [tag (:tags post)]
+               (h/substitute (atom-post-tag tag)))
   [:content] (h/content (apply str (bare-post post))))</pre></td></tr><tr><td class="docs"><p>Finally, assembling the whole atom feed is as simple as setting a
 the <code>title</code> and <code>id</code> under <code>feed</code>, with the site title and our base
 uri, respectively, updating the <code>updated</code> element, and adding the
