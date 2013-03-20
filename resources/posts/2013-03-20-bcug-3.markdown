@@ -1,0 +1,68 @@
+---
+title: "BCUG #3"
+date: 2013-03-20 16:30
+tags: [Technology, Clojure, News]
+---
+
+Our [small community][bcug] seems to be growing nicely: on our
+[first meetup][first-bcug], hardly any drinks were consumed, and we
+nicely fit into the lecture room at [BalaBit][balabit]. On the
+[second meetup][second-bcug], popcorn disappeared before I could
+blink. On our [third meetup][third-bcug], we barely fit into the
+room. For the fourth, we'll have to move the meetup to a bigger room
+(the Auditorium). I'm very happy with the meetups so far, although the
+last one became a little bit more experimental than originally
+planned. I found it fun, nevertheless, and also learned quite a bit
+about how future meetups shall be organised. Also, for the first time
+in the history of the [Budapest Clojure User Group][bcug], we have not
+only pictures, but we have a video recording too (soon to be available
+on a youtube near you)! While we still had to fight various
+non-clojurian technologies to get this far, and the quality of the
+recording ain't stellar either, it is progress nevertheless. We're
+slowly improving in this area too, and I'm confident than sooner
+rather than later, we'll have not only solved the problem of producing
+high quality recording, but that of streaming it live too.
+
+ [first-bcug]: /blog/2013/01/25/bcug-meetup/
+ [second-bcug]: http://www.meetup.com/Budapest-Clojure-User-Group/events/102105452/
+ [bcug]: http://www.meetup.com/Budapest-Clojure-User-Group/
+ [third-bcug]: http://www.meetup.com/Budapest-Clojure-User-Group/events/105482022/
+ [balabit]: http://www.balabit.com/
+ 
+<!-- more -->
+
+Regarding the last event itself, it was experimental in at least two
+ways: first, this was the first ever live coding I ever did, and I
+used [LightTable][lighttable] instead of my trusty old Emacs. Turns
+out that these two didn't mix all that well, and perhaps I should've
+experimented with one thing at a time.
+
+ [lighttable]: http://lighttable.com/
+ 
+<a href="/assets/asylum/images/posts/bcug-3/bcug-3-1.jpg"
+   style="text-align: center; display: block;"><img
+src="/assets/asylum/images/posts/bcug-3/bcug-3-1.thumb.jpg"
+alt="[Photo at the start of the event]"></a>
+
+While LightTable is a very promising IDE, it's nowhere near yet, it
+does not have all the features I would expect from an environment
+ready for live-coding. I had trouble copy & pasting blocks, even
+within the same tab, let alone between them. The only kind of
+copy-paste that worked is from outside applications into
+LightTable.. this was kind of embarassing and unexpected. But I
+should've tried it at home while preparing. On the other hand, the
+insta-repl was great, except when the error messages kept popping up
+at silly places, and my editor jumped about too... but thankfully that
+happened only once or twice. A bigger problem than LightTable was that
+I was fighting with the flu the past weekend, and still have not
+recovered fully, and that sadly had an ill effect on both how much I
+could prepare, and how well I could get it accross. Not to mention
+that I ended up sounding like Darth Vader on a gramophone by the time
+I got home.
+
+But despite all this, I liked this last event too, there were amazing
+questions asked during the session, very good feedback given - thank
+you all! I'm looking forward to the next event, which will be held on
+the 16th of April, keep an eye on the [meetup page][bcug]!
+
+ [bcug]: http://www.meetup.com/Budapest-Clojure-User-Group/
