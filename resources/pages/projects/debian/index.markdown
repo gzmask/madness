@@ -18,12 +18,11 @@ Zorp, there is no changelog available online yet.
  [debian]: http://www.debian.org/
  [ubuntu]: http://www.ubuntu.com/
 
- [1]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/autobuilt/3.3
- [2]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/autobuilt/3.4
+ [1]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.3
+ [2]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.4
 
 The repository is signed by the GPG key
 [6CE70C6E8B9E0644][archive-key], which one can add to apt with the following command:
-
 
     curl https://packages.madhouse-project.org/debian/archive-key.txt | sudo apt-key add -
 
