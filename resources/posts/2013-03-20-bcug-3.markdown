@@ -63,6 +63,6 @@ I got home.
 But despite all this, I liked this last event too, there were amazing
 questions asked during the session, very good feedback given - thank
 you all! I'm looking forward to the next event, which will be held on
-the 16th of April, keep an eye on the [meetup page][bcug]!
+the 23rd of April, keep an eye on the [meetup page][bcug]!
 
  [bcug]: http://www.meetup.com/Budapest-Clojure-User-Group/
