@@ -14,7 +14,7 @@
 ;;
 ;; [1]: http://asylum.madhouse-project.org/
 ;; [2]: https://github.com/algernon/madness
-;; [3]: http://algernon.github.com/madness/
+;; [3]: http://algernon.github.io/madness/
 ;; [5]: http://creativecommons.org/licenses/by-sa/3.0/
 ;;
 ;; ### Requirements
