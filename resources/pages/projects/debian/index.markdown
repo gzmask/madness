@@ -40,8 +40,8 @@ machines, and compile for other platforms aswell.
  <fieldset>
   <select class="inline input-xlarge" id="distro-select">
     <optgroup label="Debian">
-     <option value="debian-squeeze">Debian 6.0 (Squeeze; stable)</option>
-     <option value="debian-wheezy" selected>Debian 7.0 (Wheezy)</option>
+     <option value="debian-squeeze">Debian 6.0 (Squeeze; oldstable)</option>
+     <option value="debian-wheezy" selected>Debian 7.0 (Wheezy; stable)</option>
      <option value="debian-sid">Debian unstable</option>
     </optgroup>
     <optgroup label="Ubuntu">
