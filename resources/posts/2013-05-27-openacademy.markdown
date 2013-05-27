@@ -1,6 +1,6 @@
 ---
 title: "A Requiem for Objects - thoughts after a presentation"
-date: 2013-05-26 21:00
+date: 2013-05-27 18:32
 tags: [Technology, Clojure, News, Video]
 ---
 
