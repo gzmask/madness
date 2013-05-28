@@ -112,22 +112,23 @@
 
 ;; The post meta-data - as mentioned just before - lives in
 ;; `#madness-article-meta`, and contains the date of the post, and the
-;; tags.
+;; tags. The tag list is passed in as an argument, separate from the
+;; post.
 (h/defsnippet blog-post-meta (cfg/template)
   [:.madness-article-meta]
 
-  [post]
+  [post taglist]
 
   [:#madness-article-date] (h/do->
                             (h/set-attr :href (utils/date-to-url (:date post)))
                             (h/content (utils/date-format (:date post))))
   [:#madness-article-tags :a] (h/clone-for
-                               [tag (butlast (:tags post))]
+                               [tag (butlast taglist)]
                                (h/do->
                                 (h/substitute (blog-post-tag tag))
                                 (h/after ", ")))
   [:#madness-article-tags] (h/append
-                            (blog-post-tag (last (:tags post))))
+                            (blog-post-tag (last taglist)))
   [:#madness-article-tags] (h/remove-attr :id))
 
 ;; #### Post navigation
@@ -190,6 +191,8 @@
 ;; `#post-neighbours`, and last but not least, fill out the global tag
 ;; & recent post lists, using the tools provided by [blog.nav][1].
 ;;
+;; Tags that start with a dot will not be displayed along with the rest.
+;;
 ;; [1]: #madness.blog.nav
 ;;
 (h/deftemplate blog-post (cfg/template)
@@ -210,7 +213,9 @@
                                (:summary post)
                                (:content post))
   [:.madness-article-meta] (h/substitute
-                            (blog-post-meta post))
+                            (blog-post-meta post
+                                            (remove #(.startsWith % ".") 
+                                                    (:tags post))))
 
   [:#madness-article-read-more] nil
 

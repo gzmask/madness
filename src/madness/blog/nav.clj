@@ -52,13 +52,14 @@
                (h/substitute (recent-item (:title post) (:url post)))))
 
 ;; And to display all tags, we also clone the `tag-item` snippet above
-;; for each and every unique tag.
+;; for each and every unique tag. Does not display tags starting with
+;; a dot.
 (defn all-tags
   [all-posts]
 
   (h/clone-for [tag (sort #(compare (s/lower-case %1)
                                     (s/lower-case %2))
-                          (utils/tags all-posts))]
+                          (remove #(.startsWith % ".") (utils/tags all-posts)))]
                (h/substitute (tag-item tag))))
 
 ;; These last two functions - `recent-posts` and `all-tags` - will be

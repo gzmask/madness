@@ -48,7 +48,10 @@
   [:#madness-article :h2] (h/substitute (blog-post/blog-post-title (first blog-posts)))
   [:#madness-article-content] (h/substitute (:summary (first blog-posts)))
   [:.madness-article-meta] (h/substitute
-                            (blog-post/blog-post-meta (first blog-posts)))
+                            (blog-post/blog-post-meta
+                             (first blog-posts)
+                             (remove #(.startsWith % ".") (:tags
+                                                           (first blog-posts)))))
 
   [:#madness-article-read-more :a] (h/set-attr :href (:url (first blog-posts)))
   [:#madness-article-read-more] (h/remove-attr :id)
