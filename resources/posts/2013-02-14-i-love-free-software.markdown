@@ -1,7 +1,7 @@
 ---
 title: "I love Free Software"
 date: 2013-02-14 14:00
-tags: [Technology]
+tags: [Technology, .planet.debian]
 ---
 
 <p style="text-align: center">

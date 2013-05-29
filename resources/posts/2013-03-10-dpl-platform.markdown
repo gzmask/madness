@@ -1,7 +1,7 @@
 ---
 title: "DPL platform"
 date: 2013-03-10 19:00
-tags: [Debian, News]
+tags: [Debian, News, .planet.debian]
 ---
 
 Last year, I invited you all to [walk the plank][wtp] with me, to

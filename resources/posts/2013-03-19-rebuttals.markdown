@@ -1,7 +1,7 @@
 ---
 title: "Rebuttals, or the lack of thereof"
 date: 2013-03-19 11:35
-tags: [Debian, News]
+tags: [Debian, News, .planet.debian]
 ---
 
 It is customary during [Debian Project Leader elections][dpl-ele] to

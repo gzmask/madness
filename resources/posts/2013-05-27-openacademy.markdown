@@ -1,7 +1,7 @@
 ---
 title: "A Requiem for Objects - thoughts after a presentation"
 date: 2013-05-27 18:32
-tags: [Technology, Clojure, News, Video]
+tags: [Technology, Clojure, News, Video, .planet.debian]
 ---
 
 When [OpenAcademy][oa] started, I immediately found it a terrific

@@ -1,7 +1,7 @@
 ---
 title: "Hunting Hy and low"
 date: 2013-04-22 14:00
-tags: [Technology]
+tags: [Technology, .planet.debian]
 ---
 
 I hate Python with a passion, it is a terrible language, and I find it
