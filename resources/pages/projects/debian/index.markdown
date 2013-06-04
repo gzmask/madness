@@ -42,14 +42,15 @@ machines, and compile for other platforms aswell.
     <optgroup label="Debian">
      <option value="debian-squeeze">Debian 6.0 (Squeeze; oldstable)</option>
      <option value="debian-wheezy" selected>Debian 7.0 (Wheezy; stable)</option>
+     <option value="debian-jessie" selected>Debian 8.0 (Jessie; testing)</option>
      <option value="debian-sid">Debian unstable</option>
     </optgroup>
     <optgroup label="Ubuntu">
      <option value="ubuntu-lucid">Ubuntu 10.04 LTS (Lucid Lynx)</option>
-     <option value="ubuntu-oneiric">Ubuntu 11.10 (Oneiric Ocelot)</option>
      <option value="ubuntu-precise">Ubuntu 12.04 LTS (Precise Pangolin)</option>
      <option value="ubuntu-quantal">Ubuntu 12.10 (Quantal Quetzal)</option>
      <option value="ubuntu-raring">Ubuntu 13.04 (Raring Ringtail)</option>
+     <option value="ubuntu-saucy">Ubuntu 13.10 (Saucy Salamander)</ooption>
     </optgroup>
   </select>
   <select class="inline input-xlarge" id="sng-select">

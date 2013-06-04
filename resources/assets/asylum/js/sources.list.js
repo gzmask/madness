@@ -51,7 +51,9 @@ $(document).ready(
                     alert_text = "The selected distribution does not have packages for syslog-ng-3.4 or syslog-ng-devel.";
                 }
             }
-            if (data.release == "raring") {
+            if (data.release == "raring" ||
+                data.release == "jessie" ||
+                data.release == "saucy") {
                 if (data.components.indexOf ("zorp") != -1) {
                     data.components.splice(data.components.indexOf ("zorp"), 1);
                     alert_text = "The selected distribution does not have packages for zorp."
@@ -83,7 +85,9 @@ $(document).ready(
             $("#zorp-select").find("option")
                 .each(function (x) {
                           if (this.value == "zorp") {
-                              if (data.release == "raring") {
+                              if (data.release == "raring" ||
+                                  data.release == "saucy" ||
+                                  data.release == "jessie") {
                                   $(this).attr("disabled", true);
                               } else {
                                   $(this).removeAttr("disabled")
