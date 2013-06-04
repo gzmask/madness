@@ -42,7 +42,7 @@ machines, and compile for other platforms aswell.
     <optgroup label="Debian">
      <option value="debian-squeeze">Debian 6.0 (Squeeze; oldstable)</option>
      <option value="debian-wheezy" selected>Debian 7.0 (Wheezy; stable)</option>
-     <option value="debian-jessie" selected>Debian 8.0 (Jessie; testing)</option>
+     <option value="debian-jessie">Debian 8.0 (Jessie; testing)</option>
      <option value="debian-sid">Debian unstable</option>
     </optgroup>
     <optgroup label="Ubuntu">
