@@ -43,8 +43,7 @@ $(document).ready(
         function validate_selection(data) {
             var alert_text = null;
 
-            if (data.release == "natty" ||
-                data.release == "lucid") {
+            if (data.release == "natty") {
                 if (data.components.indexOf ("syslog-ng-devel") != -1 ||
                     data.components.indexOf ("syslog-ng-3.4") != -1) {
                     data.components.splice(data.components.indexOf ("syslog-ng-devel"), 1);
@@ -73,8 +72,7 @@ $(document).ready(
                 .each(function (x) {
                           if (this.value == "syslog-ng-devel" ||
                               this.value == "syslog-ng-3.4") {
-                              if (data.release == "natty" ||
-                                  data.release == "lucid") {
+                              if (data.release == "natty") {
                                   $(this).attr("disabled", true);
                               } else {
                                   $(this).removeAttr("disabled");
