@@ -1,0 +1,64 @@
+---
+title: "Deploying with drone.io"
+date: 2013-06-27 14:00
+tags: [Technology, News]
+---
+
+I have always deployed this site by hand (using a small script, which
+I did not commit to git, to rsync it up to my server), but that was
+becoming a bit of a pain recently, when I wanted to deploy from places
+where I neither had the script handy, nor a suitable SSH key. So I was
+looking for alternative options, and since I've recently started to
+use [drone.io][drone] for [other][drone:riemann]
+[projects][drone:syslog-ng], I figured I may aswell use it to deploy
+my homepage too. It can build it, it can rsync it up, and all of these
+frees me up from doing it by hand, and also makes sure that the site
+is buildable.
+
+Doing this sounded easy (and in essence, it really was), because
+[drone.io][drone] supports depolying via SSH, and for a static site
+like mine, that's all I really need anyway. However, there were a
+couple of gotchas I ran into, some of them I should've expected, some
+caught me by suprise. Nevertheless, the attempt was a great success,
+this post you're reading now was built and deployed via
+[drone.io][drone] already.
+
+So what were these gotchas I ran into?
+
+ [drone]: https://drone.io/
+ [drone:riemann]: https://drone.io/github.com/algernon/riemann-c-client
+ [drone:syslog-ng]: https://drone.io/github.com/algernon/syslog-ng
+
+<!-- more -->
+
+The first and most suprising one was that I set up the deployment, I
+made it so that it only happens for a particular branch. I'm not quite
+sure why - I should've limited testing to that branch in the first
+place. Nevertheless, while testing, I triggered builds by hand, but
+deployment did not happen. Took me a few minutes to figure out that
+even though the default branch on GitHub is **not** master,
+[drone][drone] doesn't check the branch when manually triggering the
+build, and assumes master. It's no problem when one pushes: the branch
+name is in the payload received from GitHub then, but this is an issue
+with triggered builds.
+
+ [drone]: https://drone.io/
+
+The other gotcha was that [drone][drone] does not support
+[Clojure][clj] out of the box (yet?), so the building steps start with
+downloading Leiningen. Works, but it's a little bit inconvenient and
+feels like cheating. I hope native Clojure support will arrive at some
+point, it would make my life a lot easier, and I'd set up testing for
+my other Clojure projects too.
+
+ [clj]: http://clojure.org/
+
+All in all, my experience with [drone.io][drone] is very pleasant so
+far, the ability to set up build steps independently of the repo is a
+great feature over [Travis][travis]. There are some shortcomings (the
+auto-follow mode of [Travis][travis] is very useful, for example), but
+there are great advantages too, deployment being one of them, and
+repo-independent build steps. It's so much more convenient not having
+to push a commit just to change a build property!
+
+ [travis]: http://travis-ci.org/
