@@ -1,6 +1,6 @@
 ---
 title: "My git tagging convention"
-date: 2013-07-25 17:00
+date: 2013-07-24 17:00
 tags: [Technology, Rants, .planet.debian]
 ---
 
