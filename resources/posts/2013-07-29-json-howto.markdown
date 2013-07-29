@@ -25,9 +25,9 @@ parts will be clearly marked as such. The 3.3 series do not have a
 JSON parser, and as such, is insufficient for most needs explored in
 this guide.
 
- [howto:raw-json]: /blog/2013/07/22/json-howto/#howto-raw-json
- [howto:json-syslog]: /blog/2013/07/22/json-howto/#howto-json-syslog
- [howto:mixed-stream]: /blog/2013/07/22/json-howto/#howto-mixed-stream
+ [howto:raw-json]: /blog/2013/07/29/json-howto/#howto-raw-json
+ [howto:json-syslog]: /blog/2013/07/29/json-howto/#howto-json-syslog
+ [howto:mixed-stream]: /blog/2013/07/29/json-howto/#howto-mixed-stream
 
 <!-- more -->
 
