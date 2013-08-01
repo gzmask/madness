@@ -77,6 +77,9 @@
 
   [:#madness-archive-archived-posts] nil
 
+  ; Misc
+  [:.pygmentize] utils/pygmentize-node
+
   ; Cleanup
   [:#main-rss] (h/remove-attr :id)
   [:#rss-feed] (h/remove-attr :id)
