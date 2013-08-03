@@ -54,6 +54,9 @@
                                                            (first blog-posts)))))
 
   [:#madness-article-read-more :a] (h/set-attr :href (:url (first blog-posts)))
+  [:#madness-article-read-more] (when-not (empty? (:content (first
+                                                             blog-posts)))
+                                  identity)
   [:#madness-article-read-more] (h/remove-attr :id)
 
   [:#madness-article-comments] nil
