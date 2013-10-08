@@ -1,0 +1,101 @@
+---
+title: "Onto the margin of a summer of code"
+date: 2013-10-08 12:15
+tags: [Technology, syslog-ng, Debian, .planet.debian]
+---
+
+Just as last year, [BalaBit][balabit] applied to become a mentoring
+organisation for this year's [Google Summer of Code][gsoc2013], but
+like the year before, were not accepted. Instead, the
+[openSUSE][openSUSE] project was kind enough to give us two slots of
+their own, similarly to the year before - we are very thankful for
+this, and this year, both of the projects we took were closed
+successfully! So much so, that [one of them][gsoc:redis] was already
+[merged][gsoc:redis-merge] into
+[syslog-ng 3.5.0beta2][sng:3.5.0beta2], and the
+[other one][gsoc:mysql] is being prepared for getting merged into the
+[Incubator][sng:incubator]. I also helped out a little with
+[Clojure & Leiningen packaging][gsoc:debian-clj], although my
+contributions there were minimal at best.
+
+On the whole, I really liked this year's programme, our students
+accomplished a lot, and the whole summer was a great experience in
+itself, I learned a lot about mentoring, and about working with other
+people, people who are very new to the codebase they're working on. I
+would like to summarise what I learned and observed this year, in the
+hopes that others may find them useful too.
+
+ [balabit]: http://www.balabit.com/
+ [gsoc2013]: http://www.google-melange.com/gsoc/homepage/google/gsoc2013
+ [openSUSE]: http://en.opensuse.org/Main_Page
+ [gsoc:redis]: http://tichygsoc.blogspot.hu/
+ [gsoc:redis-merge]: https://github.com/balabit/syslog-ng-3.5/commit/ecef67b81616e48a93594ad606c0995b88854a4f
+ [sng:3.5.0beta2]: https://lists.balabit.hu/pipermail/syslog-ng-announce/2013-September/000167.html
+ [gsoc:mysql]: http://petrovicsgyula.blogspot.hu/
+ [sng:incubator]: https://github.com/algernon/syslog-ng-incubator
+ [gsoc:debian-clj]: https://wiki.debian.org/SummerOfCode2013/StudentApplications/EugenioCanoManuel
+
+<!-- more -->
+
+This year, we set fairly ambitious goals for our students: they had to
+write a Redis and a MySQL destination, both of which presented
+interesting challenges to the students. None of them had prior
+experience with the syslog-ng source code, and their programming
+knowledge was mostly in C#, not plain old C which syslog-ng is written
+in. They also had to dabble a bit in the bowels of our overly complex
+<kbd>configure.ac</kbd> and a few <kbd>Makefile</kbd>s. Wasn't an easy
+task.
+
+In the beginning, we tasked the students to write proof of concept
+code, to get familiar with the libraries they will need to use - no
+syslog-ng involved at this point. This sounded like a good idea on
+paper, but without clear goals and milestones, a lot of time was spent
+on this task, and the students ran into a few dead-ends which could
+have been avoided, if we, the mentors, were more careful. This
+resulted in a reasonably poor first term, frustration and caused many
+a sleepless nights. We had to change our approach if we wanted to see
+the projects succeed.
+
+So we sat down with the students, and took one big leap: in person, we
+explained some of the internals of syslog-ng, did code reviews with
+them, and so on. But the best thing we did was what my colleague (and
+the main mentor), Viktor Tusa, came up with: we wrote a test script,
+that started syslog-ng, configured it, and ran tests against it.
+Students had to make their code pass the test by the next in-person
+meeting. This helped tremendously, and increased the speed they worked
+at by an order of magnitude at least. We kept developing the test
+script further, and so did the projects improve.
+
+### Conclusions ###
+
+There are a couple of conclusions I arrived at as the programme
+concluded, things we (or other mentors, as I plan to participate as a
+student next year) will need to improve upon in the coming years.
+
+* We need milestones *at the time of announcing the project*, not
+  later, but by the time we put a project online, we need clear
+  milestones.
+* We need a way to help students track their own progress. We can't
+  always be there for them, and that's OK. They need to be able to see
+  how they're doing, though. Automated tests, whenever possible, are a
+  great aid.
+* In person meetings, with code reviews and explaining idiosyncrasies
+  of the existing code-base are a great help to students, and also
+  help us better understand how others would like to use our APIs,
+  which in turn makes it easier to write APIs that are actually good.
+* Lack of experience in the programming language can be gained during
+  the programme, if the student is dedicated. We should not be afraid
+  of involving smart, but less experienced students. As a consequence,
+  requiring code samples may not be the best idea. That's a very high
+  barrier to jump over. I would rather have a talk - in person,
+  preferably - with the student, and see if they have the potential to
+  bring the project to the finish line.
+* We need to start preparing for next year soon, if we want to
+  participate on our own. Can't wait for the last minute, starting
+  just a month before the application period for organisations open is
+  already too late.
+* Involving the students in the project, letting them do useful work
+  that gets merged during the programme is a huge accomplishment. Both
+  our students expressed interest in not only participating next year
+  too, but also continuing their work after GSoC. We need to keep this
+  up in the coming years too!
