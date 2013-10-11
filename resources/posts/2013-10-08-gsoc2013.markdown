@@ -83,13 +83,14 @@ student next year) will need to improve upon in the coming years.
   of the existing code-base are a great help to students, and also
   help us better understand how others would like to use our APIs,
   which in turn makes it easier to write APIs that are actually good.
-* Lack of experience in the programming language can be gained during
-  the programme, if the student is dedicated. We should not be afraid
-  of involving smart, but less experienced students. As a consequence,
-  requiring code samples may not be the best idea. That's a very high
-  barrier to jump over. I would rather have a talk - in person,
-  preferably - with the student, and see if they have the potential to
-  bring the project to the finish line.
+* Lack of experience in the programming language is no big deal,
+  experience can be gained during the programme, if the student is
+  dedicated. We should not be afraid of involving smart, but less
+  experienced students. As a consequence, requiring code samples may
+  not be the best idea. That's a very high barrier to jump over. I
+  would rather have a talk - in person, preferably - with the student,
+  and see if they have the potential to bring the project to the
+  finish line.
 * We need to start preparing for next year soon, if we want to
   participate on our own. Can't wait for the last minute, starting
   just a month before the application period for organisations open is
