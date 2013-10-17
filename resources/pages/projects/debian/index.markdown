@@ -55,13 +55,12 @@ machines, and compile for other platforms as well.
   </select>
   <select class="inline input-xlarge" id="sng-select">
     <option value="syslog-ng-none">No syslog-ng</option>
-    <optgroup label="syslog-ng stable">
-     <option value="syslog-ng">Latest syslog-ng stable release (3.3)</option>
-     <option value="syslog-ng-3.3" selected>syslog-ng 3.3</option>
+    <optgroup label="syslog-ng old stable">
+     <option value="syslog-ng-3.3">syslog-ng 3.3</option>
     </optgroup>
-    <optgroup label="syslog-ng devel">
-     <option value="syslog-ng-devel">Latest syslog-ng devel release (3.4)</option>
-     <option value="syslog-ng-3.4">syslog-ng 3.4</option>
+    <optgroup label="syslog-ng stable">
+     <option value="syslog-ng">Latest syslog-ng stable release (3.4)</option>
+     <option value="syslog-ng-3.4" selected>syslog-ng 3.4</option>
     </optgroup>
   </select>
   <select class="inline input-xlarge" id="zorp-select">
@@ -71,8 +70,8 @@ machines, and compile for other platforms as well.
  </fieldset>
 </form>
 
-    deb       http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.3 zorp
-    deb-src   http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.3 zorp
+    deb       http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.4 zorp
+    deb-src   http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.4 zorp
     
     deb       http://packages.madhouse-project.org/zorp-kernel   kernel   2.6
 
