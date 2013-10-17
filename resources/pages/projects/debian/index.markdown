@@ -32,7 +32,7 @@ Packages are available for the **i386** and **amd64** architectures on
 both Debian and Ubuntu, but in addition to those, the Debian
 repositories also contain *syslog-ng* packages for the **powerpc**
 architecture. If there's enough interest, I can pull in more build
-machines, and compile for other platforms aswell.
+machines, and compile for other platforms as well.
 
 # Choose your components!
 
