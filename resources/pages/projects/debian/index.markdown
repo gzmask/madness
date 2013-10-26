@@ -71,15 +71,13 @@ machines, and compile for other platforms as well.
   </select>
   <select class="inline input-xlarge" id="zorp-select">
     <option value="zorp-none">No zorp</option>
-    <option value="zorp" selected>zorp</option>
+    <option value="zorp">zorp</option>
   </select>
  </fieldset>
 </form>
 
-    deb       http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.4 zorp
-    deb-src   http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.4 zorp
-    
-    deb       http://packages.madhouse-project.org/zorp-kernel   kernel   2.6
+    deb       http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.4
+    deb-src   http://packages.madhouse-project.org/debian   wheezy   syslog-ng-3.4
 
 <script src="/assets/asylum/js/sources.list.js" type="text/javascript"></script>
 
