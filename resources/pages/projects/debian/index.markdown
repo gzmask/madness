@@ -2,16 +2,16 @@
 title: Debian repository
 ---
 
-For some selected packages ([syslog-ng][sng] 3.3 & 3.4, and
+For some selected packages ([syslog-ng][sng] 3.3, 3.4 & 3.5, and
 [Zorp GPL][zorp]), I provide up-to-date packages for a number of
 [Debian][debian] and [Ubuntu][ubuntu] releases - see the
 <kbd>sources.list</kbd> assemby area just below. The packages will be
 kept up to date for all platforms, until at least after a month of the
 platforms end of life.
 
-To see what changed between versions, please see either the
-[syslog-ng 3.3 changelog][1] or the [syslog-ng 3.4 changelog][2]. For
-Zorp, there is no changelog available online yet.
+To see what changed between versions, please see either of the
+[syslog-ng 3.3][1], [syslog-ng 3.4][2] or [syslog-ng 3.5][3]
+changelogs. For Zorp, there is no changelog available online yet.
 
  [sng]: https://www.balabit.com/network-security/syslog-ng/opensource-logging-system/overview
  [zorp]: https://www.balabit.com/network-security/zorp-gpl/overview
@@ -20,6 +20,7 @@ Zorp, there is no changelog available online yet.
 
  [1]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.3
  [2]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.4
+ [3]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.5
 
 The repository is signed by the GPG key
 [6CE70C6E8B9E0644][archive-key], which one can add to apt with the following command:
@@ -51,6 +52,7 @@ machines, and compile for other platforms as well.
      <option value="ubuntu-quantal">Ubuntu 12.10 (Quantal Quetzal)</option>
      <option value="ubuntu-raring">Ubuntu 13.04 (Raring Ringtail)</option>
      <option value="ubuntu-saucy">Ubuntu 13.10 (Saucy Salamander)</option>
+     <option value="ubuntu-trusty">Ubuntu 14.04 (Trusty Tahr)</option>
     </optgroup>
   </select>
   <select class="inline input-xlarge" id="sng-select">
