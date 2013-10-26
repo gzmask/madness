@@ -43,19 +43,13 @@ $(document).ready(
         function validate_selection(data) {
             var alert_text = null;
 
-            if (data.release == "natty") {
-                if (data.components.indexOf ("syslog-ng-devel") != -1 ||
-                    data.components.indexOf ("syslog-ng-3.4") != -1) {
-                    data.components.splice(data.components.indexOf ("syslog-ng-devel"), 1);
-                    alert_text = "The selected distribution does not have packages for syslog-ng-3.4 or syslog-ng-devel.";
-                }
-            }
             if (data.release == "trusty") {
                 if (data.components.indexOf ("syslog-ng-3.3") != -1) {
                     data.components.splice(data.components.indexOf ("syslog-ng-3.3"), 1);
                     alert_text = "The selected distribution does not have packages for syslog-ng-3.3.";
                 }
             }
+
             if (data.release == "raring" ||
                 data.release == "jessie" ||
                 data.release == "saucy" ||
@@ -77,15 +71,6 @@ $(document).ready(
         function reset_controls(data) {
             $("#sng-select").find("option")
                 .each(function (x) {
-                          if (this.value == "syslog-ng-devel" ||
-                              this.value == "syslog-ng-3.4") {
-                              if (data.release == "natty") {
-                                  $(this).attr("disabled", true);
-                              } else {
-                                  $(this).removeAttr("disabled");
-                              }
-                          }
-
                           if (this.value == "syslog-ng-3.3") {
                               if (data.release == "trusty") {
                                   $(this).attr("disabled", true);
