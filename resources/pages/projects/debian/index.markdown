@@ -52,7 +52,7 @@ machines, and compile for other platforms as well.
      <option value="ubuntu-quantal">Ubuntu 12.10 (Quantal Quetzal)</option>
      <option value="ubuntu-raring">Ubuntu 13.04 (Raring Ringtail)</option>
      <option value="ubuntu-saucy">Ubuntu 13.10 (Saucy Salamander)</option>
-     <option value="ubuntu-trusty">Ubuntu 14.04 (Trusty Tahr)</option>
+     <option value="ubuntu-trusty">Ubuntu 14.04 LTS (Trusty Tahr)</option>
     </optgroup>
   </select>
   <select class="inline input-xlarge" id="sng-select">
