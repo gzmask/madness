@@ -50,7 +50,7 @@ machines, and compile for other platforms as well.
      <option value="ubuntu-precise">Ubuntu 12.04 LTS (Precise Pangolin)</option>
      <option value="ubuntu-quantal">Ubuntu 12.10 (Quantal Quetzal)</option>
      <option value="ubuntu-raring">Ubuntu 13.04 (Raring Ringtail)</option>
-     <option value="ubuntu-saucy">Ubuntu 13.10 (Saucy Salamander)</ooption>
+     <option value="ubuntu-saucy">Ubuntu 13.10 (Saucy Salamander)</option>
     </optgroup>
   </select>
   <select class="inline input-xlarge" id="sng-select">
