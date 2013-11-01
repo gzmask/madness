@@ -1,5 +1,31 @@
 $(document).ready(
     function () {
+        avails = {
+            "lucid": ["zorp", "syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                     "syslog-ng", "syslog-ng-devel"],
+            "precise": ["zorp", "syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                       "syslog-ng", "syslog-ng-devel"],
+            "quantal": ["zorp", "syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                       "syslog-ng", "syslog-ng-devel"],
+            "raring": ["syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                      "syslog-ng", "syslog-ng-devel"],
+            "saucy": ["syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                     "syslog-ng", "syslog-ng-devel"],
+            "trusty": ["syslog-ng-3.5",
+                      "syslog-ng-devel"],
+
+            "squeeze": ["zorp", "syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                       "syslog-ng", "syslog-ng-devel"],
+            "wheezy": ["zorp", "syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                      "syslog-ng", "syslog-ng-devel"],
+            "jessie": ["syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                      "syslog-ng", "syslog-ng-devel"],
+            "unstable": ["syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5",
+                        "syslog-ng", "syslog-ng-devel"]
+        };
+
+        all_components = ["zorp", "syslog-ng-3.3", "syslog-ng-3.4", "syslog-ng-3.5"];
+
         function get_data_from_distrib_form () {
             var distrel = $("#distro-select").val().split("-");
             var components = [];
@@ -41,27 +67,23 @@ $(document).ready(
         }
 
         function validate_selection(data) {
-            var alert_text = null;
+            var alert_components = [];
+            var rel_comps = avails[data.release];
 
-            if (data.release == "trusty") {
-                if (data.components.indexOf ("syslog-ng-3.3") != -1) {
-                    data.components.splice(data.components.indexOf ("syslog-ng-3.3"), 1);
-                    alert_text = "The selected distribution does not have packages for syslog-ng-3.3.";
+            all_components.forEach(function (val) {
+                if (data.components.indexOf (val) != -1 &&
+                    rel_comps.indexOf (val) == -1) {
+                    data.components.splice(data.components.indexOf (val), 1);
+                    alert_components.push(val);
+
+                    if (val == "zorp") {
+                        data.zorp_extra = false;
+                    }
                 }
-            }
+            });
 
-            if (data.release == "raring" ||
-                data.release == "jessie" ||
-                data.release == "saucy" ||
-                data.release == "trusty") {
-                if (data.components.indexOf ("zorp") != -1) {
-                    data.components.splice(data.components.indexOf ("zorp"), 1);
-                    alert_text = "The selected distribution does not have packages for zorp."
-                }
-            }
-
-            if (alert_text) {
-                $("#alert-box").text(alert_text).fadeIn();
+            if (alert_components.length > 0) {
+                $("#alert-box").text ("The selected distribution does not have packages for the following components: " + alert_components.join(", ")).fadeIn();
             } else {
                 $("#alert-box").fadeOut();
             }
@@ -71,28 +93,23 @@ $(document).ready(
         function reset_controls(data) {
             $("#sng-select").find("option")
                 .each(function (x) {
-                          if (this.value == "syslog-ng-3.3") {
-                              if (data.release == "trusty") {
-                                  $(this).attr("disabled", true);
-                              } else {
-                                  $(this).removeAttr("disabled");
-                              }
-                          }
-                      });
+                    if (avails[data.release].indexOf (this.value) == -1 &&
+                        this.value != "syslog-ng-none") {
+                        $(this).attr("disabled", true);
+                    } else {
+                        $(this).removeAttr("disabled");
+                    }
+                });
 
             $("#zorp-select").find("option")
                 .each(function (x) {
-                          if (this.value == "zorp") {
-                              if (data.release == "raring" ||
-                                  data.release == "saucy" ||
-                                  data.release == "jessie" ||
-                                  data.release == "trusty") {
-                                  $(this).attr("disabled", true);
-                              } else {
-                                  $(this).removeAttr("disabled")
-                              }
-                          }
-                      });
+                    if (avails[data.release].indexOf (this.value) == -1 &&
+                        this.value != "zorp-none") {
+                        $(this).attr("disabled", true);
+                    } else {
+                        $(this).removeAttr("disabled");
+                    }
+                });
         }
 
         $("#dist-select").change (
