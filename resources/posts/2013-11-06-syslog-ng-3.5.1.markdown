@@ -1,0 +1,99 @@
+---
+title: "syslog-ng 3.5.1 released"
+date: 2013-11-06 10:00
+tags: [News, syslog-ng]
+---
+
+I'm proud to announce - two days later on this blog - the result of
+about eight months of development [syslog-ng][sng] version
+[3.5.1][351-release]! This is the first stable release from the 3.5
+branch, the successor of the 3.3 branch, which was originally released
+earlier this year, in February. This is the second time I oversee a
+first major release, but it still feels intimidating. Although, this
+time it went much smoother than the last time. The 3.5.1 release is
+also very interesting for a number of reasons: not only do we have
+very interesting features, we also have more code contributed by the
+community, a succesful merge of a GSoC project, and a faster
+development cycle to boot!
+
+ [sng]: http://www.balabit.com/network-security/syslog-ng/opensource-logging-system/overview
+ [351-release]: https://lists.balabit.hu/pipermail/syslog-ng-announce/2013-November/000174.html
+
+I already wrote an [article about upcoming features][cooking], so I
+will not go into detail about the features already mentioned there.
+Nevertheless, the list of new things is fairly long:
+[multi-line support][cooking:ml], [STOMP destination][cooking:stomp],
+[Redis destination](#f:redis),
+[template type-hinting][cooking:type-hinting],
+[unit suffixes in the config][cooking:unit-suffix],
+[new template functions][cooking:template-funcs], and the existence of
+the [Incubator project][incubator].
+
+ [cooking]: /blog/2013/09/05/what-is-cooking-in-syslog-ng-3.5/
+ [cooking:ml]: /blog/2013/09/05/what-is-cooking-in-syslog-ng-3.5/#f:multiline
+ [cooking:stomp]: /blog/2013/09/05/what-is-cooking-in-syslog-ng-3.5/#f:new-dests
+ [cooking:type-hinting]: /blog/2013/09/05/what-is-cooking-in-syslog-ng-3.5/#f:type-hinting
+ [cooking:unit-suffix]: /blog/2013/09/05/what-is-cooking-in-syslog-ng-3.5/#f:unit-suffix
+ [cooking:template-funcs]: /blog/2013/09/05/what-is-cooking-in-syslog-ng-3.5/#f:template-funcs
+ [incubator]: https://github.com/balabit/syslog-ng-incubator
+
+<!-- more -->
+
+Of course, not everything was documented in the previous post, the
+[redis destination](#f:redis) was not merged yet at the time, and the
+Riemann destination ended up being part of the [Incubator][incubator]
+instead of the master tree. Lets look at Redis, and then some nice
+numbers afterwards!
+
+ [incubator]: https://github.com/balabit/syslog-ng-incubator
+
+## <a name="f:redis" href="#f:redis">Redis destination</a>
+
+Developed during the [Google Summer of Code 2013][gsoc2013] program,
+this destination driver makes it possible to easily send commands to a
+[Redis server](http://redis.io/), an advanced key-value store (or data
+structure server). Using it is fairly simple:
+
+ [gsoc2013]: http://www.google-melange.com/gsoc/project/google/gsoc2013/tichy/27001
+
+<pre>redis(
+ host("localhost")
+ port(6369)
+
+ command("HINCRBY", "hosts", "$HOST", 1)
+);</pre>
+
+## The Incubator project
+
+The syslog-ng module incubator (Incubator henceforth) is a collection
+of tools and modules for syslog-ng that for one reason or the other,
+are not part of the official repository. This serves both as a staging
+ground for experimental modules, and as a repository of plugins that
+are not aimed at upstream inclusion. It's also an example of a third
+party syslog-ng module.
+
+## Contributors!
+
+Compared to the [first commit on the 3.5 branch][3.5-first], a total
+of **346** patches have been committed, producing the following
+diffstat:
+
+>  372 files changed, 17948 insertions(+), 8396 deletions(-)
+
+That's half the pathces and half the lines modified than in the 3.4
+development cycle, which, I believe is a good thing. Faster, smaller,
+more stable releases are good for everybody.
+
+I would hereby like to thank all the people who contributed to
+syslog-ng's development in one form or another, be that patches, bug
+reports, testing or anything else: Fabien Wernli, Balazs Scheidler,
+Peter Gyongyosi, Cy Schubert, Andras Tim, Peter Czanik, Lucas McLane,
+Martin, Paul Dann, Michal Privoznik, Attila Nagy, Gonzalo Paniagua,
+Marc Falzon, Sergey Shuman, Attila Szalay, Anton Koldaev, Attila M.
+Magyar, Tamas Pal, Alexandre Biancalana, Nicolas Szalay, Michael
+Sterrett, Vincent Brillault, Laszlo Budai, Evan Rempel, Tibor Benke,
+Robert Fekete, Balint Kovacs, Valentijn Sessink, Chris Johnson, Ryan
+Frederick, Oscar Muñoz, Viktor Juhasz, Viktor Tusa, Tihamer Petrovics,
+Jose Pedro Oliveira, and everyone else I may have forgotten (sorry!)
+
+ [3.5-first]: https://github.com/balabit/syslog-ng-3.5/commit/945c11d7b8221c52ec1af74a0ae1fb86f112f86d
