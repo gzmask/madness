@@ -59,11 +59,12 @@ $(document).ready(
             } else {
                 new_text += "\n\n";
             }
-            $("pre code:last").fadeOut(400, 
-                                        function () {
-                                            $("pre code:last").text(new_text);
-                                            $("pre code:last").fadeIn();
-                                        });
+            var box = $("pre code")[1];
+            $(box).fadeOut(400, 
+                                     function () {
+                                         $(box).text(new_text);
+                                         $(box).fadeIn();
+                                     });
         }
 
         function validate_selection(data) {
