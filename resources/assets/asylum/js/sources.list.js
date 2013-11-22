@@ -55,7 +55,7 @@ $(document).ready(
                 "deb       http://packages.madhouse-project.org/" + data.dist + "   " + data.release + "   " + data.components.join(" ") + "\n" +
                 "deb-src   http://packages.madhouse-project.org/" + data.dist + "   " + data.release + "   " + data.components.join(" ") + "\n";
             if (data.zorp_extra) {
-                new_text += "\ndeb       http://packages.madhouse-project.org/zorp-kernel   kernel   2.6";
+                new_text += "\ndeb       http://packages.madhouse-project.org/zorp-kernel   kernel   2.6 3.2";
             } else {
                 new_text += "\n\n";
             }
