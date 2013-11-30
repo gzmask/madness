@@ -44,7 +44,8 @@
     (h/clone-for [p posts]
                  (h/do->
                   (h/substitute (archive-post-item p))
-                  (h/set-attr :class (str "span" (cfg/archive-posts :span)))
+                  (h/set-attr :class (str "col-xs-" (cfg/archive-posts :span)
+                                          " span" (cfg/archive-posts :span)))
                   (h/remove-attr :id)))
   [:#recent-posts] (h/do->
                     (h/remove-attr :id)
@@ -70,6 +71,7 @@
   [:#madness-article-read-more] nil
   [:#madness-article-comments] nil
   [:#madness-article-neighbours] nil
+  [:#madness-article-share] nil
   [:#rss-feed] (h/do->
                 (h/set-attr :href feed-url)
                 (h/remove-attr :id))
@@ -80,7 +82,7 @@
   ; Navigation bar
   [:#madness-recent-posts :li] (blog-nav/recent-posts all-posts)
   [:#madness-recent-posts] (h/remove-attr :id)
-  [:#madness-tags :li] (blog-nav/all-tags all-posts)
+  [:#madness-tags :.madness-tag] (blog-nav/all-tags all-posts)
   [:#madness-tags] (h/remove-attr :id)
 
   ; Recents & archived posts

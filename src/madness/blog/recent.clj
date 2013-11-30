@@ -108,5 +108,6 @@
     (h/clone-for [p posts]
                  (h/do->
                   (h/substitute (recent-post-item p))
-                  (h/set-attr :class (str "span" (cfg/recent-posts :span)))
+                  (h/set-attr :class (str "col-xs-" (cfg/archive-posts :span)
+                                          " span" (cfg/archive-posts :span)))
                   (h/remove-attr :id))))
