@@ -37,7 +37,7 @@
 ;; The anchor's `href` and textual content will be rewritten by this
 ;; snippet to the URL for the tag archive, and the name of the tag
 ;; itself.
-(h/defsnippet tag-item (cfg/template) [:#madness-tags :li]
+(h/defsnippet tag-item (cfg/template) [:#madness-tags :.madness-tag]
   [tag]
 
   [:a] (utils/rewrite-link (utils/tag-to-url tag) tag))

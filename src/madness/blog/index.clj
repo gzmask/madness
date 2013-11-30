@@ -65,7 +65,7 @@
   ; Navigation bar
   [:#madness-recent-posts :li] (blog-nav/recent-posts blog-posts)
   [:#madness-recent-posts] (h/remove-attr :id)
-  [:#madness-tags :li] (blog-nav/all-tags blog-posts)
+  [:#madness-tags :.madness-tag] (blog-nav/all-tags blog-posts)
   [:#madness-tags] (h/remove-attr :id)
 
   ; Index
