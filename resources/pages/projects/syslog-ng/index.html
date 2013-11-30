@@ -31,25 +31,26 @@
   <h3><a name="branches/upstream">Upstream mirrors</a></h3>
 
   <p>
-    I do not have a separate repository for the different versions of
-    syslog-ng, I keep it all in one, because I find that more
-    convenient. For this reason, I do not have a dedicated master
-    branch either. Instead, there
-    is <strong><a href="https://github.com/algernon/syslog-ng/tree/upstream/mirror/3.4">upstream/mirror/3.4</a></strong>
-    and <strong><a href="https://github.com/algernon/syslog-ng/tree/upstream/mirror/3.3">upstream/mirror/3.3</a></strong>.
+    Recently, the <a href="https://github.com/balabit/syslog-ng">upstream
+    syslog-ng repository</a> switched to a single-repository model, so my tree
+    is basically a mirror of that, with a few extra branches.
   </p>
 
   <p>
-    These are the same as the master branches of the appropriate
-    upstream syslog-ng repositories, their primary purpose is to
-    provide a stable branching and rebasing point for me.
+    The <strong><a href="https://github.com/algernon/syslog-ng/tree/master">master</a></strong>
+    branch is a reasonably up-to-date mirror of the current development
+    version of syslog-ng. The <strong><a href="https://github.com/algernon/syslog-ng/tree/3.5/master">3.5/master</a></strong>,
+    <strong><a href="https://github.com/algernon/syslog-ng/tree/3.4/master">3.4/master</a></strong>
+    and <strong><a href="https://github.com/algernon/syslog-ng/tree/3.3/master">3.3/master</a></strong>
+    branches are where bugfixes for released versions go, and they are a mirror
+    of the upstream branches of the same name.
   </p>
 
   <h3><a name="branches/hotfix">Hotfix branches</a></h3>
 
   <p>
     Occassionally, I will have branches prefixed
-    with <strong>hotfix/<em>VERSION</em></strong>, branched off of the
+    with <strong>merge/h/<em>VERSION</em></strong>, branched off of the
     matching upstream branch, to contain some small fixes only.
   </p>
 
@@ -66,7 +67,7 @@
 
   <p>
     Feature branches (prefixed
-    with <strong>feature/<em>VERSION</em></strong>) are branched off
+    with <strong>merge/f/<em>VERSION</em></strong>) are branched off
     of the <a href="#branches/merge-queue">merge queue</a>, and
     contain work in progress features, and are often rebased to
     collapse commits, or move to a newer base for easier merging
@@ -92,10 +93,15 @@
 
   <p>
     More interesting than the branches before,
-    the <strong>merge-queue/<em>VERSION</em></strong> branches contain
+    the <strong><em>VERSION</em>merge-queue</strong> branches contain
     patches I consider merge-ready. This branch replaces the former
     short-lived hotfix branches I used to have, but will also contain
     features, once they're complete.
+  </p>
+
+  <p>
+    The version-less <strong>merge-queue</strong> branch contains
+    merge-ready patches against the master branch.
   </p>
 
   <p>
@@ -104,34 +110,14 @@
     time its contents get merged one way or the other.
   </p>
 
-  <h3><a name="branches/sandbox">The sandbox</a></h3>
-
-  <p>
-    The sandbox (<strong>sandbox/<em>VERSION</em></strong>) is
-    somewhat similar to the merge queue, except that it also contains
-    experimental code: work in progress features, unreviewed fixes,
-    and so on and so forth.
-  </p>
-
-  <p>
-    It is the most rebased (onto
-    the <a href="#branches/merge-queue">merge queue</a>) branch of it
-    all, and possibly the most interesting too, as this is where all
-    the shiny new things can be tested first.
-  </p>
-
   <h3><a name="branches/packaging">Packaging branches</a></h3>
 
   <p>
     Packaging branches are where
     my <a href="/projects/debian/">packaging work</a> is done. They
     have
-    their <a href="https://raw.github.com/algernon/syslog-ng/packaging/debian/3.4/debian/README.source">own
-    documentation</a>, but in short: there are two kinds of packaging
-    branches: the normal one, and the autobuilt one. The difference
-    between the two is that the autobuilt branch has some features
-    (multi-arch and systemd support as of this writing) disabled for
-    portability reasons.
+    their <a href="https://raw.github.com/algernon/syslog-ng/packaging/debian/3.5/debian/README.source">own
+    documentation</a>.
   </p>
 
   <p>
