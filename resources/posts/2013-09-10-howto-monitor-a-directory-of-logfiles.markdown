@@ -1,7 +1,7 @@
 ---
 title: "How to monitor a directory of logfiles?"
 date: 2013-09-10 16:00
-tags: [Technology, syslog-ng, .planet.debian]
+tags: [Technology, syslog-ng, HOWTO, .planet.debian]
 ---
 
 One feature of [syslog-ng PE][sng:PE] is support for wildcard file
