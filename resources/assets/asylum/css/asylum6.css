@@ -462,3 +462,6 @@ body,
 .project-item .panel .panel-heading a:hover {
         text-decoration: none;
 }
+.pager {
+        clear: both;
+}
