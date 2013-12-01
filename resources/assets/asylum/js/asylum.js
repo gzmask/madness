@@ -9,4 +9,24 @@ $(document).ready(function () {
   $(".madness-share-flattr").attr
     ("href",
      "https://flattr.com/submit/auto?user_id=algernon&title=" + encodeURIComponent(document.title) + "&category=text&url=" + encodeURIComponent(document.location.toString()))
+
+  function load_page(o) {
+      var x = o.attr("href");
+      if (x) {
+          document.location = x;
+      }
+  }
+
+  Mousetrap.bind('j', function () {
+      load_page($(".next a"));
+  });
+
+  Mousetrap.bind('k', function () {
+      load_page($(".previous a"));
+  });
+
+  Mousetrap.bind('d', function () {
+      load_page($("#madness-article-date"));
+  });
+  $(".madness-article-frame").focus();
 });
