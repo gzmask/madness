@@ -97,6 +97,8 @@
   [page all-posts]
 
   [:title] (h/content (:title page) " - Asylum")
+  [:#madness-og-title] (h/set-attr :content (str (:title page) " - Asylum"))
+  [:#madness-og-url] (h/set-attr :content (str (cfg/base-url) (:url page)))
 
   ; Article
   [:#madness-article :h2] (h/substitute (blog-page-title (:title page)))

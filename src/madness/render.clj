@@ -93,7 +93,8 @@
 ;;
 (defmethod render :archive [_]
   (render-to-file res/posts res/posts
-                  (partial blog-archive/blog-archive "Archive" "/blog/atom.xml")
+                  (partial blog-archive/blog-archive "Archive"
+                           "/blog/atom.xml" "/blog/archives/")
                   "blog/archives/index.html"))
 
 ;; ### The tag archives
@@ -114,7 +115,8 @@
   (let [fn (str "." (utils/tag-to-url tag) "index.html")]
     (render-to-file all-posts tagged-posts
                     (partial blog-archive/blog-archive (str "Tag: " tag)
-                             (str "" (utils/tag-to-url tag) "atom.xml")) fn)))
+                             (str "" (utils/tag-to-url tag) "atom.xml")
+                             (str "" (utils/tag-to-url tag))) fn)))
 
 ;; And another, that maps through the tags, and using the previous
 ;; method, renders an archive for each of them.
@@ -143,7 +145,8 @@
     (render-to-file all-posts dated-posts
                     (partial blog-archive/blog-archive
                              (str "Archive of posts @ " date)
-                             (str "" uri "atom.xml")) fn)))
+                             (str "" uri "atom.xml")
+                             uri) fn)))
 
 ;; And since all the dated archives follow the same pattern, lets
 ;; introduce a helper function!

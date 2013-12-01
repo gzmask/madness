@@ -46,7 +46,8 @@
 
   {:template {:default "default.html"
               :atom "atom.xml"
-              :empty "empty.html"}
+              :empty "empty.html"
+              :base-url "http://localhost"}
    :dirs {:posts "resources/posts"
           :pages "resources/pages"
           :output "public"}
@@ -68,6 +69,12 @@
   [& id]
 
   (str "templates/" ((or (first id) :default) (:template config))))
+
+(defn base-url
+  "Get the base URL for the site."
+  []
+
+  (-> config :template :base-url))
 
 (defmulti recent-posts
   "Return various settings for recent-posts. Apart from the settable

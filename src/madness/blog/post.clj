@@ -199,6 +199,8 @@
   [post all-posts]
 
   [:title] (h/content (:title post) " - Asylum")
+  [:#madness-og-title] (h/set-attr :content (str (:title post) " - Asylum"))
+  [:#madness-og-url] (h/set-attr :content (str (cfg/base-url) (:url post)))
 
   ; Navigation bar
   [:#madness-recent-posts :li] (blog-nav/recent-posts all-posts)
