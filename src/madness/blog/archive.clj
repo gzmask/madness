@@ -61,7 +61,12 @@
 ;; Uses the `#madness-archive-recent-posts` and
 ;; `#madness-archive-archived-posts` elements of the template mostly.
 (h/deftemplate blog-archive (cfg/template)
-  [title feed-url blog-posts all-posts]
+  [title feed-url archive-url blog-posts all-posts]
+
+  [:#madness-og-title] (h/set-attr :content title)
+  [:#madness-og-url] (h/set-attr
+                      :content
+                      (str (cfg/base-url) archive-url))
 
   [:#madness-article :h2] (h/do->
                            (h/content title)
