@@ -1,6 +1,6 @@
 ---
 title: "Bootstrapping Madness"
-date: 2013-12-01 23:00
+date: 2013-12-01 23:15
 tags: [News]
 ---
 
