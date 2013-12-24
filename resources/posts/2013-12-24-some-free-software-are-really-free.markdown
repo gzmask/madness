@@ -1,6 +1,6 @@
 ---
 title: "Some free software are really free"
-date: 2013-12-21 03:30
+date: 2013-12-24 03:30
 tags: [Hacking, Rants, .planet.debian]
 ---
 
