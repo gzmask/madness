@@ -54,7 +54,6 @@ copy-paste the lines to <code>/etc/apt/sources.list</code>:
      <option value="ubuntu-lucid">Ubuntu 10.04 LTS (Lucid Lynx)</option>
      <option value="ubuntu-precise">Ubuntu 12.04 LTS (Precise Pangolin)</option>
      <option value="ubuntu-quantal">Ubuntu 12.10 (Quantal Quetzal)</option>
-     <option value="ubuntu-raring">Ubuntu 13.04 (Raring Ringtail)</option>
      <option value="ubuntu-saucy">Ubuntu 13.10 (Saucy Salamander)</option>
      <option value="ubuntu-trusty">Ubuntu 14.04 LTS (Trusty Tahr)</option>
     </optgroup>
