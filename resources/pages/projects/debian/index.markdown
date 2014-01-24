@@ -2,18 +2,20 @@
 title: Debian repository
 ---
 
-For some selected packages ([syslog-ng][sng] 3.3, 3.4 & 3.5, and
-[Zorp GPL][zorp]), I provide up-to-date packages for a number of
-[Debian][debian] and [Ubuntu][ubuntu] releases - see the
-<kbd>sources.list</kbd> assemby area just below. The packages will be
-kept up to date for all platforms, until at least after a month of the
-platforms end of life.
+For some selected packages ([syslog-ng][sng] 3.3, 3.4 & 3.5,
+[syslog-ng incubator][sng-incubator] and [Zorp GPL][zorp]), I provide
+up-to-date packages for a number of [Debian][debian] and
+[Ubuntu][ubuntu] releases - see the <kbd>sources.list</kbd> assemby
+area just below. The packages will be kept up to date for all
+platforms, until at least after a month of the platforms end of life.
 
 To see what changed between versions, please see either of the
-[syslog-ng 3.3][1], [syslog-ng 3.4][2] or [syslog-ng 3.5][3]
-changelogs. For Zorp, there is no changelog available online yet.
+[syslog-ng 3.3][1], [syslog-ng 3.4][2], [syslog-ng 3.5][3] or
+[syslog-ng incubator][4] changelogs. For Zorp, there is no changelog
+available online yet.
 
  [sng]: https://www.balabit.com/network-security/syslog-ng/opensource-logging-system/overview
+ [sng-incubator]: https://github.com/balabit/syslog-ng-incubator
  [zorp]: https://www.balabit.com/network-security/zorp-gpl/overview
  [debian]: http://www.debian.org/
  [ubuntu]: http://www.ubuntu.com/
@@ -21,6 +23,7 @@ changelogs. For Zorp, there is no changelog available online yet.
  [1]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.3
  [2]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.4
  [3]: https://git.madhouse-project.org/debian/syslog-ng/plain/debian/changelog?h=packaging/debian/3.5
+ [4]: https://github.com/balabit/syslog-ng-incubator/raw/debian/master/debian/changelog
 
 The repository is signed by the GPG key
 [6CE70C6E8B9E0644][archive-key], which one can add to apt with the following command:
