@@ -87,9 +87,9 @@ The other option is to use a [hosted script][add-release] that figures
 out your platform, adds the key to apt keyring, and the appropriate
 lines to <code>/etc/apt/sources.list.d/syslog-ng.list</code>:
 
-    curl https://packages.madhouse-project.org/debian/add-release.sh | sudo sh
+    curl http://packages.madhouse-project.org/debian/add-release.sh | sudo sh
 
- [add-release]: https://packages.madhouse-project.org/debian/add-release.sh
+ [add-release]: http://packages.madhouse-project.org/debian/add-release.sh
 
 <script src="/assets/asylum/js/sources.list.js" type="text/javascript"></script>
 
