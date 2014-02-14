@@ -1,0 +1,399 @@
+/* This code is only meant for previewing your Reflow design. */
+.primaryContainer {
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100%;
+    width: 100%;
+    background-color: rgb(255, 250, 146);
+}
+
+#grid {
+    float: left;
+    width: 61.435523%;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    margin-top: 0px;
+    margin-left: 0%;
+    clear: both;
+    background-image:url("img/grid.jpg");
+    min-height: 549px;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+#Home {
+    float: left;
+    font-size: 1.1159137499999998em;
+    width: auto;
+    height: auto;
+    text-align: left;
+    font-weight: normal;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+    font-style: normal;
+    letter-spacing: normal;
+    text-decoration: none;
+    font-family: arial;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    margin-top: 12px;
+    margin-left: 8.133971%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#b1 {
+    float: left;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 9;
+    margin-top: 0px;
+    margin-left: 0%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#About_Us {
+    float: left;
+    font-size: 1.125em;
+    width: auto;
+    height: auto;
+    text-align: center;
+    font-weight: normal;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+    font-style: normal;
+    letter-spacing: normal;
+    text-decoration: none;
+    font-family: arial;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 26;
+    margin-top: 12px;
+    margin-left: 4.883366%;
+    clear: none;
+    margin-right: 0%;
+    min-height: 42px;
+}
+
+#b5 {
+    float: left;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 25;
+    margin-top: 0px;
+    margin-left: 0%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#Measure_Install {
+    float: left;
+    font-size: 1.02632625em;
+    width: auto;
+    height: auto;
+    text-align: center;
+    font-weight: normal;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+    font-style: normal;
+    letter-spacing: normal;
+    text-decoration: none;
+    font-family: arial;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 18;
+    margin-top: 14px;
+    margin-left: 29.045344%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#b3 {
+    float: left;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 17;
+    margin-top: 0px;
+    margin-left: -100%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#Galleries {
+    float: left;
+    font-size: 1.125em;
+    width: auto;
+    height: auto;
+    text-align: center;
+    font-weight: normal;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+    font-style: normal;
+    letter-spacing: normal;
+    text-decoration: none;
+    font-family: arial;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 22;
+    margin-top: 12px;
+    margin-left: 43.384002%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#b4 {
+    float: left;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 21;
+    margin-top: 0px;
+    margin-left: -100%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#Window_Treatments {
+    float: left;
+    font-size: 0.976093125em;
+    width: auto;
+    height: auto;
+    text-align: left;
+    font-weight: normal;
+    line-height: normal;
+    color: rgb(255, 255, 255);
+    font-style: normal;
+    letter-spacing: normal;
+    text-decoration: none;
+    font-family: arial;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 14;
+    margin-top: 15px;
+    margin-left: 26.561616%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#b2 {
+    float: left;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 13;
+    margin-top: 0px;
+    margin-left: -100%;
+    clear: none;
+    margin-right: 0%;
+}
+
+#nav {
+    float: left;
+    width: 58.822803%;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 7;
+    margin-top: 0px;
+    margin-left: 0.91240876%;
+    clear: none;
+    display: block;
+    background-image:url("img/nav.png");
+    min-height: 217px;
+    background-size: cover;
+    margin-right: 0%;
+    background-position: 50% 50%;
+}
+
+#banner {
+    float: left;
+    width: 1644px;
+    height: auto;
+    color: rgb(0, 0, 0);
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 3;
+    display: block;
+    background-image:url("img/banner.jpg");
+    min-height: 205.734375px;
+    background-size: cover;
+    margin: 0px 0%;
+    clear: none;
+    background-position: 50% 50%;
+}
+
+#home {
+    float: left;
+    height: auto;
+    margin-left: 17.01863%;
+    margin-top: 158px;
+    clear: none;
+    width: 10.806095%;
+}
+
+#windows {
+    float: left;
+    height: auto;
+    margin-left: 1.200498%;
+    margin-top: 156px;
+    clear: none;
+    width: 19.99483%;
+}
+
+#measure {
+    float: left;
+    height: auto;
+    margin-left: 1.751466%;
+    margin-top: 157px;
+    clear: none;
+    width: 17.923446%;
+}
+
+#galleries {
+    float: left;
+    height: auto;
+    margin-left: 0.30052835%;
+    margin-top: 157px;
+    clear: none;
+    width: 12.96796%;
+}
+
+#about {
+    float: left;
+    height: auto;
+    margin-left: 1.447706%;
+    margin-top: 157px;
+    clear: none;
+    width: 14.822834%;
+}
+
+body {
+    background-color: rgb(255, 250, 146);
+}
+
+#slide {
+    float: left;
+    width: 901.484375px;
+    height: auto;
+    margin-left: 7.966872%;
+    margin-top: 39px;
+    clear: none;
+    color: rgb(0, 0, 0);
+    background-attachment: scroll;
+    max-width: 100%;
+    background-repeat: repeat repeat;
+}
+
+#text {
+    float: left;
+    font-size: 1em;
+    width: 590px;
+    height: 32px;
+    text-align: center;
+    font-weight: normal;
+    line-height: 1em;
+    margin-left: 21.913387%;
+    margin-top: 159px;
+    clear: both;
+    min-height: 0px;
+    color: rgb(114, 114, 114);
+    font-family: aclonica;
+    margin-right: 0%;
+}
+
+@media only screen and (max-width: 1648px) {
+    #grid {
+        margin-top: 0px;
+        margin-left: 0%;
+        clear: both;
+        width: 1011.21875px;
+        height: 549px;
+    }
+
+    #Galleries {
+        margin-top: 12px;
+        margin-left: 47.371044%;
+        clear: none;
+    }
+
+    #b4 {
+        margin-top: 0px;
+        margin-left: -92.823324%;
+        clear: none;
+    }
+
+    #slide {
+        float: left;
+        width: 901.484375px;
+        height: auto;
+        margin-left: 7.966872%;
+        margin-top: 39px;
+        clear: none;
+        color: rgb(0, 0, 0);
+        max-width: 100%;
+    }
+
+    #banner {
+        width: 1644px;
+    }
+
+    #text {
+        float: left;
+        font-size: 1em;
+        width: 590px;
+        height: 32px;
+        text-align: center;
+        font-weight: normal;
+        line-height: 1em;
+        margin-left: 21.913387%;
+        margin-top: 159px;
+        clear: both;
+        min-height: 0px;
+        color: rgb(114, 114, 114);
+        font-family: aclonica;
+        margin-right: 0%;
+    }
+
+    .primaryContainer {
+        padding-bottom: 50px;
+    }
+}
+
