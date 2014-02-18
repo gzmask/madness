@@ -9,9 +9,8 @@
 }
 
 #grid {
-    float: left;
-    width: 61.435523%;
     height: auto;
+    width: 61.435523%;
     color: rgb(0, 0, 0);
     position: relative;
     top: 0px;
@@ -21,7 +20,6 @@
     margin-left: 0%;
     clear: both;
     background-image:url("img/grid.jpg");
-    min-height: 549px;
     background-position: 50% 50%;
     background-size: cover;
 }
@@ -312,91 +310,52 @@ body {
     background-color: rgb(255, 250, 146);
 }
 
-#slide {
-    float: left;
-    width: 901.484375px;
-    height: auto;
-    margin-left: 7.966872%;
-    margin-top: 39px;
-    clear: none;
-    color: rgb(0, 0, 0);
-    background-repeat: repeat;
-    background-attachment: scroll;
-    max-width: 100%;
-}
-
-#text {
-    float: left;
+#cpright {
     font-size: 1em;
-    width: 590px;
-    height: 32px;
     text-align: center;
     font-weight: normal;
     line-height: 1em;
-    margin-left: 21.913387%;
-    margin-top: 159px;
-    clear: both;
-    min-height: 0px;
     color: rgb(114, 114, 114);
     font-family: aclonica;
-    margin-right: 0%;
 }
 
-@media only screen and (max-width: 1648px) {
-    #grid {
-        margin-top: 0px;
-        margin-left: 0%;
-        clear: both;
-        width: 1011.21875px;
-        height: 675px;
-    }
-
-    #Galleries {
-        margin-top: 12px;
-        margin-left: 47.371044%;
-        clear: none;
-    }
-
-    #b4 {
-        margin-top: 0px;
-        margin-left: -92.823324%;
-        clear: none;
-    }
-
-    #slide {
-        float: left;
-        width: 901.484375px;
-        height: auto;
-        margin-left: 6.322816%;
-        margin-top: 23px;
-        clear: none;
-        color: rgb(0, 0, 0);
-        max-width: 100%;
-    }
-
-    #banner {
-        width: 1644px;
-    }
-
-    #text {
-        float: left;
-        font-size: 1em;
-        width: 590px;
-        height: 32px;
-        text-align: center;
-        font-weight: normal;
-        line-height: 1em;
-        margin-left: 19.53125%;
-        margin-top: 33px;
-        clear: both;
-        min-height: 0px;
-        color: rgb(114, 114, 114);
-        font-family: aclonica;
-        margin-right: 0%;
-    }
-
-    .primaryContainer {
-        padding-bottom: 50px;
-    }
+#grid {
+  margin-top: 0px;
+  margin-left: 0%;
+  clear: both;
+  width: 1011.21875px;
+  height: auto;
 }
+
+#Galleries {
+  margin-top: 12px;
+  margin-left: 47.371044%;
+  clear: none;
+}
+
+#b4 {
+  margin-top: 0px;
+  margin-left: -92.823324%;
+  clear: none;
+}
+
+#slide {
+  float: left;
+  width: 901.484375px;
+  height: auto;
+  margin-left: 6.322816%;
+  margin-top: 23px;
+  clear: none;
+  color: rgb(0, 0, 0);
+  max-width: 100%;
+}
+
+#banner {
+  width: 1644px;
+}
+
+.primaryContainer {
+  padding-bottom: 50px;
+}
+
 
