@@ -1,2 +1,2 @@
-sudo rm -rf ~/Sites/*
-sudo cp -r public/* ~/Sites/
+rm -rf ~/Sites/*
+cp -r public/* ~/Sites/

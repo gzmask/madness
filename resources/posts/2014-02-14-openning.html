@@ -1,19 +1,55 @@
 <article>
-  <title>Home</title>
+  <title>Openning</title>
   <date>2014-02-14 09:15</date>
   <tags>
-    <tag>Open</tag>
     <tag>News</tag>
-    <tag>Yidao</tag>
   </tags>
 </article>
 
 <summary>
+  <link rel="stylesheet" type="text/css" href="/assets/sliderman.css" />
+  <script type="text/javascript" src="/assets/sliderman.1.3.7.js"></script>
+  <div id="slider_container_1" class="col-lg-offset-1">
+    <div id="SliderName">
+      <a href="#1">
+      <img src="/assets/img/h1.jpg" title="Description from Image Title" />
+      </a>
+      <div class="SliderNameDescription">
+      <img src="/assets/img/h2.jpg" height="40" style="float:left;margin-right:5px;" />
+      <strong>Nulla luctus congue fermentum.</strong><br />Integer <a href="javascript:void(0);">elementum</a> convallis lorem eu volutpat. Suspendisse fermentum arcu in lorem fringilla ultricies. Nam vel diam nisi.
+      </div>
+      <a href="#2">
+      <img src="/assets/img/h2.jpg" />
+      </a>
+      <img src="/assets/img/h3.jpg" />
+      <div class="SliderNameDescription"><a href="#3">Link</a></div>
+      <img src="/assets/img/h4.jpg" />
+      <div class="SliderNameDescription"><strong>Nullam nec velit vel leo tristique commodo.</strong><br />Nulla facilisi. Fusce lacus massa, ullamcorper sed hendrerit quis, venenatis eget tortor.</div>
+    </div>
+    <div id="SliderNameNavigation"></div>
 
-  <img src="/assets/img/h1.jpg" />
+    <script type="text/javascript">
+      // we created new effect and called it 'demo01'. We use this name later.
+      Sliderman.effect({name: 'demo01', cols: 10, rows: 5, delay: 10, fade: true, order: 'straight_stairs'});
 
+      var demoSlider = Sliderman.slider({container: 'SliderName', width: 900, height: 600, effects: 'demo01',
+      display: {
+      pause: true, // slider pauses on mouseover
+      autoplay: 3000, // 3 seconds slideshow
+      always_show_loading: 200, // testing loading mode
+      description: {background: '#ffffff', opacity: 0.5, height: 50, position: 'bottom'}, // image description box settings
+      loading: {background: '#000000', opacity: 0.2, image: 'img/loading.gif'}, // loading box settings
+      buttons: {opacity: 1, prev: {className: 'SliderNamePrev', label: ''}, next: {className: 'SliderNameNext', label: ''}}, // Next/Prev buttons settings
+      navigation: {container: 'SliderNameNavigation', label: '&nbsp;'} // navigation (pages) settings
+      }});
+    </script>
+
+  </div>
 </summary>
 
 <section>
-  <p>this is a test</p>
+  <br /><br />
+  <div class="row">
+    <p class="col-lg-offset-2 col-lg-4">this is a test</p>
+  </div>
 </section>

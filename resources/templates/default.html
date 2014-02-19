@@ -2,6 +2,8 @@
 <html>
     <!-- This code is only meant for previewing your Reflow design. -->
     <head>
+        <link href="http://netdna.bootstrapcdn.com/bootswatch/3.0.2/yeti/bootstrap.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="/assets/boilerplate.css" />
 	<link rel="stylesheet" href="/assets/home.css" />
 	<meta charset="utf-8">
@@ -48,9 +50,13 @@
         </div>
         <div id="grid" class="clearfix">
           <section id="madness-article" class="madness-article-frame">
-            <h2 title="the lastest article">the lastest article</h2>
-            <div class="madness-article-meta">
-                <span class="article-date">
+            <h2 title="the lastest article">
+              <a href="#">
+                the lastest news
+              </a>
+            </h2>
+            <div class="madness-article-meta row">
+                <span class="article-date col-lg-offset-1">
                   <i class="fa fa-calendar fa-fw"></i>
                   <a href="#" id="madness-article-date">2013-11-30</a>
                 </span>
@@ -61,11 +67,12 @@
                 </span>
                 <hr>
             </div>
-            <div id="madness-article-content">
+            <div id="madness-article-content" class="row">
                 ....
             </div>
-             <div id="madness-article-read-more">
-                <a class="btn btn-primary madness-read-on">
+            <br /><br /><br />
+            <div id="madness-article-read-more" class="row">
+                <a class="col-lg-offset-8 btn btn-default madness-read-on">
                   Read on <i class="fa fa-fw fa-angle-double-right"></i>
                 </a>
             </div>
@@ -81,36 +88,29 @@
             </div>
             <div id="madness-article-share">
               <hr>
-              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                  <h3 class="share">Share</h3>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-right">
-                  <a href="https://twitter.com/share?url="
-                     class="btn btn-success btn-xs madness-share-twitter"
-                     target="_blank">
+              <div class="col-lg-6 col-lg-offset-4 col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-4 col-xs-6 col-xs-offset-4 text-right">
+                <a href="https://twitter.com/share?url=www.yidaohomedecor.ca" 
+                   class="btn btn-success btn-xs madness-share-twitter"
+                   target="_blank">
                     <i class="fa fa-fw fa-twitter"></i>
                   </a>
-                  <a href="https://plus.google.com/share?url="
+                  <a href="https://plus.google.com/share?url=www.yidaohomedecor.ca"
                      target="_blank"
                      class="btn btn-success btn-xs madness-share-google-plus">
                     <i class="fa fa-fw fa-google-plus"></i>
-                  </a>
-                  <a href="https://flattr.com/submit/auto?user_id=algernon&title=Diaries+of+a+Madman&category=text&url="
-                     class="btn btn-success btn-xs madness-share madness-share-flattr"
-                     target="_blank">
-                    <i class="fa fa-fw fa-gittip fa-inverse"></i>
                   </a>
               </div>
             </div>
             <div id="madness-archive-recent-posts">
               <div id="madness-archive-recent-post-row">
-                  <div class="col-xs-3" id="madness-archive-recent-post">
+                 <div class="col-xs-3" id="madness-archive-recent-post">
                     <h3 class="madness-post-title">
                       <a href="#" rel="tooltip"
                          title="The latest article">
                         The latest article
                       </a>
                     </h3>
+                 </div>
               </div>
             </div>
             <div id="madness-archive-archived-posts">
@@ -123,5 +123,7 @@
         Copyright@ Yi Dao International Trading Co.Ltd. All rights reserved. <br />Designed and hosted by <a href="http://www.richever.ca">Richever Technology Ltd.</a> 
         </p>
     </div>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.5/mousetrap.min.js"></script>
     </body>
 </html>
