@@ -60,7 +60,7 @@
 ;; ### The site index
 ;;
 ;; Renders the main entry point of the site into the content area, and
-;; saves the result into a file named `index.html`.
+;; saves the result into a file named `blog.html`.
 ;;
 ;; The content area will consist of the latest blog post, followed by
 ;; a limited number of recent items: the configuration controls how
@@ -75,7 +75,7 @@
 ;; [1]: #madness.blog.index
 ;;
 (defmethod render :index [_]
-  (render-to-file nil res/posts blog-index/blog-index "index.html"))
+  (render-to-file nil res/posts blog-index/blog-index "blog.html"))
 
 ;; ### The global archive
 ;;
