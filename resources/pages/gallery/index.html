@@ -1,6 +1,76 @@
 <article>
-  <title>windows</title>
+  <title>Gallery</title>
 </article>
 
 <section> 
+  <script src="/assets/lightbox/jquery.min.js" type="text/javascript"></script>
+  <link href="/assets/lightbox/jquery.lightbox-0.5.css" media="screen" rel="stylesheet" type="text/css">
+
+  <div class="gallery" style="font-size: 20px;">
+    <div class="row">
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g1.jpg" title=""><img class="photo" src="/assets/img/gallery/g1s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g5.jpg" title=""><img class="photo" src="/assets/img/gallery/g5s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g6.jpg" title=""><img class="photo" src="/assets/img/gallery/g6s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g4.jpg" title=""><img class="photo" src="/assets/img/gallery/g4s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+    </div><br />
+    <div class="row">
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g9.jpg" title=""><img class="photo" src="/assets/img/gallery/g9s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g10.jpg" title=""><img class="photo" src="/assets/img/gallery/g10s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/h1.jpg" title=""><img class="photo" src="/assets/img/gallery/h1s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/h2.jpg" title=""><img class="photo" src="/assets/img/gallery/h2s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+    </div><br />
+    <div class="row">
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/h3.jpg" title=""><img class="photo" src="/assets/img/gallery/h3s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/h4.jpg" title=""><img class="photo" src="/assets/img/gallery/h4s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g7.jpg" title=""><img class="photo" src="/assets/img/gallery/g7s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+    </div><br />
+    <div class="row">
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g2.jpg" title=""><img class="photo" src="/assets/img/gallery/g2s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g3.jpg" title=""><img class="photo" src="/assets/img/gallery/g3s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+      <div class="col-lg-offset-1 col-lg-2">
+        <a href="/assets/img/gallery/g8.jpg" title=""><img class="photo" src="/assets/img/gallery/g8s.jpg" alt="YIDAO, Regina"></a>
+      </div>
+    </div><br />
+  </div>
+
+  <script src="/assets/lightbox/jquery.lightbox-0.5.min.js" type="text/javascript"></script>
+  <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src='//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+    $('.gallery a').lightBox({
+      overlayBgColor: '#483a25',
+      containerResizeSpeed: 150,
+      txtImage: 'Product', 
+      containerBorderSize: 1,
+      overlayOpacity: 0.9
+    });
+  </script>
 </section>
