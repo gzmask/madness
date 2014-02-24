@@ -269,6 +269,12 @@
     width: 10.806095%;
 }
 
+#home a:hover {
+    background-color: rgba(0,0,0,0.3);
+    color: rgb(255, 255, 255);
+}
+
+
 #windows {
     float: left;
     height: auto;
@@ -277,6 +283,12 @@
     clear: none;
     width: 19.99483%;
 }
+
+#windows a:hover {
+    background-color: rgba(0,0,0,0.3);
+    color: rgb(255, 255, 255);
+}
+
 
 #measure {
     float: left;
@@ -287,6 +299,12 @@
     width: 17.923446%;
 }
 
+#measure a:hover {
+    background-color: rgba(0,0,0,0.3);
+    color: rgb(255, 255, 255);
+}
+
+
 #galleries {
     float: left;
     height: auto;
@@ -296,6 +314,12 @@
     width: 12.96796%;
 }
 
+#galleries a:hover {
+    background-color: rgba(0,0,0,0.3);
+    color: rgb(255, 255, 255);
+}
+
+
 #about {
     float: left;
     height: auto;
@@ -304,6 +328,12 @@
     clear: none;
     width: 14.822834%;
 }
+
+#about a:hover {
+    background-color: rgba(0,0,0,0.3);
+    color: rgb(255, 255, 255);
+}
+
 
 body {
     background-color: rgb(255, 250, 146);
